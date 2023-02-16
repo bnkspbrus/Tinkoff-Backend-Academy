@@ -1,0 +1,36 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: handyman
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vogorode
+    username: postgres
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, prometheus, readiness
+      base-path:
+      path-mapping:
+        prometheus: /metrics
+        info: /actuator/info
+        readiness: /system/readiness
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true

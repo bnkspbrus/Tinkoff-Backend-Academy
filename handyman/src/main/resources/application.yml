@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: handyman
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
