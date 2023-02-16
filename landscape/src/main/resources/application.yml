@@ -1,8 +1,8 @@
 server:
-  port: ${HANDYMAN_PORT}
+  port: ${LANDSCAPE_PORT}
 spring:
   application:
-    name: handyman
+    name: landscape
 management:
   endpoints:
     web:
