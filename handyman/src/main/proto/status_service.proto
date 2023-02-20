@@ -1,0 +1,22 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.tinkofflibrary.lib";
+option java_outer_classname = "VOgorodeProto";
+
+service StatusService {
+  rpc getStatus (HandymanStatuses) returns (HandymanStatuses) {
+  }
+}
+
+message HandymanStatuses {
+  repeated Status HandymanService = 1;
+}
+
+message Status {
+  string host = 1;
+  string status = 2;
+  string artifact = 3;
+  string name = 4;
+  string group = 5;
+  string version = 6;
+}

@@ -12,3 +12,6 @@ management:
       path-mapping:
         prometheus: /metrics
         info: /actuator/info
+grpc:
+  server:
+    port: 9898
