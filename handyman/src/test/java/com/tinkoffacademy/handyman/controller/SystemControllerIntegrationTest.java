@@ -8,21 +8,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
-class HandymanControllerIntegrationTest {
+class SystemControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @BeforeAll
-    public static void setUp() {
-        System.setProperty("HANDYMAN_PORT", "7070");
-    }
 
     @Test
     void testGetLiveness() throws Exception {

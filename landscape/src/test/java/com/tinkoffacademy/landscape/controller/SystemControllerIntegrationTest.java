@@ -1,4 +1,4 @@
-package com.tinkoffacademy.rancher.controller;
+package com.tinkoffacademy.landscape.controller;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -8,22 +8,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
-class RancherControllerIntegrationTest {
+class SystemControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @BeforeAll
-    public static void setUp() {
-        System.setProperty("RANCHER_PORT", "8080");
-    }
 
     @Test
     void testGetLiveness() throws Exception {
@@ -48,6 +43,6 @@ class RancherControllerIntegrationTest {
         // Then
         response
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"RancherService\": \"OK\"}"));
+                .andExpect(content().json("{\"LandscapeService\": \"OK\"}"));
     }
 }

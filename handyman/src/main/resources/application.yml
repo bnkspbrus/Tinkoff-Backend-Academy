@@ -1,5 +1,5 @@
 server:
-  port: ${HANDYMAN_PORT}
+  port: 7070
 spring:
   application:
     name: handyman
