@@ -1,5 +1,5 @@
 server:
-  port: ${LANDSCAPE_PORT}
+  port: 8080
 spring:
   application:
     name: landscape

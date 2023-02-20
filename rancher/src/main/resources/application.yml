@@ -1,5 +1,5 @@
 server:
-  port: ${RANCHER_PORT}
+  port: 9090
 spring:
   application:
     name: rancher

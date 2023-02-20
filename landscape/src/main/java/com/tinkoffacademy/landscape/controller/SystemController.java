@@ -2,6 +2,7 @@ package com.tinkoffacademy.landscape.controller;
 
 import com.tinkoffacademy.landscape.dto.StatusDTO;
 import com.tinkoffacademy.landscape.service.LandscapeStatusService;
+import com.tinkoffacademy.landscape.service.SystemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +14,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/system")
 @RequiredArgsConstructor
-public class LandscapeController {
+public class SystemController {
+
+    private final SystemService systemService;
 
     private final LandscapeStatusService landscapeStatusService;
+
     /**
      * Checks liveness
      */
@@ -25,11 +29,12 @@ public class LandscapeController {
 
     /**
      * Checks readiness
+     *
      * @return Map with single entry to be converted in Json
      */
     @GetMapping("/readiness")
     public Map<String, String> getReadiness() {
-        return Map.of("LandscapeService", "OK");
+        return systemService.getReadiness();
     }
 
     @GetMapping("/statuses")
