@@ -1,0 +1,14 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: landscape
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, prometheus
+      base-path:
+      path-mapping:
+        prometheus: /metrics
+        info: /actuator/info
