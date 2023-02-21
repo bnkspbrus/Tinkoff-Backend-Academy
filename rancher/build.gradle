@@ -45,6 +45,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+    testImplementation("net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}")
+
 }
 
 protobuf {

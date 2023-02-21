@@ -1,22 +1,23 @@
 syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+package ru.tinkoff;
+
+option java_package = "ru.tinkoff.proto";
 option java_multiple_files = true;
-option java_package = "com.tinkofflibrary.lib";
-option java_outer_classname = "VOgorodeProto";
 
 service StatusService {
-  rpc getStatus (HandymanStatuses) returns (HandymanStatuses) {
-  }
+  rpc getVersion(google.protobuf.Empty) returns (VersionResponse);
+  rpc getReadiness(google.protobuf.Empty) returns (ReadinessResponse);
 }
 
-message HandymanStatuses {
-  repeated Status HandymanService = 1;
+message VersionResponse {
+  string artifact = 1;
+  string name = 2;
+  string group = 3;
+  string version = 4;
 }
 
-message Status {
-  string host = 1;
-  string status = 2;
-  string artifact = 3;
-  string name = 4;
-  string group = 5;
-  string version = 6;
+message ReadinessResponse {
+  string status = 1;
 }

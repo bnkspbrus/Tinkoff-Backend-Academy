@@ -1,7 +1,7 @@
 package com.tinkoffacademy.landscape.controller;
 
 import com.tinkoffacademy.landscape.dto.StatusDTO;
-import com.tinkoffacademy.landscape.service.LandscapeStatusService;
+import com.tinkoffacademy.landscape.service.StatusService;
 import com.tinkoffacademy.landscape.service.SystemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ public class SystemController {
 
     private final SystemService systemService;
 
-    private final LandscapeStatusService landscapeStatusService;
+    private final StatusService statusService;
 
     /**
      * Checks liveness
@@ -38,7 +38,7 @@ public class SystemController {
     }
 
     @GetMapping("/statuses")
-    public List<StatusDTO> getStatuses() {
-        return landscapeStatusService.getStatuses();
+    public Map<String, StatusDTO[]> getStatuses() {
+        return statusService.getStatuses();
     }
 }

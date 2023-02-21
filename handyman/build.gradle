@@ -45,6 +45,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+    // JUnit-Test-Framework
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+// Grpc-Test-Support
+    testImplementation("io.grpc:grpc-testing:${grpcVersion}")
+    testImplementation("net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}")
+
 }
 
 protobuf {
