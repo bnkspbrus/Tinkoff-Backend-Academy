@@ -14,12 +14,24 @@ import ru.tinkoff.proto.VersionResponse;
 public class StatusServiceImpl extends StatusServiceGrpc.StatusServiceImplBase {
     private final BuildProperties buildProperties;
 
+    /**
+     * Gets server liveness and put it as response
+     *
+     * @param request          just empty object
+     * @param responseObserver observer to be notified as response is ready
+     */
     @Override
     public void getVersion(Empty request, StreamObserver<VersionResponse> responseObserver) {
         responseObserver.onNext(getVersion());
         responseObserver.onCompleted();
     }
 
+    /**
+     * Gets server readiness and put it as response
+     *
+     * @param request          just empty object
+     * @param responseObserver observer to be notified as response is ready
+     */
     @Override
     public void getReadiness(Empty request, StreamObserver<ReadinessResponse> responseObserver) {
         ReadinessResponse response = ReadinessResponse.newBuilder().setStatus("OK").build();
@@ -27,6 +39,11 @@ public class StatusServiceImpl extends StatusServiceGrpc.StatusServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    /**
+     * Gets server version
+     *
+     * @return server version
+     */
     private VersionResponse getVersion() {
         return VersionResponse
                 .newBuilder()

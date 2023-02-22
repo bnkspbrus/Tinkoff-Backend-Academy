@@ -10,6 +10,7 @@ buildscript {
         springBootVersion = '2.7.8'
         springBootGrpcVersion = '2.14.0.RELEASE'
         lombokPluginVersion = '6.6.2'
+        mockitoVersion = '1.10.19'
     }
 }
 

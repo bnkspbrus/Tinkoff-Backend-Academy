@@ -25,7 +25,7 @@ public class SystemController {
     /**
      * Checks readiness
      *
-     * @return Map with single entry to be converted in Json
+     * @return Map with single entry to be converted to Json
      */
     @GetMapping("/readiness")
     public Map<String, String> getReadiness() {

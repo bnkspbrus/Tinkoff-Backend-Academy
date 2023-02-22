@@ -20,6 +20,11 @@ public class StatusService {
     @GrpcClient("rancher-server")
     private StatusServiceGrpc.StatusServiceBlockingStub rancherStub;
 
+    /**
+     * Gets status for each server
+     *
+     * @return Map where key is server name and value is statuses of such server instances
+     */
     public Map<String, StatusDTO[]> getStatuses() {
         StatusDTO handymanStatus = getStatusDTO(handymanStub);
         StatusDTO rancherStatus = getStatusDTO(rancherStub);
@@ -29,6 +34,12 @@ public class StatusService {
         );
     }
 
+    /**
+     * Gets status of server with given blocking stub
+     *
+     * @param blockingStub stub of server
+     * @return status of server as dto
+     */
     private StatusDTO getStatusDTO(StatusServiceGrpc.StatusServiceBlockingStub blockingStub) {
         ReadinessResponse readiness = blockingStub.getReadiness(Empty.getDefaultInstance());
         VersionResponse version = blockingStub.getVersion(Empty.getDefaultInstance());

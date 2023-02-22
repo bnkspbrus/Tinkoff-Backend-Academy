@@ -4,7 +4,7 @@
 
 ### Использование
 
-* Настройте переменные окружения `HANDYMAN_PORT`, `RANCHER_PORT` и `LANDSCAPE_PORT` - порты для Handyman, Rancher и Landscape cервисов соответственно.
+* Порты сервисов `7070`, `8080`, `9090` для handyman, landscape, rancher соответственно
 * Запустите желаемый сервис `cd $SERVICE && ./gradlew bootRun`, где `SERVICE` это либо handyman, либо rancher, либо landscape.
 
 ### Ссылки

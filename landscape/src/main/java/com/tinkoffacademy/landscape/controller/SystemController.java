@@ -30,13 +30,17 @@ public class SystemController {
     /**
      * Checks readiness
      *
-     * @return Map with single entry to be converted in Json
+     * @return Map with single entry to be converted to Json
      */
     @GetMapping("/readiness")
     public Map<String, String> getReadiness() {
         return systemService.getReadiness();
     }
 
+    /**
+     * Gets status for each server
+     * @return Map where key is server name and value is statuses of such server instances
+     */
     @GetMapping("/statuses")
     public Map<String, StatusDTO[]> getStatuses() {
         return statusService.getStatuses();
