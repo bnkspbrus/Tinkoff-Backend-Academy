@@ -2,12 +2,16 @@
 
 ## VOgorode
 
+### Пререквезиты
+
+* JDK версии 17 или выше. Настроенный `JAVA_HOME`.
+
 ### Использование
 
-* Порты сервисов `7070`, `8080`, `9090` для handyman, landscape, rancher соответственно
+* Порты сервисов `7070`, `8080`, `9090` для handyman, landscape, rancher соответственно.
 * Запустите желаемый сервис `cd $SERVICE && ./gradlew bootRun`, где `SERVICE` это либо handyman, либо rancher, либо landscape.
 
 ### Ссылки
 
-* [ТЗ](/docs/hw1/TOR.md)
-* [Дока с описанием работы](/docs/hw1/DESC.md)
+* HW 1: [описание](/docs/hw1/DESC.md) [тз](/docs/hw1/TOR.md)
+* HW 2: [описание](/docs/hw2/DESC.md) [тз](/docs/hw2/TOR.md)

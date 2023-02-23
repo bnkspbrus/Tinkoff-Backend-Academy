@@ -2,7 +2,9 @@ package com.tinkoffacademy.landscape.service;
 
 import com.google.protobuf.Empty;
 import com.tinkoffacademy.landscape.dto.StatusDTO;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.proto.ReadinessResponse;
@@ -13,6 +15,8 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Setter
+@Getter
 public class StatusService {
     @GrpcClient("handyman-server")
     private StatusServiceGrpc.StatusServiceBlockingStub handymanStub;
@@ -29,8 +33,8 @@ public class StatusService {
         StatusDTO handymanStatus = getStatusDTO(handymanStub);
         StatusDTO rancherStatus = getStatusDTO(rancherStub);
         return Map.of(
-                handymanStatus.getName(), new StatusDTO[]{handymanStatus},
-                rancherStatus.getName(), new StatusDTO[]{rancherStatus}
+                "HandymanService", new StatusDTO[]{handymanStatus},
+                "RancherService", new StatusDTO[]{rancherStatus}
         );
     }
 

@@ -29,6 +29,7 @@ repositories {
 
 group = 'com.tinkoffacademy'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
 dependencies {
     implementation("io.grpc:grpc-netty-shaded")

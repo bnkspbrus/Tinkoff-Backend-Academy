@@ -18,8 +18,6 @@ public class SystemController {
 
     private final SystemService systemService;
 
-    private final StatusService statusService;
-
     /**
      * Checks liveness
      */
@@ -35,14 +33,5 @@ public class SystemController {
     @GetMapping("/readiness")
     public Map<String, String> getReadiness() {
         return systemService.getReadiness();
-    }
-
-    /**
-     * Gets status for each server
-     * @return Map where key is server name and value is statuses of such server instances
-     */
-    @GetMapping("/statuses")
-    public Map<String, StatusDTO[]> getStatuses() {
-        return statusService.getStatuses();
     }
 }

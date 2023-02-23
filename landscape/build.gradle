@@ -30,6 +30,7 @@ repositories {
 
 group = 'com.tinkoffacademy'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
 dependencies {
     implementation("io.grpc:grpc-netty-shaded")
@@ -46,6 +47,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+    testImplementation("io.grpc:grpc-testing:${grpcVersion}")
+    testImplementation("net.devh:grpc-server-spring-boot-starter:${springBootGrpcVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 protobuf {
