@@ -26,9 +26,9 @@ public class SystemController {
     }
 
     /**
-     * Checks readiness
+     * Gets readiness state
      *
-     * @return Map with single entry to be converted to Json
+     * @return pair of server name and "OK"
      */
     @GetMapping("/readiness")
     public Map<String, String> getReadiness() {

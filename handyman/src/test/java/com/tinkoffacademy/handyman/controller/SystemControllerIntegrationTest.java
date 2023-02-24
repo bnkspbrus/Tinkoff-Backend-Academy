@@ -1,13 +1,19 @@
 package com.tinkoffacademy.handyman.controller;
 
-import org.junit.jupiter.api.BeforeAll;
+import com.tinkoffacademy.handyman.service.SystemService;
+import io.grpc.ConnectivityState;
+import io.grpc.ManagedChannel;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -19,6 +25,16 @@ class SystemControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private SystemService systemService;
+
+    @BeforeEach
+    void setup() {
+        ManagedChannel channel = mock(ManagedChannel.class);
+        when(channel.getState(true)).thenReturn(ConnectivityState.READY);
+        systemService.setChannel(channel);
+    }
 
     @Test
     void testGetLiveness() throws Exception {
@@ -43,6 +59,6 @@ class SystemControllerIntegrationTest {
         // Then
         response
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"HandymanService\": \"OK\"}"));
+                .andExpect(content().json("{\"HandymanService\": \"READY\"}"));
     }
 }

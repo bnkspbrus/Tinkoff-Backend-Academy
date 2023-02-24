@@ -12,9 +12,9 @@ public class SystemService {
     private final BuildProperties buildProperties;
 
     /**
-     * Checks readiness
+     * Gets readiness state
      *
-     * @return Map with single entry to be converted to Json
+     * @return pair of server name and "OK"
      */
     public Map<String, String> getReadiness() {
         return Map.of(buildProperties.getName(), "OK");

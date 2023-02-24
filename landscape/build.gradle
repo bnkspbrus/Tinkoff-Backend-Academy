@@ -10,7 +10,7 @@ buildscript {
         springBootVersion = '2.7.8'
         springBootGrpcVersion = '2.14.0.RELEASE'
         lombokPluginVersion = '6.6.2'
-        mockitoVersion = '1.10.19'
+        mokitoVersion = '5.1.1'
     }
 }
 
@@ -49,8 +49,7 @@ dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     testImplementation("io.grpc:grpc-testing:${grpcVersion}")
     testImplementation("net.devh:grpc-server-spring-boot-starter:${springBootGrpcVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.mockito:mockito-core:${mokitoVersion}")
 }
 
 protobuf {
