@@ -1,27 +1,30 @@
 package com.tinkoffacademy.rancher.service;
 
+import java.util.Map;
+
 import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import net.devh.boot.grpc.server.config.GrpcServerProperties;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Service
-@RequiredArgsConstructor
-@Getter
-@Setter
 public class SystemService {
+
     private final BuildProperties buildProperties;
 
-    private ManagedChannel channel = ManagedChannelBuilder
-            .forAddress("localhost", 8989)
-            .usePlaintext()
-            .build();
+    @Setter
+    private ManagedChannel channel;
+
+    public SystemService(BuildProperties buildProperties, GrpcServerProperties serverProperties) {
+        this.buildProperties = buildProperties;
+        channel = ManagedChannelBuilder
+                .forAddress(serverProperties.getAddress(), serverProperties.getPort())
+                .usePlaintext()
+                .build();
+    }
 
     /**
      * Gets readiness state
