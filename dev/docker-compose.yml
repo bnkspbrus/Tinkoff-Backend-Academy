@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  hadnyman:
+    container_name: handyman
+    image: handyman:1.0
+    ports:
+      - "7070:7070"
+    build: ../handyman
+
+  landscape:
+    container_name: landscape
+    image: landscape:1.0
+    ports:
+      - "8080:8080"
+    depends_on:
+      - hadnyman
+      - rancher
+    environment:
+      GRPC_CLIENT_HANDYMAN-SERVER_ADDRESS: static://handyman:9898
+      GRPC_CLIENT_RANCHER-SERVER_ADDRESS: static://rancher:8989
+    build: ../landscape
+
+  rancher:
+    container_name: rancher
+    image: rancher:1.0
+    ports:
+      - "9090:9090"
+    build: ../rancher
+
+  postgres:
+    image: postgres
+
+  prometheus:
+    image: bitnami/prometheus
+
+  grafana:
+    image: grafana/grafana
+
