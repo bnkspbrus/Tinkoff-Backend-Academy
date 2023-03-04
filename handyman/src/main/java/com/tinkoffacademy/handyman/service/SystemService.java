@@ -21,7 +21,7 @@ public class SystemService {
     public SystemService(BuildProperties buildProperties, GrpcServerProperties serverProperties) {
         this.buildProperties = buildProperties;
         channel = ManagedChannelBuilder
-                .forAddress(serverProperties.getAddress(), serverProperties.getPort())
+                .forAddress("127.0.0.1", serverProperties.getPort())
                 .usePlaintext()
                 .build();
     }

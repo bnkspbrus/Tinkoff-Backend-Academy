@@ -4,12 +4,15 @@
 
 ### Пререквезиты
 
-* JDK версии 17 или выше. Настроенный `JAVA_HOME`.
+* JDK версии 17 или выше. Настроенный `JAVA_HOME`. `docker`.
 
 ### Использование
 
 * Порты сервисов `7070`, `8080`, `9090` для handyman, landscape, rancher соответственно.
-* Запустите желаемый сервис `cd $SERVICE && ./gradlew bootRun`, где `SERVICE` это либо handyman, либо rancher, либо landscape.
+* Запустите скрипт [setup.sh](setup.sh) командой `./setup.sh` он создаст jar на каждый сервис.
+* Запустите `docker daemon` командой `sudo systemctl start docker`.
+* Чтобы запустить сервисы выполните `docker compose -f dev/docker-compose.yml up --build`
+* Чтобы остановить сервисы выпольните `^C` и `docker compose -f dev/docker-compose.yml down`.
 
 ### Ссылки
 

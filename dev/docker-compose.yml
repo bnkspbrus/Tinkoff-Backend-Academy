@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  hadnyman:
+  handyman:
     container_name: handyman
     image: handyman:1.0
     ports:
@@ -13,7 +13,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - hadnyman
+      - handyman
       - rancher
     environment:
       GRPC_CLIENT_HANDYMAN-SERVER_ADDRESS: static://handyman:9898

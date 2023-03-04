@@ -15,4 +15,3 @@ management:
 grpc:
   server:
     port: 9898
-    address: 127.0.0.1
