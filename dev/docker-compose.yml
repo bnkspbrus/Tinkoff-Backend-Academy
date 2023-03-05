@@ -6,6 +6,8 @@ services:
     ports:
       - "7070:7070"
     build: ../handyman
+    environment:
+      - grpc.server.address=0.0.0.0
 
   landscape:
     container_name: landscape
@@ -16,8 +18,8 @@ services:
       - handyman
       - rancher
     environment:
-      GRPC_CLIENT_HANDYMAN-SERVER_ADDRESS: static://handyman:9898
-      GRPC_CLIENT_RANCHER-SERVER_ADDRESS: static://rancher:8989
+      - grpc.client.handyman-server.address=static://handyman:9898
+      - grpc.client.rancher-server.address=static://rancher:8989
     build: ../landscape
 
   rancher:
@@ -26,6 +28,8 @@ services:
     ports:
       - "9090:9090"
     build: ../rancher
+    environment:
+      - grpc.server.address=0.0.0.0
 
   postgres:
     image: postgres
