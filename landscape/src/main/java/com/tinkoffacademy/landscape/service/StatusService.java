@@ -18,10 +18,10 @@ import java.util.Map;
 @Setter
 @Getter
 public class StatusService {
-    @GrpcClient("handyman-server")
+    @GrpcClient("handyman")
     private StatusServiceGrpc.StatusServiceBlockingStub handymanStub;
 
-    @GrpcClient("rancher-server")
+    @GrpcClient("rancher")
     private StatusServiceGrpc.StatusServiceBlockingStub rancherStub;
 
     /**

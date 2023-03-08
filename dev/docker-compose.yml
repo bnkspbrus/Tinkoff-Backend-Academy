@@ -2,7 +2,7 @@ version: "3.9"
 services:
   handyman:
     container_name: handyman
-    image: handyman:1.0
+    image: handyman
     ports:
       - "7070:7070"
     build: ../handyman
@@ -11,20 +11,20 @@ services:
 
   landscape:
     container_name: landscape
-    image: landscape:1.0
+    image: landscape
     ports:
       - "8080:8080"
     depends_on:
       - handyman
       - rancher
     environment:
-      - grpc.client.handyman-server.address=static://handyman:9898
-      - grpc.client.rancher-server.address=static://rancher:8989
+      - grpc.client.handyman.address=static://handyman:9898
+      - grpc.client.rancher.address=static://rancher:8989
     build: ../landscape
 
   rancher:
     container_name: rancher
-    image: rancher:1.0
+    image: rancher
     ports:
       - "9090:9090"
     build: ../rancher
