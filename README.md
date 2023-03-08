@@ -4,15 +4,18 @@
 
 ### Пререквезиты
 
-* JDK версии 17 или выше. Настроенный `JAVA_HOME`. `docker`.
+* JDK версии 17 или выше, настроенный `JAVA_HOME`, `docker`, `minikube`, `kubectl`
 
 ### Использование
 
-* Порты сервисов `7070`, `8080`, `9090` для handyman, landscape, rancher соответственно.
-* Запустите скрипт [setup.sh](setup.sh) командой `./setup.sh` он создаст jar на каждый сервис.
-* Запустите `docker daemon` командой `sudo systemctl start docker`.
-* Чтобы запустить сервисы выполните `docker compose -f dev/docker-compose.yml up --build`
-* Чтобы остановить сервисы выпольните `^C` и `docker compose -f dev/docker-compose.yml down`.
+* Все команды выполняйте в одном терминале
+* Выполните `sudo systemctl start docker`
+* Выполните `eval $(minikube -p minikube docker-env)`
+* Выполните `./setup.sh`
+* Выполните `kubectl apply -f kube`
+* Запустите нужный сервис `minikube service $SERVICE`, где `SERVICE` это handyman, rancher или landscape
+* Выполняйте свои запросы в открывшемся окне браузера
+* Выполните `minikube stop` когда надоест делать запросы
 
 ### Ссылки
 

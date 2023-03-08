@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.proto.ReadinessResponse;
 import ru.tinkoff.proto.StatusServiceGrpc;
@@ -18,6 +20,9 @@ import java.util.Map;
 @Setter
 @Getter
 public class StatusService {
+
+    private final Logger logger = LoggerFactory.getLogger(StatusService.class);
+
     @GrpcClient("handyman")
     private StatusServiceGrpc.StatusServiceBlockingStub handymanStub;
 
@@ -46,7 +51,9 @@ public class StatusService {
      */
     private StatusDTO getStatusDTO(StatusServiceGrpc.StatusServiceBlockingStub blockingStub) {
         ReadinessResponse readiness = blockingStub.getReadiness(Empty.getDefaultInstance());
+        logger.info("Receiving readiness response [{}] from the server", readiness);
         VersionResponse version = blockingStub.getVersion(Empty.getDefaultInstance());
+        logger.info("Receiving version response [{}] from the server", version);
         return StatusDTO
                 .builder()
                 .status(readiness.getStatus())
