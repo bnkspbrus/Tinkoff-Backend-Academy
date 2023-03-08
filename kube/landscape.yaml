@@ -25,6 +25,12 @@ spec:
               value: dns:///handyman-grpc:9898
             - name: GRPC_CLIENT_RANCHER_ADDRESS
               value: dns:///rancher-grpc:8989
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres:5432/vogorode
+            - name: SPRING_DATASOURCE_USERNAME
+              value: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: password
 ---
 apiVersion: v1
 kind: Service
