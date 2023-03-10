@@ -1,4 +1,4 @@
-package com.tinkoffacademy.landscape.dto;
+package com.tinkoffacademy.landscape.status;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class StatusDTO {
+public class ServerStatus {
     private String host;
     private String status;
     private String artifact;
