@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: landscape
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: landscape
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: landscape
+    spec:
+      containers:
+        - image: landscape:latest
+          name: landscape
+          resources: {}
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Never
+          env:
+            - name: GRPC_CLIENT_HANDYMAN_ADDRESS
+              value: dns:///handyman-grpc:9898
+            - name: GRPC_CLIENT_RANCHER_ADDRESS
+              value: dns:///rancher-grpc:8989
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres:5432/vogorode
+            - name: SPRING_DATASOURCE_USERNAME
+              value: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: landscape
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: landscape
+  type: LoadBalancer

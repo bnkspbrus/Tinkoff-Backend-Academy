@@ -12,3 +12,15 @@ management:
       path-mapping:
         prometheus: /metrics
         info: /actuator/info
+grpc:
+  client:
+    handyman:
+      address: 'static://127.0.0.1:9898'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+    rancher:
+      address: 'static://127.0.0.1:8989'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext

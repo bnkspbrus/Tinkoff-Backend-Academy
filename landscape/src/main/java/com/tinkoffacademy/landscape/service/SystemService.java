@@ -11,6 +11,11 @@ import java.util.Map;
 public class SystemService {
     private final BuildProperties buildProperties;
 
+    /**
+     * Gets readiness state
+     *
+     * @return pair of server name and "OK"
+     */
     public Map<String, String> getReadiness() {
         return Map.of(buildProperties.getName(), "OK");
     }

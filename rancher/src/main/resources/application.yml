@@ -12,3 +12,7 @@ management:
       path-mapping:
         prometheus: /metrics
         info: /actuator/info
+grpc:
+  server:
+    port: 8989
+    address: 127.0.0.1

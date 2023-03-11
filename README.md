@@ -2,12 +2,22 @@
 
 ## VOgorode
 
+### Пререквезиты
+
+* JDK версии 17 или выше, настроенный `JAVA_HOME`, `docker`, `minikube`, `kubectl`
+
 ### Использование
 
-* Настройте переменные окружения `HANDYMAN_PORT`, `RANCHER_PORT` и `LANDSCAPE_PORT` - порты для Handyman, Rancher и Landscape cервисов соответственно.
-* Запустите желаемый сервис `cd $SERVICE && ./gradlew bootRun`, где `SERVICE` это либо handyman, либо rancher, либо landscape.
+* Все команды выполняйте в одном терминале
+* Выполните `sudo systemctl start docker`
+* Выполните `eval $(minikube -p minikube docker-env)`
+* Выполните `./setup.sh`
+* Выполните `kubectl apply -f kube`
+* Запустите нужный сервис `minikube service $SERVICE`, где `SERVICE` это handyman, rancher или landscape
+* Выполняйте свои запросы в открывшемся окне браузера
+* Выполните `minikube stop` когда надоест делать запросы
 
 ### Ссылки
 
-* [ТЗ](/docs/hw1/TOR.md)
-* [Дока с описанием работы](/docs/hw1/DESC.md)
+* HW 1: [описание](/docs/hw1/DESC.md) [тз](/docs/hw1/TOR.md)
+* HW 2: [описание](/docs/hw2/DESC.md) [тз](/docs/hw2/TOR.md)
