@@ -17,9 +17,13 @@ services:
     depends_on:
       - handyman
       - rancher
+      - postgres
     environment:
       - grpc.client.handyman.address=static://handyman:9898
       - grpc.client.rancher.address=static://rancher:8989
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
+      - spring.datasource.username=username
+      - spring.datasource.password=password
     build: ../landscape
 
   rancher:
@@ -32,11 +36,16 @@ services:
       - grpc.server.address=0.0.0.0
 
   postgres:
+    container_name: postgres
     image: postgres
+    environment:
+      - POSTGRES_DB=vogorode
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
 
-  prometheus:
-    image: bitnami/prometheus
-
-  grafana:
-    image: grafana/grafana
+#  prometheus:
+#    image: bitnami/prometheus
+#
+#  grafana:
+#    image: grafana/grafana
 
