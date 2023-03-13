@@ -1,8 +1,11 @@
+--liquibase formatted sql
+
+--changeset bnkspbrus:1
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TYPE client_type AS ENUM('handyman', 'rancher');
 
-CREATE TABLE IF NOT EXISTS client
+CREATE TABLE client
 (
     id           UUID DEFAULT uuid_generate_v4(),
     clientType   client_type,

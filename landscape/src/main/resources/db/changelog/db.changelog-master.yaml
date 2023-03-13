@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
-      file: db/create-table-user.sql
+      file: db/create-table-client.sql
+  - include:
+      file: db/alter-table-client.sql
