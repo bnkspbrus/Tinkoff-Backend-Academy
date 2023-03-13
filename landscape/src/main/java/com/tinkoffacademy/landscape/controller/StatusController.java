@@ -1,13 +1,11 @@
 package com.tinkoffacademy.landscape.controller;
 
-import com.tinkoffacademy.landscape.dto.StatusDTO;
 import com.tinkoffacademy.landscape.service.StatusService;
+import com.tinkoffacademy.landscape.status.StatusCollector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,11 +15,11 @@ public class StatusController {
     private final StatusService statusService;
 
     /**
-     * Gets status for each server
-     * @return Map where key is server name and value is statuses of such server instances
+     * Gets status of each server
+     * @return all handyman statuses and all rancher statuses
      */
     @GetMapping("/statuses")
-    public Map<String, StatusDTO[]> getStatuses() {
+    public StatusCollector getStatuses() {
         return statusService.getStatuses();
     }
 }

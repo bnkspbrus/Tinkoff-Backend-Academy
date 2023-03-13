@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 @RestController
 @RequestMapping("/system")
@@ -25,10 +26,10 @@ public class SystemController {
     /**
      * Gets readiness state
      *
-     * @return pair of server name and its state of connectivity
+     * @return pair of server name and state of connectivity
      */
     @GetMapping("/readiness")
-    public Map<String, String> getReadiness() {
+    public Entry<String, String> getReadiness() {
         return systemService.getReadiness();
     }
 }

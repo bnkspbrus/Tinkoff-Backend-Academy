@@ -1,7 +1,8 @@
 package com.tinkoffacademy.landscape.service;
 
 import com.google.protobuf.Empty;
-import com.tinkoffacademy.landscape.dto.StatusDTO;
+import com.tinkoffacademy.landscape.status.ServerStatus;
+import com.tinkoffacademy.landscape.status.StatusCollector;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,8 +13,6 @@ import org.springframework.stereotype.Service;
 import ru.tinkoff.proto.ReadinessResponse;
 import ru.tinkoff.proto.StatusServiceGrpc;
 import ru.tinkoff.proto.VersionResponse;
-
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -30,31 +29,31 @@ public class StatusService {
     private StatusServiceGrpc.StatusServiceBlockingStub rancherStub;
 
     /**
-     * Gets status for each server
+     * Gets status of each server
      *
-     * @return Map where key is server name and value is statuses of such server instances
+     * @return all handyman statuses and all rancher statuses
      */
-    public Map<String, StatusDTO[]> getStatuses() {
-        StatusDTO handymanStatus = getStatusDTO(handymanStub);
-        StatusDTO rancherStatus = getStatusDTO(rancherStub);
-        return Map.of(
-                "HandymanService", new StatusDTO[]{handymanStatus},
-                "RancherService", new StatusDTO[]{rancherStatus}
-        );
+    public StatusCollector getStatuses() {
+        ServerStatus handymanStatus = mapToStatus(handymanStub);
+        ServerStatus rancherStatus = mapToStatus(rancherStub);
+        StatusCollector collector = new StatusCollector();
+        collector.addHandyman(handymanStatus);
+        collector.addRancher(rancherStatus);
+        return collector;
     }
 
     /**
      * Gets status of server with given blocking stub
      *
      * @param blockingStub stub of server
-     * @return status of server as dto
+     * @return status of server
      */
-    private StatusDTO getStatusDTO(StatusServiceGrpc.StatusServiceBlockingStub blockingStub) {
+    private ServerStatus mapToStatus(StatusServiceGrpc.StatusServiceBlockingStub blockingStub) {
         ReadinessResponse readiness = blockingStub.getReadiness(Empty.getDefaultInstance());
         logger.info("Receiving readiness response [{}] from the server", readiness);
         VersionResponse version = blockingStub.getVersion(Empty.getDefaultInstance());
         logger.info("Receiving version response [{}] from the server", version);
-        return StatusDTO
+        return ServerStatus
                 .builder()
                 .status(readiness.getStatus())
                 .host(blockingStub.getChannel().authority())
