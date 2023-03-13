@@ -4,6 +4,8 @@ import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.info.BuildProperties;
 import ru.tinkoff.proto.ReadinessResponse;
 import ru.tinkoff.proto.StatusServiceGrpc;
@@ -12,6 +14,9 @@ import ru.tinkoff.proto.VersionResponse;
 @GrpcService
 @RequiredArgsConstructor
 public class StatusServiceImpl extends StatusServiceGrpc.StatusServiceImplBase {
+
+    private final Logger logger = LoggerFactory.getLogger(StatusServiceImpl.class);
+
     private final BuildProperties buildProperties;
 
     /**
@@ -22,7 +27,9 @@ public class StatusServiceImpl extends StatusServiceGrpc.StatusServiceImplBase {
      */
     @Override
     public void getVersion(Empty request, StreamObserver<VersionResponse> responseObserver) {
-        responseObserver.onNext(getVersion());
+        VersionResponse response = getVersion();
+        logger.info("Sending version response [{}] to the client", response);
+        responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
@@ -35,6 +42,7 @@ public class StatusServiceImpl extends StatusServiceGrpc.StatusServiceImplBase {
     @Override
     public void getReadiness(Empty request, StreamObserver<ReadinessResponse> responseObserver) {
         ReadinessResponse response = ReadinessResponse.newBuilder().setStatus("OK").build();
+        logger.info("Sending readiness response [{}] to the client...", response);
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rancher
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rancher
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: rancher
+    spec:
+      containers:
+        - image: rancher:latest
+          name: rancher
+          resources: {}
+          ports:
+            - containerPort: 9090
+            - name: grpc
+              containerPort: 8989
+          imagePullPolicy: Never
+          env:
+            - name: GRPC_SERVER_ADDRESS
+              value: 0.0.0.0
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres:5432/vogorode
+            - name: SPRING_DATASOURCE_USERNAME
+              value: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rancher
+spec:
+  ports:
+    - port: 9090
+      targetPort: 9090
+  selector:
+    app: rancher
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rancher-grpc
+spec:
+  selector:
+    app: rancher
+  ports:
+    - name: grpclb
+      port: 8989
+      targetPort: grpc

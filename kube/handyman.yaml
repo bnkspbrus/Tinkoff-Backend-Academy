@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: handyman
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: handyman
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: handyman
+    spec:
+      containers:
+      - image: handyman:latest
+        name: handyman
+        resources: {}
+        ports:
+          - containerPort: 7070
+          - name: grpc
+            containerPort: 9898
+        imagePullPolicy: Never
+        env:
+          - name: GRPC_SERVER_ADDRESS
+            value: 0.0.0.0
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:postgresql://postgres:5432/vogorode
+          - name: SPRING_DATASOURCE_USERNAME
+            value: username
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: handyman
+spec:
+  ports:
+  - port: 7070
+    targetPort: 7070
+  selector:
+    app: handyman
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: handyman-grpc
+spec:
+  selector:
+    app: handyman
+  ports:
+    - name: grpclb
+      port: 9898
+      targetPort: grpc

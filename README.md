@@ -4,12 +4,18 @@
 
 ### Пререквезиты
 
-* JDK версии 17 или выше. Настроенный `JAVA_HOME`.
+* JDK версии 17 или выше, настроенный `JAVA_HOME`, `docker`, `minikube`, `kubectl`
 
 ### Использование
 
-* Порты сервисов `7070`, `8080`, `9090` для handyman, landscape, rancher соответственно.
-* Запустите желаемый сервис `cd $SERVICE && ./gradlew bootRun`, где `SERVICE` это либо handyman, либо rancher, либо landscape.
+* Все команды выполняйте в одном терминале
+* Выполните `sudo systemctl start docker`
+* Выполните `eval $(minikube -p minikube docker-env)`
+* Выполните `./setup.sh`
+* Выполните `kubectl apply -f kube`
+* Запустите нужный сервис `minikube service $SERVICE`, где `SERVICE` это handyman, rancher или landscape
+* Выполняйте свои запросы в открывшемся окне браузера
+* Выполните `minikube stop` когда надоест делать запросы
 
 ### Ссылки
 
