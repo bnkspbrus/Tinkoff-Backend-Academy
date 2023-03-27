@@ -31,3 +31,6 @@ grpc:
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
+  server:
+    port: 8888
+    address: 127.0.0.1

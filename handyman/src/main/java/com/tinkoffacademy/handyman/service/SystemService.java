@@ -1,7 +1,5 @@
 package com.tinkoffacademy.handyman.service;
 
-import java.util.Map.Entry;
-
 import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -9,6 +7,8 @@ import lombok.Setter;
 import net.devh.boot.grpc.server.config.GrpcServerProperties;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.stereotype.Service;
+
+import java.util.Map.Entry;
 
 import static java.util.Map.entry;
 

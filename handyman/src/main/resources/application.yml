@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: handyman
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/vogorode
+      database: vogorode
 management:
   endpoints:
     web:
@@ -16,3 +20,9 @@ grpc:
   server:
     port: 9898
     address: 127.0.0.1
+  client:
+    landscape:
+      address: 'static://127.0.0.1:8888'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext

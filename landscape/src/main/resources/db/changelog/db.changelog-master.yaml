@@ -1,5 +1,7 @@
 databaseChangeLog:
   - include:
-      file: db/create-table-client.sql
+      file: db/create-table-account.sql
   - include:
-      file: db/alter-table-client.sql
+      file: db/alter-table-account.sql
+  - include:
+      file: db/create-procedure.sql

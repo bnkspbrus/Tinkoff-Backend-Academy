@@ -5,9 +5,13 @@ services:
     image: handyman
     ports:
       - "7070:7070"
+    depends_on:
+      - mongodb
     build: ../handyman
     environment:
       - grpc.server.address=0.0.0.0
+      - spring.data.mongodb.uri=mongodb://mongodb:27017/vogorode
+      - grpc.client.landscape.address=static://landscape:8888
 
   landscape:
     container_name: landscape
@@ -15,8 +19,6 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - handyman
-      - rancher
       - postgres
     environment:
       - grpc.client.handyman.address=static://handyman:9898
@@ -24,6 +26,7 @@ services:
       - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
       - spring.datasource.username=username
       - spring.datasource.password=password
+      - grpc.server.address=0.0.0.0
     build: ../landscape
 
   rancher:
@@ -31,6 +34,8 @@ services:
     image: rancher
     ports:
       - "9090:9090"
+    depends_on:
+      - mongodb
     build: ../rancher
     environment:
       - grpc.server.address=0.0.0.0
@@ -43,9 +48,8 @@ services:
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
 
-#  prometheus:
-#    image: bitnami/prometheus
-#
-#  grafana:
-#    image: grafana/grafana
+  mongodb:
+    container_name: mongodb
+    image: mongo
+
 

@@ -49,9 +49,13 @@ dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     // Grpc-Test-Support
     testImplementation("io.grpc:grpc-testing:${grpcVersion}")
-    testImplementation("net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}")
+    implementation("net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}")
     testImplementation("org.mockito:mockito-core:${mockitoVersion}")
-
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.mongodb:bson")
+    implementation("org.mongodb:mongodb-driver-core")
+    implementation("org.mongodb:mongodb-driver-sync")
+    implementation("org.liquibase.ext:liquibase-mongodb:4.20.0")
 }
 
 protobuf {

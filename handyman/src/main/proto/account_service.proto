@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package ru.tinkoff;
+
+option java_package = "ru.tinkoff.proto";
+option java_multiple_files = true;
+
+service AccountService {
+  rpc save(AccountProto) returns (UUIDProto);
+  rpc findById(UUIDProto) returns (AccountProto);
+}
+
+message AccountProto {
+  UUIDProto id = 1;
+  string typeName = 2;
+  string login = 3;
+  string email = 4;
+  string phone = 5;
+  double latitude = 6;
+  double longitude = 7;
+}
+
+message UUIDProto {
+  string value = 1;
+}
