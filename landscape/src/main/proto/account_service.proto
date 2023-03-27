@@ -7,7 +7,7 @@ option java_multiple_files = true;
 
 service AccountService {
   rpc save(AccountProto) returns (UUIDProto);
-  rpc findById(UUIDProto) returns (AccountProto);
+  rpc findById(UUIDProto) returns (AccountCredProto);
 }
 
 message AccountProto {
@@ -22,4 +22,10 @@ message AccountProto {
 
 message UUIDProto {
   string value = 1;
+}
+
+message AccountCredProto {
+  string login = 1;
+  string email = 2;
+  string phone = 3;
 }

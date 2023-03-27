@@ -15,6 +15,6 @@ import javax.persistence.Table;
 public class AccountTypeV2 {
     @Id
     private Integer id;
-    @Column(name = "type_name", unique = true)
+    @Column(name = "type_name", unique = true, nullable = false)
     private String typeName;
 }

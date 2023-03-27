@@ -1,9 +1,9 @@
-package com.tinkoffacademy.handyman.controller;
+package com.tinkoffacademy.rancher.controller;
 
-import com.tinkoffacademy.handyman.dto.AccountDto;
-import com.tinkoffacademy.handyman.model.Account;
-import com.tinkoffacademy.handyman.service.AccountService;
-import com.tinkoffacademy.handyman.view.AccountExt;
+import com.tinkoffacademy.rancher.dto.AccountDto;
+import com.tinkoffacademy.rancher.model.Account;
+import com.tinkoffacademy.rancher.service.AccountService;
+import com.tinkoffacademy.rancher.view.AccountExt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

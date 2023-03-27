@@ -1,9 +1,9 @@
-package com.tinkoffacademy.handyman.service;
+package com.tinkoffacademy.rancher.service;
 
-import com.tinkoffacademy.handyman.dto.AccountDto;
-import com.tinkoffacademy.handyman.model.Account;
-import com.tinkoffacademy.handyman.repository.AccountRepository;
-import com.tinkoffacademy.handyman.view.AccountExt;
+import com.tinkoffacademy.rancher.dto.AccountDto;
+import com.tinkoffacademy.rancher.model.Account;
+import com.tinkoffacademy.rancher.repository.AccountRepository;
+import com.tinkoffacademy.rancher.view.AccountExt;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;

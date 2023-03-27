@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("accounts")
@@ -14,6 +15,11 @@ import java.util.List;
 public class AccountController {
 
     private final AccountService accountService;
+
+    @GetMapping("/{id}")
+    public Account findById(@PathVariable UUID id) {
+        return accountService.findById(id);
+    }
 
     @GetMapping
     public List<Account> findAll() {
@@ -23,5 +29,10 @@ public class AccountController {
     @PostMapping
     public Account save(@RequestBody AccountDto accountDto) {
         return accountService.save(accountDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable UUID id) {
+        accountService.deleteById(id);
     }
 }

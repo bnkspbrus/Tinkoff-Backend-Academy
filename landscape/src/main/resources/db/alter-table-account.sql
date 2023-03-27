@@ -4,7 +4,7 @@
 create table account_type_v2
 (
     id        int,
-    type_name varchar(255) unique,
+    type_name varchar(255) unique not null,
     primary key (id)
 );
 
@@ -13,4 +13,4 @@ values (1, 'handyman'),
        (2, 'rancher');
 
 alter table account
-    add type_v2 int references account_type_v2 (id);
+    add type_v2 int references account_type_v2 (id) not null;

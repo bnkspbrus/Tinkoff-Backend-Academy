@@ -6,6 +6,7 @@ import com.tinkoffacademy.landscape.repository.AccountRepository;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
+import ru.tinkoff.proto.AccountCredProto;
 import ru.tinkoff.proto.AccountProto;
 import ru.tinkoff.proto.AccountServiceGrpc.AccountServiceImplBase;
 import ru.tinkoff.proto.UUIDProto;
@@ -19,6 +20,8 @@ public class AccountServiceGrpcImpl extends AccountServiceImplBase {
     private final AccountTypeV2Service accountTypeV2Service;
 
     private final AccountRepository accountRepository;
+
+    private final AccountService accountService;
 
     @Override
     public void save(AccountProto request, StreamObserver<UUIDProto> responseObserver) {
@@ -37,6 +40,19 @@ public class AccountServiceGrpcImpl extends AccountServiceImplBase {
                 .setValue(account.getId().toString())
                 .build();
         responseObserver.onNext(uuid);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void findById(UUIDProto request, StreamObserver<AccountCredProto> responseObserver) {
+        UUID uuid = UUID.fromString(request.getValue());
+        Account account = accountService.findById(uuid);
+        AccountCredProto accountCredProto = AccountCredProto.newBuilder()
+                .setLogin(account.getLogin())
+                .setEmail(account.getEmail())
+                .setPhone(account.getPhone())
+                .build();
+        responseObserver.onNext(accountCredProto);
         responseObserver.onCompleted();
     }
 }
