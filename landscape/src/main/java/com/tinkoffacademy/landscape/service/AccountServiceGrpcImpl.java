@@ -11,7 +11,10 @@ import ru.tinkoff.proto.AccountProto;
 import ru.tinkoff.proto.AccountServiceGrpc.AccountServiceImplBase;
 import ru.tinkoff.proto.UUIDProto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
+
+import static java.time.ZoneOffset.UTC;
 
 @GrpcService
 @RequiredArgsConstructor
@@ -26,12 +29,23 @@ public class AccountServiceGrpcImpl extends AccountServiceImplBase {
     @Override
     public void save(AccountProto request, StreamObserver<UUIDProto> responseObserver) {
         AccountTypeV2 typeV2 = accountTypeV2Service.findByTypeName(request.getTypeName());
+        LocalDateTime creation = LocalDateTime.ofEpochSecond(
+                request.getCreation().getSeconds(),
+                request.getCreation().getNanos(),
+                UTC
+        );
+        LocalDateTime updating = LocalDateTime.ofEpochSecond(
+                request.getUpdating().getSeconds(),
+                request.getUpdating().getNanos(),
+                UTC
+        );
         Account account = Account.builder()
-                .id(UUID.fromString(request.getId().getValue()))
                 .typeV2(typeV2)
                 .login(request.getLogin())
                 .email(request.getEmail())
                 .phone(request.getPhone())
+                .creation(creation)
+                .updating(updating)
                 .latitude(request.getLatitude())
                 .longitude(request.getLongitude())
                 .build();

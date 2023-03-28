@@ -1,0 +1,24 @@
+GET http://localhost:8080/accounts
+Accept: application/json
+
+###
+POST http://localhost:8080/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "typeName": "handyman",
+  "login": "handyman3",
+  "email": "handyman3",
+  "phone": "911",
+  "creation": "2030-01-25T22:34:55",
+  "updating": "2030-01-25T22:34:55",
+  "latitude": 0,
+  "longitude": 2
+}
+
+###
+GET http://localhost:8080/accounts
+Accept: application/json
+
+###

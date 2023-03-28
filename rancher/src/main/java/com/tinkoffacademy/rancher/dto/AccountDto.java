@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record AccountDto(
-        String id,
-        String typeName,
         String login,
         String email,
         String phone,
@@ -13,6 +11,6 @@ public record AccountDto(
         LocalDateTime updating,
         Double latitude,
         Double longitude,
-        List<String> skills
+        List<String> jobs
 ) {
 }

@@ -1,5 +1,6 @@
 package com.tinkoffacademy.handyman.service;
 
+import com.google.protobuf.Timestamp;
 import com.tinkoffacademy.handyman.dto.AccountDto;
 import com.tinkoffacademy.handyman.model.Account;
 import com.tinkoffacademy.handyman.repository.AccountRepository;
@@ -7,6 +8,7 @@ import com.tinkoffacademy.handyman.view.AccountExt;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tinkoff.proto.AccountCredProto;
 import ru.tinkoff.proto.AccountProto;
@@ -16,6 +18,7 @@ import ru.tinkoff.proto.UUIDProto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.time.ZoneOffset.UTC;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -40,20 +43,27 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Account save(AccountDto accountDto) {
-        UUIDProto uuid = UUIDProto.newBuilder()
-                .setValue(accountDto.id())
+        Timestamp creation = Timestamp.newBuilder()
+                .setSeconds(accountDto.creation().toEpochSecond(UTC))
+                .setNanos(accountDto.creation().getNano())
+                .build();
+        Timestamp updating = Timestamp.newBuilder()
+                .setSeconds(accountDto.updating().toEpochSecond(UTC))
+                .setNanos(accountDto.updating().getNano())
                 .build();
         AccountProto accountProto = AccountProto.newBuilder()
-                .setId(uuid)
-                .setTypeName(accountDto.typeName())
+                .setTypeName("handyman")
                 .setLogin(accountDto.login())
                 .setEmail(accountDto.email())
                 .setPhone(accountDto.phone())
+                .setCreation(creation)
+                .setUpdating(updating)
                 .setLatitude(accountDto.latitude())
                 .setLongitude(accountDto.longitude())
                 .build();
-        uuid = landscapeStub.save(accountProto);
+        UUIDProto uuid = landscapeStub.save(accountProto);
         Account account = Account.builder()
                 .latitude(accountDto.latitude())
                 .longitude(accountDto.longitude())

@@ -10,7 +10,7 @@ services:
     build: ../handyman
     environment:
       - grpc.server.address=0.0.0.0
-      - spring.data.mongodb.uri=mongodb://mongodb:27017/vogorode
+      - spring.data.mongodb.uri=mongodb://mongodb:27017/handyman
       - grpc.client.landscape.address=static://landscape:8888
 
   landscape:
@@ -39,6 +39,8 @@ services:
     build: ../rancher
     environment:
       - grpc.server.address=0.0.0.0
+      - spring.data.mongodb.uri=mongodb://mongodb:27017/rancher
+      - grpc.client.landscape.address=static://landscape:8888
 
   postgres:
     container_name: postgres

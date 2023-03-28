@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 public record AccountDto(
-        String id,
-        String typeName,
         String login,
         String email,
         String phone,

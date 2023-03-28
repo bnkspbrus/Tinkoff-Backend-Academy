@@ -9,6 +9,6 @@ public record AccountExt(
         String phone,
         Double latitude,
         Double longitude,
-        List<String> skills
+        List<String> jobs
 ) {
 }

@@ -25,7 +25,9 @@ public class Account {
     private String email;
     @Column(nullable = false)
     private String phone;
+    @Column(nullable = false)
     private LocalDateTime creation;
+    @Column(nullable = false)
     private LocalDateTime updating;
     @Column(nullable = false)
     private Double latitude;

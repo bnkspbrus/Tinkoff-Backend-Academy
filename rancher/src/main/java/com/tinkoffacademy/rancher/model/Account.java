@@ -17,7 +17,7 @@ import java.util.List;
 public class Account {
     @Id
     private String id;
-    private List<String> skills;
+    private List<String> jobs;
     private Double latitude;
     private Double longitude;
     private String parentUUID;

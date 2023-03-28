@@ -13,8 +13,8 @@ create table account
     login     varchar(255) not null,
     email     varchar(255) not null,
     phone     varchar(255) not null,
-    creation  timestamp without time zone,
-    updating  timestamp without time zone,
+    creation  timestamp without time zone not null,
+    updating  timestamp without time zone not null,
     latitude  float8       not null,
     longitude float8       not null,
     primary key (id)

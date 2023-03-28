@@ -5,8 +5,7 @@ spring:
     name: handyman
   data:
     mongodb:
-      uri: mongodb://localhost:27017/vogorode
-      database: vogorode
+      uri: mongodb://localhost:27017/handyman
 management:
   endpoints:
     web:

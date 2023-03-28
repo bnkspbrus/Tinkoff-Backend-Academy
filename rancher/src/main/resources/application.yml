@@ -5,8 +5,7 @@ spring:
     name: rancher
   data:
     mongodb:
-      uri: mongodb://localhost:27017/vogorode
-      database: vogorode
+      uri: mongodb://localhost:27017/rancher
 management:
   endpoints:
     web:

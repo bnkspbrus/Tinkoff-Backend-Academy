@@ -49,6 +49,7 @@ public class StatusServiceImpl extends StatusServiceGrpc.StatusServiceImplBase {
 
     /**
      * Gets server version
+     *
      * @return server version
      */
     private VersionResponse getVersion() {
