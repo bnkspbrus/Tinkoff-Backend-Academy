@@ -1,6 +1,5 @@
 package com.tinkoffacademy.rancher.service;
 
-import com.google.protobuf.Timestamp;
 import com.tinkoffacademy.rancher.dto.AccountDto;
 import com.tinkoffacademy.rancher.model.Account;
 import com.tinkoffacademy.rancher.repository.AccountRepository;
@@ -18,7 +17,6 @@ import ru.tinkoff.proto.UUIDProto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.time.ZoneOffset.UTC;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -45,21 +43,11 @@ public class AccountService {
 
     @Transactional
     public Account save(AccountDto accountDto) {
-        Timestamp creation = Timestamp.newBuilder()
-                .setSeconds(accountDto.creation().toEpochSecond(UTC))
-                .setNanos(accountDto.creation().getNano())
-                .build();
-        Timestamp updating = Timestamp.newBuilder()
-                .setSeconds(accountDto.updating().toEpochSecond(UTC))
-                .setNanos(accountDto.updating().getNano())
-                .build();
         AccountProto accountProto = AccountProto.newBuilder()
-                .setTypeName("handyman")
+                .setTypeName("rancher")
                 .setLogin(accountDto.login())
                 .setEmail(accountDto.email())
                 .setPhone(accountDto.phone())
-                .setCreation(creation)
-                .setUpdating(updating)
                 .setLatitude(accountDto.latitude())
                 .setLongitude(accountDto.longitude())
                 .build();

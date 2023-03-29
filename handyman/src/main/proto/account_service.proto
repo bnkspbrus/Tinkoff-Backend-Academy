@@ -1,6 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
 package ru.tinkoff;
 
 option java_package = "ru.tinkoff.proto";
@@ -16,10 +15,8 @@ message AccountProto {
   string login = 2;
   string email = 3;
   string phone = 4;
-  google.protobuf.Timestamp creation = 5;
-  google.protobuf.Timestamp updating = 6;
-  double latitude = 7;
-  double longitude = 8;
+  double latitude = 5;
+  double longitude = 6;
 }
 
 message UUIDProto {

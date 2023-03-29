@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,17 +32,18 @@ public class AccountService {
     }
 
     public Account save(AccountDto accountDto) {
+        LocalDateTime now = LocalDateTime.now();
         AccountTypeV2 typeV2 = accountTypeV2Service.findByTypeName(accountDto.typeName());
         Account account = Account.builder()
                 .id(accountDto.id())
                 .latitude(accountDto.latitude())
                 .longitude(accountDto.longitude())
-                .creation(accountDto.creation())
-                .updating(accountDto.updating())
                 .login(accountDto.login())
                 .email(accountDto.email())
                 .phone(accountDto.phone())
                 .typeV2(typeV2)
+                .creation(now)
+                .updating(now)
                 .build();
         return accountRepository.save(account);
     }
