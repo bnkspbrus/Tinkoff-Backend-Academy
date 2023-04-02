@@ -1,6 +1,3 @@
---liquibase formatted sql
-
---changeset bnkspbrus:1
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TYPE client_type AS ENUM('handyman', 'rancher');

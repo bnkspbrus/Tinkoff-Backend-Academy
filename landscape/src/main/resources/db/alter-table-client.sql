@@ -1,6 +1,3 @@
---liquibase formatted sql
-
---changeset bnkspbrus:2
 CREATE TABLE client_type_v2
 (
     id       INT,
@@ -15,7 +12,6 @@ VALUES (1, 'handyman'),
 ALTER TABLE client
     ADD clientTypeV2 INT REFERENCES client_type_v2 (id);
 
---changeset bnkspbrus:3 splitStatements:false
 create procedure migrateBatch(batch integer, pause integer)
 language sql
 as $$
