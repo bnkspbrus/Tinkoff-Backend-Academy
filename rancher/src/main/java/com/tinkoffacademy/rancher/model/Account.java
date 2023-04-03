@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document("handymanAccounts")
+@Document("accounts")
 @Getter
 @Setter
 @AllArgsConstructor

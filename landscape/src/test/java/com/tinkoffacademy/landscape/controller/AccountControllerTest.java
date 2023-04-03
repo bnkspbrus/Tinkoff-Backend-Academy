@@ -27,7 +27,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@TestPropertySource(properties = "spring.datasource.url=none")
 @WebMvcTest(controllers = AccountController.class, properties = "spring.datasource.url=none")
 @Import({AccountService.class, AccountTypeV2Service.class})
 class AccountControllerTest {
@@ -48,16 +47,30 @@ class AccountControllerTest {
                     LocalDateTime.parse("2023-02-23T01:19:23"),
                     0D,
                     0D
+            ),
+            new Account(
+                    UUID.randomUUID(),
+                    getTypes().get(0),
+                    "Michael Roberts",
+                    "smithnicole@example.net",
+                    "(548)115-8479x41804",
+                    LocalDateTime.parse("2022-05-03T01:51:01"),
+                    LocalDateTime.parse("2022-09-20T15:24:02"),
+                    2D,
+                    3D
+            ),
+            new Account(
+                    UUID.randomUUID(),
+                    getTypes().get(0),
+                    "Daniel Myers",
+                    "brittany21@example.com",
+                    "652.709.1771",
+                    LocalDateTime.parse("2022-03-24T01:58:21"),
+                    LocalDateTime.parse("2022-11-13T02:31:27"),
+                    3D,
+                    5D
             )
     );
-
-    private static List<AccountTypeV2> getTypes() {
-        return types;
-    }
-
-    private static List<Account> getAccounts() {
-        return accounts;
-    }
 
     @Autowired
     private MockMvc mockMvc;
@@ -70,6 +83,14 @@ class AccountControllerTest {
 
     @MockBean
     private AccountTypeV2Repository accountTypeV2Repository;
+
+    private static List<AccountTypeV2> getTypes() {
+        return types;
+    }
+
+    private static List<Account> getAccounts() {
+        return accounts;
+    }
 
     @Test
     void testFindAll() throws Exception {

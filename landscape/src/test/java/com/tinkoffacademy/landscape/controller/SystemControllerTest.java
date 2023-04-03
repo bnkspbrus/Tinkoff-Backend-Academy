@@ -1,23 +1,29 @@
 package com.tinkoffacademy.landscape.controller;
 
+import com.tinkoffacademy.landscape.service.SystemService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.info.BuildProperties;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = SystemController.class, properties = "spring.datasource.url=none")
+@Import(SystemService.class)
 class SystemControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private BuildProperties buildProperties;
 
     @Test
     void testGetLiveness() throws Exception {
@@ -34,6 +40,7 @@ class SystemControllerTest {
     @Test
     void getReadiness() throws Exception {
         // Given
+        when(buildProperties.getName()).thenReturn("LandscapeService");
         String readinessUrl = "/system/readiness";
 
         // When
