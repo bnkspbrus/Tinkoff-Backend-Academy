@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-client-hw5
+      author: bnkspbrus
+      changes:
+        - sqlFile:
+            relativeToChangelogFile: true
+            path: ../create-table-client.sql
+  - changeSet:
+      id: alter-client-hw5
+      author: bnkspbrus
+      changes:
+        - sqlFile:
+            relativeToChangelogFile: true
+            path: ../alter-table-client.sql
+            splitStatements: false

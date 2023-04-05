@@ -15,9 +15,10 @@
 * Выполните `kubectl apply -f kube`
 * Запустите нужный сервис `minikube service $SERVICE`, где `SERVICE` это handyman, rancher или landscape
 * Выполняйте свои запросы в открывшемся окне браузера
-* Выполните `minikube stop` когда надоест делать запросы
+* Выполните `minikube stop`, когда надоест делать запросы
 
 ### Ссылки
 
 * HW 1: [описание](/docs/hw1/DESC.md) [тз](/docs/hw1/TOR.md)
 * HW 2: [описание](/docs/hw2/DESC.md) [тз](/docs/hw2/TOR.md)
+* HW 5: [описание](/docs/hw5/DESC.md) [тз](/docs/hw5/TOR.md)

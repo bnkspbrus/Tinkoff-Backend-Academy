@@ -3,6 +3,13 @@ server:
 spring:
   application:
     name: landscape
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vogorode
+    username: username
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: none
 management:
   endpoints:
     web:
