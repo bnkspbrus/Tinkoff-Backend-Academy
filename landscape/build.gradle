@@ -16,12 +16,12 @@ buildscript {
 
 
 plugins {
-    id("java")
-    id("idea")
-    id("org.springframework.boot") version "${springBootVersion}"
-    id("io.spring.dependency-management") version "1.1.0"
-    id("com.google.protobuf") version "${protobufGradlePluginVersion}"
-    id("io.freefair.lombok") version "${lombokPluginVersion}"
+    id "java"
+    id "idea"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id "io.spring.dependency-management" version "1.1.0"
+    id "com.google.protobuf" version "${protobufGradlePluginVersion}"
+    id "io.freefair.lombok" version "${lombokPluginVersion}"
 }
 
 repositories {
@@ -33,26 +33,26 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 dependencies {
-    implementation("io.grpc:grpc-netty-shaded")
-    implementation("io.grpc:grpc-protobuf")
-    implementation("io.grpc:grpc-stub")
+    implementation "io.grpc:grpc-netty-shaded"
+    implementation "io.grpc:grpc-protobuf"
+    implementation "io.grpc:grpc-stub"
     if (JavaVersion.current().isJava9Compatible()) {
         // Workaround for @javax.annotation.Generated
         // see: https://github.com/grpc/grpc-java/issues/3633
         implementation 'jakarta.annotation:jakarta.annotation-api'
     }
-    implementation("net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}")
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-    testImplementation("io.grpc:grpc-testing:${grpcVersion}")
-    implementation("net.devh:grpc-server-spring-boot-starter:${springBootGrpcVersion}")
-    testImplementation("org.mockito:mockito-core:${mokitoVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.liquibase:liquibase-core")
-    runtimeOnly("org.postgresql:postgresql")
+    implementation "net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    runtimeOnly "io.micrometer:micrometer-registry-prometheus"
+    testImplementation "io.grpc:grpc-testing:${grpcVersion}"
+    implementation "net.devh:grpc-server-spring-boot-starter:${springBootGrpcVersion}"
+    testImplementation "org.mockito:mockito-core:${mokitoVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.liquibase:liquibase-core"
+    runtimeOnly "org.postgresql:postgresql"
 }
 
 protobuf {
