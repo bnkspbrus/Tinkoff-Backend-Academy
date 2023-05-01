@@ -12,8 +12,6 @@ import java.util.List;
 @Document("accounts")
 @Getter
 @Setter
-@AllArgsConstructor
-@Builder
 public class Account {
     @Id
     private String id;

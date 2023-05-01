@@ -3,31 +3,35 @@ package com.tinkoffacademy.handyman.controller;
 import com.tinkoffacademy.handyman.dto.AccountDto;
 import com.tinkoffacademy.handyman.model.Account;
 import com.tinkoffacademy.handyman.service.AccountService;
-import com.tinkoffacademy.handyman.view.AccountExt;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
-@RequiredArgsConstructor
-public class AccountController {
-
-    private final AccountService accountService;
+public record AccountController(
+        AccountService accountService
+) {
 
     @GetMapping("/{id}")
-    public AccountExt findById(@PathVariable String id) {
+    public AccountDto findById(@PathVariable String id) {
         return accountService.findById(id);
     }
 
     @GetMapping
-    public List<AccountExt> findAll() {
+    public List<AccountDto> findAll() {
         return accountService.findAll();
     }
 
     @PostMapping
-    public Account save(@RequestBody AccountDto accountDto) {
+    public AccountDto save(@RequestBody AccountDto accountDto) {
         return accountService.save(accountDto);
     }
 
