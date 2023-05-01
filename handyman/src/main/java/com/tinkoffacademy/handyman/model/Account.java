@@ -12,11 +12,12 @@ import java.util.List;
 @Document("accounts")
 @Getter
 @Setter
+@AllArgsConstructor
 public class Account {
     @Id
     private String id;
-    private List<String> skills;
+    private String parentUUID;
     private Double latitude;
     private Double longitude;
-    private String parentUUID;
+    private List<String> skills;
 }
