@@ -35,5 +35,9 @@ grpc:
       keepAliveWithoutCalls: true
       negotiationType: plaintext
   server:
-    port: 8888
+    port: 8900
     address: 127.0.0.1
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

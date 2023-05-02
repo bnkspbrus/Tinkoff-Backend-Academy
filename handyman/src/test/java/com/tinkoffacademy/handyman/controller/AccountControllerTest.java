@@ -7,9 +7,11 @@ import com.tinkoffacademy.handyman.model.Account;
 import com.tinkoffacademy.handyman.repository.AccountRepository;
 import com.tinkoffacademy.handyman.service.AccountService;
 import com.tinkoffacademy.handyman.utils.AccountMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -45,14 +47,25 @@ import java.util.stream.Stream;
 class AccountControllerTest {
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
-    private AccountServiceBlockingStub accountServiceBlockingStub;
+    @Mock
+    private AccountServiceBlockingStub landscapeStub;
     @MockBean
     private AccountRepository accountRepository;
+    @Autowired
+    AccountService accountService;
+    @Autowired
+    AccountMapper accountMapper;
+
     /**
      * List of test AccountDto Objects of size 10. Use corresponding field types.
      * see {@link AccountDto}
      */
+    @BeforeEach
+    void injectStub() {
+        accountService.setLandscapeStub(landscapeStub);
+        accountMapper.setLandscapeStub(landscapeStub);
+    }
+
     private static final List<AccountDto> accountDtoList = List.of(
             new AccountDto("id1", "login1", "email1", "phone1", 1.0, 1.0, List.of("skill1")),
             new AccountDto("id2", "login2", "email2", "phone2", 2.0, 2.0, List.of("skill2")),
@@ -137,11 +150,11 @@ class AccountControllerTest {
     @MethodSource("provideGetAccountById")
     void getAccountById(AccountDto accountDto, Account account, AccountCredProto accountCredProto, UUIDProto uuidProto) throws Exception {
         Mockito.when(accountRepository.findById(account.getId())).thenReturn(java.util.Optional.of(account));
-        Mockito.when(accountServiceBlockingStub.findById(uuidProto)).thenReturn(accountCredProto);
+        Mockito.when(landscapeStub.findById(uuidProto)).thenReturn(accountCredProto);
         mockMvc.perform(MockMvcRequestBuilders.get("/accounts/" + account.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(new ObjectMapper().writeValueAsString(accountDto)));
         Mockito.verify(accountRepository, Mockito.times(1)).findById(account.getId());
-        Mockito.verify(accountServiceBlockingStub, Mockito.times(1)).findById(uuidProto);
+        Mockito.verify(landscapeStub, Mockito.times(1)).findById(uuidProto);
     }
 }

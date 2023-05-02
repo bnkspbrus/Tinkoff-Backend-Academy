@@ -2,6 +2,8 @@ package com.tinkoffacademy.handyman.utils;
 
 import com.tinkoffacademy.handyman.dto.AccountDto;
 import com.tinkoffacademy.handyman.model.Account;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -17,17 +19,29 @@ import ru.tinkoff.proto.UUIDProto;
  * @see com.tinkoffacademy.handyman.model.Account
  */
 @Component
-public record AccountMapper(
-        ModelMapper modelMapper,
-        @GrpcClient("landscape") AccountServiceBlockingStub landscapeStub
-) {
+@RequiredArgsConstructor
+public class AccountMapper {
+    private final ModelMapper modelMapper;
+    @GrpcClient("landscape")
+    @Setter
+    private AccountServiceBlockingStub landscapeStub;
+
     /**
-     * Maps AccountDto to Account using ModelMapper
+     * Maps AccountDto to Account using ModelMapper.
      */
     public Account mapToAccount(AccountDto accountDto) {
         return modelMapper.map(accountDto, Account.class);
     }
 
+    /**
+     * Maps fields from AccountDto to Account using ModelMapper. ModelMapper skips id field of AccountDto.
+     */
+    public Account mapToAccount(AccountDto accountDto, Account account) {
+        // configure ModelMapper to skip id field of AccountDto using PropertyMap
+        modelMapper.typeMap(AccountDto.class, Account.class)
+                .addMappings(mapper -> mapper.skip(Account::setId));
+        modelMapper.map(accountDto, account);
+        return account;}
     /**
      * Maps Account to AccountDto using AccountServiceBlockingStub to find AccountCredProto by Account's parentUUID
      */
@@ -49,19 +63,12 @@ public record AccountMapper(
     }
 
     /**
-     * Maps AccountDto to AccountProto using AccountProto#newBuilder()
-     * <p>
-     * Maps all fields from AccountDto to AccountProto. Also sets typeName to "handyman".
-     * </p>
+     * Maps AccountDto to AccountProto using ModelMapper. Also sets typeName to "handyman".
      */
     public AccountProto mapToAccountProto(AccountDto accountDto) {
-        return AccountProto.newBuilder()
+        AccountProto accountProto = modelMapper.map(accountDto, AccountProto.Builder.class).build();
+        return accountProto.toBuilder()
                 .setTypeName("handyman")
-                .setLogin(accountDto.login())
-                .setEmail(accountDto.email())
-                .setPhone(accountDto.phone())
-                .setLatitude(accountDto.latitude())
-                .setLongitude(accountDto.longitude())
                 .build();
     }
 }

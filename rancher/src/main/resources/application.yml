@@ -21,7 +21,7 @@ grpc:
     address: 127.0.0.1
   client:
     landscape:
-      address: 'static://127.0.0.1:8888'
+      address: 'static://127.0.0.1:8900'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
