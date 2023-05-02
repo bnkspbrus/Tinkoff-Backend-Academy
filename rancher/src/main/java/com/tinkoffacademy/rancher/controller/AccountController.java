@@ -1,39 +1,42 @@
 package com.tinkoffacademy.rancher.controller;
 
 import com.tinkoffacademy.rancher.dto.AccountDto;
-import com.tinkoffacademy.rancher.model.Account;
 import com.tinkoffacademy.rancher.service.AccountService;
-import com.tinkoffacademy.rancher.view.AccountExt;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
-@RequiredArgsConstructor
-public class AccountController {
-
-    private final AccountService accountService;
+public record AccountController(
+        AccountService accountService
+) {
 
     @GetMapping("/{id}")
-    public AccountExt findById(@PathVariable String id) {
-        return accountService.findById(id);
+    public AccountDto getById(@PathVariable String id) {
+        return accountService.getById(id);
     }
 
     @GetMapping
-    public List<AccountExt> findAll() {
+    public List<AccountDto> findAll() {
         return accountService.findAll();
     }
 
     @PostMapping
-    public Account save(@RequestBody AccountDto accountDto) {
+    public AccountDto save(@RequestBody AccountDto accountDto) {
         return accountService.save(accountDto);
     }
 
     @PutMapping("/{id}")
-    public Account updateById(@PathVariable String id, @RequestBody Account account) {
-        return accountService.updateById(id, account);
+    public AccountDto updateById(@PathVariable String id, @RequestBody AccountDto accountDto) {
+        return accountService.updateById(id, accountDto);
     }
 
     @DeleteMapping("/{id}")

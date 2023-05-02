@@ -1,7 +1,6 @@
 package com.tinkoffacademy.handyman.controller;
 
 import com.tinkoffacademy.handyman.dto.AccountDto;
-import com.tinkoffacademy.handyman.model.Account;
 import com.tinkoffacademy.handyman.service.AccountService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +20,8 @@ public record AccountController(
 ) {
 
     @GetMapping("/{id}")
-    public AccountDto findById(@PathVariable String id) {
-        return accountService.findById(id);
+    public AccountDto getById(@PathVariable String id) {
+        return accountService.getById(id);
     }
 
     @GetMapping
@@ -36,8 +35,8 @@ public record AccountController(
     }
 
     @PutMapping("/{id}")
-    public Account updateById(@PathVariable String id, @RequestBody Account account) {
-        return accountService.updateById(id, account);
+    public AccountDto updateById(@PathVariable String id, @RequestBody AccountDto accountDto) {
+        return accountService.updateById(id, accountDto);
     }
 
     @DeleteMapping("/{id}")

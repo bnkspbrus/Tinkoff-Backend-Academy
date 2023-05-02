@@ -28,7 +28,7 @@ public class AccountService {
     @Setter
     private AccountServiceBlockingStub landscapeStub;
 
-    public AccountDto findById(String id) {
+    public AccountDto getById(String id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Handyman account with id " + id + " not found"));
 

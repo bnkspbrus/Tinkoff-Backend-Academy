@@ -3,13 +3,13 @@ package com.tinkoffacademy.rancher.service;
 import com.tinkoffacademy.rancher.dto.AccountDto;
 import com.tinkoffacademy.rancher.model.Account;
 import com.tinkoffacademy.rancher.repository.AccountRepository;
-import com.tinkoffacademy.rancher.view.AccountExt;
+import com.tinkoffacademy.rancher.utils.AccountMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import ru.tinkoff.proto.AccountCredProto;
 import ru.tinkoff.proto.AccountProto;
 import ru.tinkoff.proto.AccountServiceGrpc.AccountServiceBlockingStub;
 import ru.tinkoff.proto.UUIDProto;
@@ -22,67 +22,44 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 @RequiredArgsConstructor
 public class AccountService {
-
     private final AccountRepository accountRepository;
-
+    private final AccountMapper accountMapper;
     @GrpcClient("landscape")
+    @Setter
     private AccountServiceBlockingStub landscapeStub;
 
-    public AccountExt findById(String id) {
+    public AccountDto getById(String id) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Handyman account with id " + id + " not found"));
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Rancher account with id " + id + " not found"));
 
-        return toAccountExt(account);
+        return accountMapper.mapToAccountDto(account, true);
     }
 
-    public List<AccountExt> findAll() {
+    public List<AccountDto> findAll() {
         return accountRepository.findAll().stream()
-                .map(this::toAccountExt)
+                .map(account -> accountMapper.mapToAccountDto(account, false))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public Account save(AccountDto accountDto) {
-        AccountProto accountProto = AccountProto.newBuilder()
-                .setTypeName("rancher")
-                .setLogin(accountDto.login())
-                .setEmail(accountDto.email())
-                .setPhone(accountDto.phone())
-                .setLatitude(accountDto.latitude())
-                .setLongitude(accountDto.longitude())
-                .build();
+    public AccountDto save(AccountDto accountDto) {
+        AccountProto accountProto = accountMapper.mapToAccountProto(accountDto);
         UUIDProto uuid = landscapeStub.save(accountProto);
-        Account account = Account.builder()
-                .latitude(accountDto.latitude())
-                .longitude(accountDto.longitude())
-                .jobs(accountDto.jobs())
-                .parentUUID(uuid.getValue())
-                .build();
-        return accountRepository.save(account);
+        Account account = accountMapper.mapToAccount(accountDto);
+        account.setParentUUID(uuid.getValue());
+        account = accountRepository.save(account);
+        return accountMapper.mapToAccountDto(account, true);
     }
 
-    public Account updateById(String id, Account account) {
-        account.setId(id);
-        return accountRepository.save(account);
+    public AccountDto updateById(String id, AccountDto accountDto) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Rancher account with id " + id + " not found"));
+        account = accountMapper.mapToAccount(accountDto, account);
+        account = accountRepository.save(account);
+        return accountMapper.mapToAccountDto(account, true);
     }
 
     public void deleteById(String id) {
         accountRepository.deleteById(id);
-    }
-
-    private AccountExt toAccountExt(Account account) {
-        UUIDProto uuid = UUIDProto.newBuilder()
-                .setValue(account.getParentUUID())
-                .build();
-        AccountCredProto accountCredProto = landscapeStub.findById(uuid);
-        return new AccountExt(
-                account.getId(),
-                accountCredProto.getLogin(),
-                accountCredProto.getEmail(),
-                accountCredProto.getPhone(),
-                account.getLatitude(),
-                account.getLongitude(),
-                account.getJobs()
-        );
     }
 }

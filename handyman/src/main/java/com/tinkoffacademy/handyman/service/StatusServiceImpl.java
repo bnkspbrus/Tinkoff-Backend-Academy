@@ -14,9 +14,7 @@ import ru.tinkoff.proto.VersionResponse;
 @GrpcService
 @RequiredArgsConstructor
 public class StatusServiceImpl extends StatusServiceGrpc.StatusServiceImplBase {
-
     private final Logger logger = LoggerFactory.getLogger(StatusServiceImpl.class);
-
     private final BuildProperties buildProperties;
 
     /**

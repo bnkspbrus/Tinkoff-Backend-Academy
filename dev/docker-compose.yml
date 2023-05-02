@@ -1,46 +1,46 @@
 version: "3.9"
 services:
-#  handyman:
-#    container_name: handyman
-#    image: handyman
-#    ports:
-#      - "7070:7070"
-#    depends_on:
-#      - mongodb
-#    build: ../handyman
-#    environment:
-#      - grpc.server.address=0.0.0.0
-#      - spring.data.mongodb.uri=mongodb://mongodb:27017/handyman
-#      - grpc.client.landscape.address=static://landscape:8888
-#
-#  landscape:
-#    container_name: landscape
-#    image: landscape
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - postgres
-#    environment:
-#      - grpc.client.handyman.address=static://handyman:9898
-#      - grpc.client.rancher.address=static://rancher:8989
-#      - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
-#      - spring.datasource.username=username
-#      - spring.datasource.password=password
-#      - grpc.server.address=0.0.0.0
-#    build: ../landscape
-#
-#  rancher:
-#    container_name: rancher
-#    image: rancher
-#    ports:
-#      - "9090:9090"
-#    depends_on:
-#      - mongodb
-#    build: ../rancher
-#    environment:
-#      - grpc.server.address=0.0.0.0
-#      - spring.data.mongodb.uri=mongodb://mongodb:27017/rancher
-#      - grpc.client.landscape.address=static://landscape:8888
+  handyman:
+    container_name: handyman
+    image: handyman
+    ports:
+      - "7070:7070"
+    depends_on:
+      - mongodb
+    build: ../handyman
+    environment:
+      - grpc.server.address=0.0.0.0
+      - spring.data.mongodb.uri=mongodb://mongodb:27017/handyman
+      - grpc.client.landscape.address=static://landscape:8888
+
+  landscape:
+    container_name: landscape
+    image: landscape
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - grpc.client.handyman.address=static://handyman:9898
+      - grpc.client.rancher.address=static://rancher:8989
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
+      - spring.datasource.username=username
+      - spring.datasource.password=password
+      - grpc.server.address=0.0.0.0
+    build: ../landscape
+
+  rancher:
+    container_name: rancher
+    image: rancher
+    ports:
+      - "9090:9090"
+    depends_on:
+      - mongodb
+    build: ../rancher
+    environment:
+      - grpc.server.address=0.0.0.0
+      - spring.data.mongodb.uri=mongodb://mongodb:27017/rancher
+      - grpc.client.landscape.address=static://landscape:8888
 
   postgres:
     container_name: postgres
@@ -49,13 +49,13 @@ services:
       - POSTGRES_DB=vogorode
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
-    ports:
-      - "5432:5432"
+#    ports:
+#      - "5432:5432"
 
   mongodb:
     container_name: mongodb
     image: mongo
-    ports:
-      - "27017:27017"
+#    ports:
+#      - "27017:27017"
 
 
