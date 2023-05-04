@@ -1,23 +1,22 @@
 package com.tinkoffacademy.handyman.utils;
 
 import com.tinkoffacademy.handyman.dto.AccountDto;
-import com.tinkoffacademy.handyman.model.Account;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import com.tinkoffacademy.handyman.document.Account;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.proto.AccountCredProto;
 import ru.tinkoff.proto.AccountProto;
 import ru.tinkoff.proto.AccountServiceGrpc.AccountServiceBlockingStub;
-import ru.tinkoff.proto.UUIDProto;
+import ru.tinkoff.proto.IdProto;
 
 /**
  * AccountMapper is a class that maps Account to AccountDto and vice versa.
  *
  * @see com.tinkoffacademy.handyman.dto.AccountDto
- * @see com.tinkoffacademy.handyman.model.Account
+ * @see com.tinkoffacademy.handyman.document.Account
  */
 @Component
 @RequiredArgsConstructor
@@ -46,10 +45,10 @@ public class AccountMapper {
      * Maps Account to AccountDto using AccountServiceBlockingStub to find AccountCredProto by Account's parentUUID
      */
     public AccountDto mapToAccountDto(Account account) {
-        UUIDProto uuid = UUIDProto.newBuilder()
-                .setValue(account.getParentUUID())
+        IdProto id = IdProto.newBuilder()
+                .setValue(account.getParentId())
                 .build();
-        AccountCredProto accountCredProto = landscapeStub.findById(uuid);
+        AccountCredProto accountCredProto = landscapeStub.findById(id);
         // return AccountDto with id, login, email, phone from AccountCredProto and latitude, longitude, skills from Account
         AccountDto accountDto = modelMapper.map(account, AccountDto.class);
         modelMapper.map(accountCredProto, accountDto);

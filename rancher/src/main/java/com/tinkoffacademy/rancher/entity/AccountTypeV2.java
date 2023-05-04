@@ -1,10 +1,6 @@
-package com.tinkoffacademy.landscape.model;
+package com.tinkoffacademy.rancher.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

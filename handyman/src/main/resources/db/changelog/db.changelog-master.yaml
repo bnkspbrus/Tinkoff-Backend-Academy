@@ -1,7 +1,7 @@
 databaseChangeLog:
-  - changeSet:
-      id: create-accounts
-      author: bnkspbrus
-      changes:
-        - createCollection:
-            collectionName: accounts
+  - include:
+      file: db/create-users.sql
+  - include:
+      file: db/create-user-account.sql
+  - include:
+      file: db/create-user-skills.sql
