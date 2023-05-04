@@ -2,6 +2,7 @@ package com.tinkoffacademy.handyman.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document("accounts")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 public class Account {
     @Id
     private String id;

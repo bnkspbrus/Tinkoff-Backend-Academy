@@ -11,10 +11,9 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 @RequiredArgsConstructor
 public class AccountTypeV2Service {
-
     private final AccountTypeV2Repository accountTypeV2Repository;
 
-    public AccountTypeV2 findByTypeName(String typeName) {
+    public AccountTypeV2 getByName(String typeName) {
         return accountTypeV2Repository.findByTypeName(typeName)
                 .orElseThrow(
                         () -> new ResponseStatusException(NOT_FOUND, "AccountTypeV2 with typeName " + typeName + "not found"

@@ -47,21 +47,15 @@ public class AccountMapper {
     /**
      * Maps Account to AccountDto using AccountServiceBlockingStub to find AccountCredProto by Account's parentUUID
      */
-    public AccountDto mapToAccountDto(Account account, boolean includeId) {
+    public AccountDto mapToAccountDto(Account account) {
         UUIDProto uuid = UUIDProto.newBuilder()
                 .setValue(account.getParentUUID())
                 .build();
         AccountCredProto accountCredProto = landscapeStub.findById(uuid);
         // return AccountDto with id, login, email, phone from AccountCredProto and latitude, longitude, skills from Account
-        return new AccountDto(
-                includeId ? account.getId() : null,
-                accountCredProto.getLogin(),
-                accountCredProto.getEmail(),
-                accountCredProto.getPhone(),
-                account.getLatitude(),
-                account.getLongitude(),
-                account.getSkills()
-        );
+        AccountDto accountDto = modelMapper.map(account, AccountDto.class);
+        modelMapper.map(accountCredProto, accountDto);
+        return accountDto;
     }
 
     /**

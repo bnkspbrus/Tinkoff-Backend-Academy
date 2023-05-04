@@ -17,14 +17,10 @@ import ru.tinkoff.proto.VersionResponse;
 @Service
 @RequiredArgsConstructor
 @Setter
-@Getter
 public class StatusService {
-
     private final Logger logger = LoggerFactory.getLogger(StatusService.class);
-
     @GrpcClient("handyman")
     private StatusServiceGrpc.StatusServiceBlockingStub handymanStub;
-
     @GrpcClient("rancher")
     private StatusServiceGrpc.StatusServiceBlockingStub rancherStub;
 

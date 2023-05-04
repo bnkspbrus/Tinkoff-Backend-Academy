@@ -1,15 +1,22 @@
 package com.tinkoffacademy.landscape.dto;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.UUID;
 
-public record AccountDto(
-        UUID id,
-        String typeName,
-        String login,
-        String email,
-        String phone,
-        Double latitude,
-        Double longitude
-) {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonIgnoreProperties(value = {"id"}, allowGetters = true)
+public class AccountDto {
+        private UUID id;
+        private String typeName;
+        private String login;
+        private String email;
+        private String phone;
+        private Double latitude;
+        private Double longitude;
 }

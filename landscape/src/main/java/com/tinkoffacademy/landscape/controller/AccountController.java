@@ -18,7 +18,7 @@ public class AccountController {
 
     @GetMapping("/{id}")
     public Account findById(@PathVariable UUID id) {
-        return accountService.findById(id);
+        return accountService.getById(id);
     }
 
     @GetMapping
@@ -29,6 +29,11 @@ public class AccountController {
     @PostMapping
     public Account save(@RequestBody AccountDto accountDto) {
         return accountService.save(accountDto);
+    }
+
+    @PutMapping("/{id}")
+    public Account save(@PathVariable UUID id, @RequestBody AccountDto accountDto) {
+        return accountService.updateById(id, accountDto);
     }
 
     @DeleteMapping("/{id}")

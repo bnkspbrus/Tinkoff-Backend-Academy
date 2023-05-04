@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 @RequestMapping("/system")
 @RequiredArgsConstructor
 public class SystemController {
-
     private final SystemService systemService;
 
     /**
