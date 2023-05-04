@@ -41,7 +41,9 @@ public class AccountMapper {
         modelMapper.typeMap(AccountDto.class, Account.class)
                 .addMappings(mapper -> mapper.skip(Account::setId));
         modelMapper.map(accountDto, account);
-        return account;}
+        return account;
+    }
+
     /**
      * Maps Account to AccountDto using AccountServiceBlockingStub to find AccountCredProto by Account's parentUUID
      */
