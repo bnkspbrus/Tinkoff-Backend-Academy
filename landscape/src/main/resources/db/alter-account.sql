@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset bnkspbrus:2
+--changeset bnkspbrus:alter-account
 create table account_type_v2
 (
     id        int8,

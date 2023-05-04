@@ -1,7 +1,6 @@
-package com.tinkoffacademy.handyman.model;
+package com.tinkoffacademy.rancher.document;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,7 +19,7 @@ import java.util.List;
 public class Account {
     @Id
     private String id;
-    private String parentUUID;
+    private Long parentId;
     private Double latitude;
     private Double longitude;
     private List<String> skills;

@@ -16,7 +16,7 @@ import java.util.List;
  * It is used in the {@link com.tinkoffacademy.rancher.controller.AccountController}.
  * </p>
  *
- * @see com.tinkoffacademy.rancher.model.Account
+ * @see com.tinkoffacademy.rancher.document.Account
  * @see com.tinkoffacademy.rancher.controller.AccountController
  */
 @JsonIgnoreProperties(value = {"id"}, allowGetters = true)

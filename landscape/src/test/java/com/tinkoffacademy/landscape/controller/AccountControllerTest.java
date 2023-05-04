@@ -1,8 +1,8 @@
 package com.tinkoffacademy.landscape.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tinkoffacademy.landscape.model.Account;
-import com.tinkoffacademy.landscape.model.AccountTypeV2;
+import com.tinkoffacademy.landscape.entity.Account;
+import com.tinkoffacademy.landscape.entity.AccountTypeV2;
 import com.tinkoffacademy.landscape.repository.AccountRepository;
 import com.tinkoffacademy.landscape.repository.AccountTypeV2Repository;
 import com.tinkoffacademy.landscape.service.AccountService;

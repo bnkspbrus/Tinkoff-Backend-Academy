@@ -6,6 +6,15 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/handyman
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vogorode
+    username: username
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+  liquibase:
+    enabled: false
 management:
   endpoints:
     web:

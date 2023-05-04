@@ -1,7 +1,7 @@
 package com.tinkoffacademy.rancher.service;
 
 import com.tinkoffacademy.rancher.dto.AccountDto;
-import com.tinkoffacademy.rancher.model.Account;
+import com.tinkoffacademy.rancher.document.Account;
 import com.tinkoffacademy.rancher.repository.AccountRepository;
 import com.tinkoffacademy.rancher.utils.AccountMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tinkoff.proto.AccountProto;
 import ru.tinkoff.proto.AccountServiceGrpc.AccountServiceBlockingStub;
-import ru.tinkoff.proto.UUIDProto;
+import ru.tinkoff.proto.IdProto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,9 +45,9 @@ public class AccountService {
     @Transactional
     public AccountDto save(AccountDto accountDto) {
         AccountProto accountProto = accountMapper.mapToAccountProto(accountDto);
-        UUIDProto uuid = landscapeStub.save(accountProto);
+        IdProto id = landscapeStub.save(accountProto);
         Account account = accountMapper.mapToAccount(accountDto);
-        account.setParentUUID(uuid.getValue());
+        account.setParentId(id.getValue());
         account = accountRepository.save(account);
         return accountMapper.mapToAccountDto(account);
     }

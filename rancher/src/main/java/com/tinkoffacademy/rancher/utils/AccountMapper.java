@@ -1,7 +1,7 @@
 package com.tinkoffacademy.rancher.utils;
 
 import com.tinkoffacademy.rancher.dto.AccountDto;
-import com.tinkoffacademy.rancher.model.Account;
+import com.tinkoffacademy.rancher.document.Account;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 import ru.tinkoff.proto.AccountCredProto;
 import ru.tinkoff.proto.AccountProto;
 import ru.tinkoff.proto.AccountServiceGrpc.AccountServiceBlockingStub;
-import ru.tinkoff.proto.UUIDProto;
+import ru.tinkoff.proto.IdProto;
 
 /**
  * AccountMapper is a class that maps Account to AccountDto and vice versa.
  *
  * @see com.tinkoffacademy.rancher.dto.AccountDto
- * @see com.tinkoffacademy.rancher.model.Account
+ * @see com.tinkoffacademy.rancher.document.Account
  */
 @Component
 @RequiredArgsConstructor
@@ -45,8 +45,8 @@ public class AccountMapper {
      * Maps Account to AccountDto using AccountServiceBlockingStub to find AccountCredProto by Account's parentUUID
      */
     public AccountDto mapToAccountDto(Account account) {
-        UUIDProto uuid = UUIDProto.newBuilder()
-                .setValue(account.getParentUUID())
+        IdProto uuid = IdProto.newBuilder()
+                .setValue(account.getParentId())
                 .build();
         AccountCredProto accountCredProto = landscapeStub.findById(uuid);
         // return AccountDto with id, login, email, phone from AccountCredProto and latitude, longitude, skills from Account
@@ -56,7 +56,7 @@ public class AccountMapper {
     }
 
     /**
-     * Maps AccountDto to AccountProto using ModelMapper. Also sets typeName to "handyman".
+     * Maps AccountDto to AccountProto using ModelMapper. Also sets typeName to "rancher".
      */
     public AccountProto mapToAccountProto(AccountDto accountDto) {
         AccountProto.Builder builder = AccountProto.newBuilder();

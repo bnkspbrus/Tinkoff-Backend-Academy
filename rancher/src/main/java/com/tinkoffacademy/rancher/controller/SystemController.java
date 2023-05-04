@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/system")
-@RequiredArgsConstructor
-public class SystemController {
-
-    private final SystemService systemService;
-
+public record SystemController(
+        SystemService systemService
+) {
     /**
      * Checks liveness
      */

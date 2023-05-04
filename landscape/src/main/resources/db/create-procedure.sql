@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset bnkspbrus:3 splitStatements:false
+--changeset bnkspbrus:create-procedure splitStatements:false
 create procedure migrateBatch(batch integer, pause integer)
 language sql
 as $$

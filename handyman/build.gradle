@@ -52,12 +52,14 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-aop"
     implementation "org.liquibase.ext:liquibase-mongodb:${liquibaseVersion}"
     implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
-    implementation 'org.modelmapper:modelmapper:3.1.1'
     runtimeOnly "io.micrometer:micrometer-registry-prometheus"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     // Grpc-Test-Support
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    implementation "org.modelmapper:modelmapper:3.1.1"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    runtimeOnly "org.postgresql:postgresql"
 }
 
 protobuf {

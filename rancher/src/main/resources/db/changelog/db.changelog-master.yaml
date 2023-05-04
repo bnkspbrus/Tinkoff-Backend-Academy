@@ -1,7 +1,5 @@
 databaseChangeLog:
-  - changeSet:
-      id: create-accounts
-      author: bnkspbrus
-      changes:
-        - createCollection:
-            collectionName: accounts
+  - include:
+      file: db/create-gardener.sql
+  - include:
+      file: db/create-field.sql
