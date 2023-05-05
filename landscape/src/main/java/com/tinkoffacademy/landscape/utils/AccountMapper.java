@@ -30,9 +30,6 @@ public class AccountMapper {
      * Maps fields from AccountDto to Account using ModelMapper. ModelMapper skips id field of AccountDto.
      */
     public Account mapToAccount(AccountDto accountDto, Account account) {
-        // configure ModelMapper to skip id field of AccountDto using PropertyMap
-        modelMapper.typeMap(AccountDto.class, Account.class)
-                .addMappings(mapper -> mapper.skip(Account::setId));
         modelMapper.map(accountDto, account);
         return account;
     }

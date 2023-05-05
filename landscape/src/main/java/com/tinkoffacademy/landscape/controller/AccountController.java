@@ -13,7 +13,6 @@ import java.util.UUID;
 @RequestMapping("accounts")
 @RequiredArgsConstructor
 public class AccountController {
-
     private final AccountService accountService;
 
     @GetMapping("/{id}")
