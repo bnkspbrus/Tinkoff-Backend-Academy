@@ -37,37 +37,31 @@ public class AccountMapper {
      * Maps fields from AccountDto to Account using ModelMapper. ModelMapper skips id field of AccountDto.
      */
     public Account mapToAccount(AccountDto accountDto, Account account) {
-        // configure ModelMapper to skip id field of AccountDto using PropertyMap
-        modelMapper.typeMap(AccountDto.class, Account.class)
-                .addMappings(mapper -> mapper.skip(Account::setId));
         modelMapper.map(accountDto, account);
-        return account;}
+        return account;
+    }
+
     /**
      * Maps Account to AccountDto using AccountServiceBlockingStub to find AccountCredProto by Account's parentUUID
      */
-    public AccountDto mapToAccountDto(Account account, boolean includeId) {
+    public AccountDto mapToAccountDto(Account account) {
         UUIDProto uuid = UUIDProto.newBuilder()
                 .setValue(account.getParentUUID())
                 .build();
         AccountCredProto accountCredProto = landscapeStub.findById(uuid);
         // return AccountDto with id, login, email, phone from AccountCredProto and latitude, longitude, skills from Account
-        return new AccountDto(
-                includeId ? account.getId() : null,
-                accountCredProto.getLogin(),
-                accountCredProto.getEmail(),
-                accountCredProto.getPhone(),
-                account.getLatitude(),
-                account.getLongitude(),
-                account.getSkills()
-        );
+        AccountDto accountDto = modelMapper.map(account, AccountDto.class);
+        modelMapper.map(accountCredProto, accountDto);
+        return accountDto;
     }
 
     /**
-     * Maps AccountDto to AccountProto using ModelMapper. Also sets typeName to "rancher".
+     * Maps AccountDto to AccountProto using ModelMapper. Also sets typeName to "handyman".
      */
     public AccountProto mapToAccountProto(AccountDto accountDto) {
-        AccountProto accountProto = modelMapper.map(accountDto, AccountProto.Builder.class).build();
-        return accountProto.toBuilder()
+        AccountProto.Builder builder = AccountProto.newBuilder();
+        modelMapper.map(accountDto, builder);
+        return builder
                 .setTypeName("rancher")
                 .build();
     }

@@ -52,6 +52,7 @@ public class AccountService {
     public Account updateById(UUID id, AccountDto accountDto) {
         Account account = getById(id);
         account = accountMapper.mapToAccount(accountDto, account);
+        account.setId(id);
         return accountRepository.save(account);
     }
 }

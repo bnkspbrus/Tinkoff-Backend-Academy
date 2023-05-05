@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MongoLiquibaseRunnerConfig {
-
     @Bean
     public MongoLiquibaseRunner liquibaseRunner(final MongoLiquibaseDatabase database) {
         return new MongoLiquibaseRunner(database);
@@ -23,5 +22,4 @@ public class MongoLiquibaseRunnerConfig {
     public MongoLiquibaseDatabase database(@Value("${spring.data.mongodb.uri}") String url) throws DatabaseException {
         return (MongoLiquibaseDatabase) DatabaseFactory.getInstance().openDatabase(url, null, null, null, null);
     }
-
 }

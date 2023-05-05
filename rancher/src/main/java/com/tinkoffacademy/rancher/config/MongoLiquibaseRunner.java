@@ -7,11 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.ResourceLoader;
 
-
 public class MongoLiquibaseRunner implements CommandLineRunner, ResourceLoaderAware {
-
     public final MongoLiquibaseDatabase database;
-
     protected ResourceLoader resourceLoader;
 
     public void setResourceLoader(final ResourceLoader resourceLoader) {
@@ -26,5 +23,4 @@ public class MongoLiquibaseRunner implements CommandLineRunner, ResourceLoaderAw
         Liquibase liquiBase = new Liquibase("db/changelog/db.changelog-master.yaml", new SpringResourceAccessor(resourceLoader), database);
         liquiBase.update("");
     }
-
 }

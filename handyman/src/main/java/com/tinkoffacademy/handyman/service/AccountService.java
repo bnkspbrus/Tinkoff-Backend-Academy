@@ -56,6 +56,7 @@ public class AccountService {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Handyman account with id " + id + " not found"));
         account = accountMapper.mapToAccount(accountDto, account);
+        account.setId(id);
         account = accountRepository.save(account);
         return accountMapper.mapToAccountDto(account);
     }

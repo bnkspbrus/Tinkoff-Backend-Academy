@@ -18,7 +18,6 @@ import java.util.List;
 public record AccountController(
         AccountService accountService
 ) {
-
     @GetMapping("/{id}")
     public AccountDto getById(@PathVariable String id) {
         return accountService.getById(id);

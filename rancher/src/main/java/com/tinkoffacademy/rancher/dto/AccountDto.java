@@ -2,6 +2,10 @@ package com.tinkoffacademy.rancher.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -12,24 +16,20 @@ import java.util.List;
  * It is used in the {@link com.tinkoffacademy.rancher.controller.AccountController}.
  * </p>
  *
- * @param id        - id of the account. Ignored by Jackson if null while serializing. Ignored while deserializing.
- * @param login     - login of the account
- * @param email     - email of the account
- * @param phone     - phone of the account
- * @param latitude  - latitude of the account
- * @param longitude - longitude of the account
- * @param skills    - skills of the account
  * @see com.tinkoffacademy.rancher.model.Account
  * @see com.tinkoffacademy.rancher.controller.AccountController
  */
 @JsonIgnoreProperties(value = {"id"}, allowGetters = true)
-public record AccountDto(
-        @JsonInclude(JsonInclude.Include.NON_NULL) String id,
-        String login,
-        String email,
-        String phone,
-        Double latitude,
-        Double longitude,
-        List<String> skills
-) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AccountDto {
+    @JsonInclude(Include.NON_NULL)
+    private String id;
+    private String login;
+    private String email;
+    private String phone;
+    private Double latitude;
+    private Double longitude;
+    private List<String> skills;
 }

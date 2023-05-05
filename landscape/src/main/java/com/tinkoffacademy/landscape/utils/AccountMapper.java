@@ -35,7 +35,9 @@ public class AccountMapper {
     }
 
     public AccountCredProto mapToAccountCredProto(Account account) {
-        return modelMapper.map(account, AccountCredProto.Builder.class).build();
+        AccountCredProto.Builder builder = AccountCredProto.newBuilder();
+        modelMapper.map(account, builder);
+        return builder.build();
     }
 
     public Account mapToAccount(AccountProto accountProto) {

@@ -2,6 +2,7 @@ package com.tinkoffacademy.handyman.utils;
 
 import com.tinkoffacademy.handyman.dto.AccountDto;
 import com.tinkoffacademy.handyman.model.Account;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -37,9 +38,6 @@ public class AccountMapper {
      * Maps fields from AccountDto to Account using ModelMapper. ModelMapper skips id field of AccountDto.
      */
     public Account mapToAccount(AccountDto accountDto, Account account) {
-        // configure ModelMapper to skip id field of AccountDto using PropertyMap
-        modelMapper.typeMap(AccountDto.class, Account.class)
-                .addMappings(mapper -> mapper.skip(Account::setId));
         modelMapper.map(accountDto, account);
         return account;
     }
@@ -62,8 +60,9 @@ public class AccountMapper {
      * Maps AccountDto to AccountProto using ModelMapper. Also sets typeName to "handyman".
      */
     public AccountProto mapToAccountProto(AccountDto accountDto) {
-        AccountProto accountProto = modelMapper.map(accountDto, AccountProto.Builder.class).build();
-        return accountProto.toBuilder()
+        AccountProto.Builder builder = AccountProto.newBuilder();
+        modelMapper.map(accountDto, builder);
+        return builder
                 .setTypeName("handyman")
                 .build();
     }
