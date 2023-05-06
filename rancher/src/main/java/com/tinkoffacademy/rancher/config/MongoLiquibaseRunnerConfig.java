@@ -10,8 +10,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MongoLiquibaseRunnerConfig {
     @Bean
-    public MongoLiquibaseRunner liquibaseRunner(final MongoLiquibaseDatabase database) {
-        return new MongoLiquibaseRunner(database);
+    public MongoLiquibaseRunner liquibaseRunner(
+            MongoLiquibaseDatabase database,
+            @Value("${MONGO_CHANGELOG_FILE:db/changelog/db.changelog-master.yaml}") String changeLogFile
+    ) {
+        return new MongoLiquibaseRunner(database, changeLogFile);
     }
 
     /**
@@ -20,6 +23,12 @@ public class MongoLiquibaseRunnerConfig {
      */
     @Bean
     public MongoLiquibaseDatabase database(@Value("${spring.data.mongodb.uri}") String url) throws DatabaseException {
-        return (MongoLiquibaseDatabase) DatabaseFactory.getInstance().openDatabase(url, null, null, null, null);
+        return (MongoLiquibaseDatabase) DatabaseFactory.getInstance().openDatabase(
+                url,
+                null,
+                null,
+                null,
+                null
+        );
     }
 }
