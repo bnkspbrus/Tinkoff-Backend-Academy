@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class Field {
     private Long id;
     @ManyToOne(optional = false)
     @JoinColumn(name = "gardener")
+    @JsonBackReference
     private Gardener gardener;
     @Column(nullable = false)
     private String address;

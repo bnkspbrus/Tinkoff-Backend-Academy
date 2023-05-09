@@ -12,7 +12,7 @@ import org.springframework.core.io.ResourceLoader;
 @Setter
 @RequiredArgsConstructor
 public class MongoLiquibaseRunner implements CommandLineRunner, ResourceLoaderAware {
-    public final MongoLiquibaseDatabase database;
+    private final MongoLiquibaseDatabase database;
     private final String changeLogFile;
     protected ResourceLoader resourceLoader;
 
