@@ -1,7 +1,6 @@
 package com.tinkoffacademy.landscape.controller;
 
 import com.tinkoffacademy.landscape.dto.AccountDto;
-import com.tinkoffacademy.landscape.entity.Account;
 import com.tinkoffacademy.landscape.service.AccountService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
@@ -24,29 +23,30 @@ public class AccountController {
 
     @GetMapping("/{id}")
     @Timed(value = "getById.time", description = "Time taken to get account by id")
-    public Account findById(@PathVariable Long id) {
-        return accountService.getById(id);
+    public AccountDto findById(@PathVariable Long id) {
+        return accountService.getAccountDtoById(id);
     }
 
     @GetMapping
     @Timed(value = "findAll.time", description = "Time taken to find all accounts")
-    public List<Account> findAll() {
+    public List<AccountDto> findAll() {
         return accountService.findAll();
     }
 
     @GetMapping("/sort/lastname")
-    public List<Account> findAllSortByLastName() {
+    public List<AccountDto> findAllSortByLastName() {
         return accountService.findAllSortByLastName();
     }
+
     @PostMapping
     @Timed(value = "save.time", description = "Time taken to save account")
-    public Account save(@RequestBody AccountDto accountDto) {
+    public AccountDto save(@RequestBody AccountDto accountDto) {
         return accountService.save(accountDto);
     }
 
     @PutMapping("/{id}")
     @Timed(value = "updateById.time", description = "Time taken to update account by id")
-    public Account save(@PathVariable Long id, @RequestBody AccountDto accountDto) {
+    public AccountDto save(@PathVariable Long id, @RequestBody AccountDto accountDto) {
         return accountService.updateById(id, accountDto);
     }
 

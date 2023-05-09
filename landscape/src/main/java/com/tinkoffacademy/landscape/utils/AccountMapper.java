@@ -27,9 +27,13 @@ public class AccountMapper {
     }
 
     /**
-     * Maps fields from AccountDto to Account using ModelMapper. ModelMapper skips id field of AccountDto.
+     * Maps fields from AccountDto to Account using ModelMapper. ModelMapper skips creation and updating fields.
      */
     public Account mapToAccount(AccountDto accountDto, Account account) {
+        // configure ModelMapper to skip creation and updating fields using typeMap
+        modelMapper.typeMap(AccountDto.class, Account.class)
+                .addMappings(mapper -> mapper.skip(Account::setCreation))
+                .addMappings(mapper -> mapper.skip(Account::setUpdating));
         modelMapper.map(accountDto, account);
         return account;
     }
@@ -42,5 +46,11 @@ public class AccountMapper {
 
     public Account mapToAccount(AccountProto accountProto) {
         return modelMapper.map(accountProto, Account.class);
+    }
+
+    public AccountDto mapToAccountDto(Account account) {
+        AccountDto accountDto = modelMapper.map(account, AccountDto.class);
+        accountDto.setTypeName(account.getTypeV2().getTypeName());
+        return accountDto;
     }
 }

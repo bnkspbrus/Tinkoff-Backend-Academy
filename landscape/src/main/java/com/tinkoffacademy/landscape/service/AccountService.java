@@ -22,23 +22,40 @@ public class AccountService {
     private final AccountTypeV2Service accountTypeV2Service;
     private final AccountMapper accountMapper;
 
-    public Account getById(Long id) {
+    public AccountDto getAccountDtoById(Long id) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        NOT_FOUND,
+                        "Account with id " + id + " not found"
+                ));
+        return accountMapper.mapToAccountDto(account);
+    }
+
+    public Account getAccountById(Long id) {
         return accountRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Account with id " + id + " not found"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        NOT_FOUND,
+                        "Account with id " + id + " not found"
+                ));
     }
 
-    public List<Account> findAll() {
-        return accountRepository.findAll();
+    public List<AccountDto> findAll() {
+        return accountRepository
+                .findAll()
+                .stream()
+                .map(accountMapper::mapToAccountDto)
+                .toList();
     }
 
-    public Account save(AccountDto accountDto) {
+    public AccountDto save(AccountDto accountDto) {
         Account account = accountMapper.mapToAccount(accountDto);
         LocalDateTime now = LocalDateTime.now();
         account.setCreation(now);
         account.setUpdating(now);
         AccountTypeV2 typeV2 = accountTypeV2Service.getByName(accountDto.getTypeName());
         account.setTypeV2(typeV2);
-        return accountRepository.save(account);
+        account = accountRepository.save(account);
+        return accountMapper.mapToAccountDto(account);
     }
 
     public Account save(Account account) {
@@ -49,14 +66,19 @@ public class AccountService {
         accountRepository.deleteById(id);
     }
 
-    public Account updateById(Long id, AccountDto accountDto) {
-        Account account = getById(id);
+    public AccountDto updateById(Long id, AccountDto accountDto) {
+        Account account = getAccountById(id);
         account = accountMapper.mapToAccount(accountDto, account);
         account.setId(id);
-        return accountRepository.save(account);
+        account = accountRepository.save(account);
+        return accountMapper.mapToAccountDto(account);
     }
 
-    public List<Account> findAllSortByLastName() {
-        return accountRepository.findAll(Sort.by(Sort.Direction.ASC, "lastName"));
+    public List<AccountDto> findAllSortByLastName() {
+        return accountRepository
+                .findAll(Sort.by(Sort.Direction.ASC, "lastName"))
+                .stream()
+                .map(accountMapper::mapToAccountDto)
+                .toList();
     }
 }

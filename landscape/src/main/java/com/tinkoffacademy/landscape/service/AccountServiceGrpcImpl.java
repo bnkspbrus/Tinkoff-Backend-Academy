@@ -22,11 +22,8 @@ public class AccountServiceGrpcImpl extends AccountServiceImplBase {
 
     @Override
     public void save(AccountProto request, StreamObserver<IdProto> responseObserver) {
-        LocalDateTime now = LocalDateTime.now();
         AccountTypeV2 typeV2 = accountTypeV2Service.getByName(request.getTypeName());
         Account account = accountMapper.mapToAccount(request);
-        account.setCreation(now);
-        account.setUpdating(now);
         account.setTypeV2(typeV2);
         account = accountService.save(account);
         IdProto id = IdProto.newBuilder()
@@ -38,7 +35,7 @@ public class AccountServiceGrpcImpl extends AccountServiceImplBase {
 
     @Override
     public void findById(IdProto request, StreamObserver<AccountCredProto> responseObserver) {
-        Account account = accountService.getById(request.getValue());
+        Account account = accountService.getAccountById(request.getValue());
         AccountCredProto accountCredProto = accountMapper.mapToAccountCredProto(account);
         responseObserver.onNext(accountCredProto);
         responseObserver.onCompleted();

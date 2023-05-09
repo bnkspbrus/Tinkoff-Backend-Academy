@@ -16,9 +16,14 @@ Accept: application/json
   "login": "handyman1",
   "email": "handyman1@mail.ru",
   "phone": "123456789",
+  "firstName": "John",
+  "lastName": "Doe",
   "latitude": 1,
   "longitude": 0,
-  "skills": ["skill1", "skill2"]
+  "skills": [
+    "skill1",
+    "skill2"
+  ]
 }
 
 
@@ -36,9 +41,15 @@ Accept: application/json
   "login": "handyman2",
   "email": "handyman2@mail.ru",
   "phone": "123456789",
+  "firstName": "John",
+  "lastName": "Doe",
   "latitude": 1,
   "longitude": 1,
-  "skills": ["skill1", "skill2", "skill3"]
+  "skills": [
+    "skill1",
+    "skill2",
+    "skill3"
+  ]
 }
 
 
@@ -56,6 +67,8 @@ Accept: application/json
   "login": "handyman3",
   "email": "handyman3@mail.ru",
   "phone": "123456789",
+  "firstName": "John",
+  "lastName": "Doe",
   "latitude": 1,
   "longitude": -1,
   "skills": []

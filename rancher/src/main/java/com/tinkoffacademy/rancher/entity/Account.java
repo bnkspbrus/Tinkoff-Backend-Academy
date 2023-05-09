@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,9 +41,9 @@ public class Account {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime creation;
-    @Column(nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updating;
     @Column(nullable = false)
     private Double latitude;

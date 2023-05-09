@@ -28,6 +28,8 @@ public class AccountDto {
     private String login;
     private String email;
     private String phone;
+    private String firstName;
+    private String lastName;
     private Double latitude;
     private Double longitude;
     private List<String> skills;

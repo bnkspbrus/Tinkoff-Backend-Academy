@@ -11,19 +11,55 @@ Accept: application/json
     "SHOVEL",
     "PLANT"
   ],
-  "typeV2": {
-    "id": 1,
-    "typeName": "handyman"
-  },
-  "login": "login",
-  "email": "email@mail.ru",
+  "login": "ivanobiwan",
+  "email": "ivanobi@mail.ru",
   "phone": "123456789",
-  "firstName": "firstName",
-  "lastName": "lastName",
-  "creation": "2007-12-03T10:15:30",
-  "updating": "2007-12-03T10:15:30",
+  "firstName": "ivan",
+  "lastName": "ivanov",
+  "latitude": 1,
+  "longitude": 0
+}
+
+###
+POST http://localhost:7070/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "skills": [
+    "SHOVEL",
+    "PLANT",
+    "SOW"
+  ],
+  "login": "bnkspb",
+  "email": "bnksbp@mail.ru",
+  "phone": "123456789",
+  "firstName": "nikita",
+  "lastName": "barsukov",
   "latitude": 0,
   "longitude": 0
 }
+
+###
+POST http://localhost:7070/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "skills": [
+    "PLANT"
+  ],
+  "login": "roman",
+  "email": "roman@mail.ru",
+  "phone": "123456789",
+  "firstName": "roman",
+  "lastName": "abramovich",
+  "latitude": 2,
+  "longitude": 0
+}
+
+###
+GET http://localhost:7070/users
+Accept: application/json
 
 ###

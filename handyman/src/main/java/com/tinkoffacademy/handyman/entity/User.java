@@ -26,7 +26,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends Account{
+public class User extends Account {
     @OneToMany(mappedBy = "user")
     private List<UserAccount> userAccounts;
     private byte[] photo;

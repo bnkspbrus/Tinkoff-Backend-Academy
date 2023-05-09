@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +17,8 @@ public class AccountDto {
     private String login;
     private String email;
     private String phone;
+    private LocalDateTime creation;
+    private LocalDateTime updating;
     private Double latitude;
     private Double longitude;
 }

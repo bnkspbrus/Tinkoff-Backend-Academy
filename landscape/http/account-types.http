@@ -1,0 +1,18 @@
+POST http://localhost:8080/account-types
+Content-Type: application/json
+Accept: application/json
+
+{
+    "typeName": "handyman"
+}
+
+###
+POST http://localhost:8080/account-types
+Content-Type: application/json
+Accept: application/json
+
+{
+  "typeName": "rancher"
+}
+
+###
