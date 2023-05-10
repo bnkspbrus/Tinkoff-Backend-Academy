@@ -1,28 +1,33 @@
 version: "3.9"
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
 services:
   handyman:
     container_name: handyman
     image: handyman
     ports:
-      - "7070:7070"
+      - "8080:8080"
     depends_on:
       - mongodb
     build: ../handyman
     environment:
       - grpc.server.address=0.0.0.0
       - spring.data.mongodb.uri=mongodb://mongodb:27017/handyman
-      - grpc.client.landscape.address=static://landscape:8888
+      - grpc.client.landscape.address=dns:///landscape:8888
 
   landscape:
     container_name: landscape
     image: landscape
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       - postgres
     environment:
-      - grpc.client.handyman.address=static://handyman:9898
-      - grpc.client.rancher.address=static://rancher:8989
+      - grpc.client.handyman.address=dns:///handyman:9898
+      - grpc.client.rancher.address=dns:///rancher:8989
       - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
       - spring.datasource.username=username
       - spring.datasource.password=password
@@ -33,14 +38,14 @@ services:
     container_name: rancher
     image: rancher
     ports:
-      - "9090:9090"
+      - "8082:8082"
     depends_on:
       - mongodb
     build: ../rancher
     environment:
       - grpc.server.address=0.0.0.0
       - spring.data.mongodb.uri=mongodb://mongodb:27017/rancher
-      - grpc.client.landscape.address=static://landscape:8888
+      - grpc.client.landscape.address=dns:///landscape:8888
 
   postgres:
     container_name: postgres
@@ -49,13 +54,48 @@ services:
       - POSTGRES_DB=vogorode
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
-#    ports:
-#      - "5432:5432"
+  #    ports:
+  #      - "5432:5432"
 
   mongodb:
     container_name: mongodb
     image: mongo
-#    ports:
-#      - "27017:27017"
+  #    ports:
+  #      - "27017:27017"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ../prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    expose:
+      - 9090
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:9.5.1
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ../monitoring:/etc/grafana/provisioning/dashboards
+      - ../datasources:/etc/grafana/provisioning/datasources
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: unless-stopped
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
 
 
