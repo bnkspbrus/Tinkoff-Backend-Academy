@@ -17,11 +17,11 @@ management:
         info: /actuator/info
 grpc:
   server:
-    port: 8989
+    port: 9093
     address: 127.0.0.1
   client:
     landscape:
-      address: 'static://127.0.0.1:8900'
+      address: 'static://127.0.0.1:9092'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext

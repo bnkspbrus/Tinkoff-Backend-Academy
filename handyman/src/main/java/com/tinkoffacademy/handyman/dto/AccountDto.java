@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -25,10 +28,15 @@ import java.util.List;
 public class AccountDto {
     @JsonInclude(Include.NON_NULL)
     private String id;
+    @NotBlank(message = "Login is mandatory")
     private String login;
+    @Email(message = "Email should be valid")
     private String email;
+    @NotBlank(message = "Phone is mandatory")
     private String phone;
+    @NotNull(message = "Latitude is mandatory")
     private Double latitude;
+    @NotNull(message = "Longitude is mandatory")
     private Double longitude;
     private List<String> skills;
 }

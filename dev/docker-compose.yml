@@ -11,7 +11,7 @@ services:
     environment:
       - grpc.server.address=0.0.0.0
       - spring.data.mongodb.uri=mongodb://mongodb:27017/handyman
-      - grpc.client.landscape.address=static://landscape:8888
+      - grpc.client.landscape.address=dns:///landscape:9092
 
   landscape:
     container_name: landscape
@@ -21,8 +21,8 @@ services:
     depends_on:
       - postgres
     environment:
-      - grpc.client.handyman.address=static://handyman:9898
-      - grpc.client.rancher.address=static://rancher:8989
+      - grpc.client.handyman.address=dns:///handyman:9091
+      - grpc.client.rancher.address=dns:///rancher:9093
       - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
       - spring.datasource.username=username
       - spring.datasource.password=password
@@ -40,7 +40,7 @@ services:
     environment:
       - grpc.server.address=0.0.0.0
       - spring.data.mongodb.uri=mongodb://mongodb:27017/rancher
-      - grpc.client.landscape.address=static://landscape:8888
+      - grpc.client.landscape.address=dns:///landscape:9092
 
   postgres:
     container_name: postgres
