@@ -1,4 +1,4 @@
-package com.tinkoffacademy.handyman.entity;
+package com.tinkoffacademy.handyman.enums;
 
 public enum PaymentCard {
     Visa, MasterCard, Mir, UnionPay

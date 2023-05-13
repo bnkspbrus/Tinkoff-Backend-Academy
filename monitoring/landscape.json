@@ -70,7 +70,7 @@
         {
           "datasource": "Prometheus",
           "editorMode": "builder",
-          "expr": "getById_time_seconds_sum{class=\"com.tinkoffacademy.handyman.controller.AccountController\", exception=\"none\"}",
+          "expr": "getById_time_seconds_sum{class=\"com.tinkoffacademy.landscape.controller.AccountController\", exception=\"none\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -156,7 +156,7 @@
         {
           "datasource": "Prometheus",
           "editorMode": "builder",
-          "expr": "getById_time_seconds_max{class=\"com.tinkoffacademy.handyman.controller.AccountController\", exception=\"none\"}",
+          "expr": "getById_time_seconds_max{class=\"com.tinkoffacademy.landscape.controller.AccountController\", exception=\"none\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -213,7 +213,7 @@
         {
           "datasource": "Prometheus",
           "editorMode": "builder",
-          "expr": "findAll_time_seconds_sum{class=\"com.tinkoffacademy.handyman.controller.AccountController\", exception=\"none\"}",
+          "expr": "findAll_time_seconds_sum{class=\"com.tinkoffacademy.landscape.controller.AccountController\", exception=\"none\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -299,7 +299,7 @@
         {
           "datasource": "Prometheus",
           "editorMode": "builder",
-          "expr": "findAll_time_seconds_max{class=\"com.tinkoffacademy.handyman.controller.AccountController\", exception=\"none\"}",
+          "expr": "findAll_time_seconds_max{class=\"com.tinkoffacademy.landscape.controller.AccountController\", exception=\"none\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -356,7 +356,7 @@
         {
           "datasource": "Prometheus",
           "editorMode": "builder",
-          "expr": "save_time_seconds_sum{class=\"com.tinkoffacademy.handyman.controller.AccountController\", exception=\"none\"}",
+          "expr": "save_time_seconds_sum{class=\"com.tinkoffacademy.landscape.controller.AccountController\", exception=\"none\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -443,7 +443,7 @@
         {
           "datasource": "Prometheus",
           "editorMode": "builder",
-          "expr": "save_time_seconds_max{class=\"com.tinkoffacademy.handyman.controller.AccountController\", exception=\"none\"}",
+          "expr": "save_time_seconds_max{class=\"com.tinkoffacademy.landscape.controller.AccountController\", exception=\"none\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"

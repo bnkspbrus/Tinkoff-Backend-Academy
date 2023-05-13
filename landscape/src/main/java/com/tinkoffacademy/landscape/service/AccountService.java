@@ -1,6 +1,7 @@
 package com.tinkoffacademy.landscape.service;
 
 import com.tinkoffacademy.landscape.dto.AccountDto;
+import com.tinkoffacademy.landscape.dto.GardenerStat;
 import com.tinkoffacademy.landscape.entity.Account;
 import com.tinkoffacademy.landscape.entity.AccountTypeV2;
 import com.tinkoffacademy.landscape.repository.AccountRepository;
@@ -80,5 +81,9 @@ public class AccountService {
                 .stream()
                 .map(accountMapper::mapToAccountDto)
                 .toList();
+    }
+
+    public List<GardenerStat> findStatGroupByLogin() {
+        return accountRepository.findStatGroupByLogin();
     }
 }

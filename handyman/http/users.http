@@ -1,4 +1,4 @@
-GET http://localhost:7070/users
+GET http://localhost:8080/users
 Accept: application/json
 
 > {%
@@ -7,7 +7,7 @@ Accept: application/json
     });
 %}
 ###
-POST http://localhost:7070/users
+POST http://localhost:8080/users
 Content-Type: application/json
 Accept: application/json
 
@@ -32,7 +32,7 @@ Accept: application/json
     client.global.set("user_1", JSON.stringify(response.body))
 %}
 ###
-POST http://localhost:7070/users
+POST http://localhost:8080/users
 Content-Type: application/json
 Accept: application/json
 
@@ -58,7 +58,7 @@ Accept: application/json
     client.global.set("user_2", JSON.stringify(response.body))
 %}
 ###
-POST http://localhost:7070/users
+POST http://localhost:8080/users
 Content-Type: application/json
 Accept: application/json
 
@@ -82,7 +82,7 @@ Accept: application/json
     client.global.set("user_3", JSON.stringify(response.body))
 %}
 ###
-GET http://localhost:7070/users
+GET http://localhost:8080/users
 Accept: application/json
 
 > {%

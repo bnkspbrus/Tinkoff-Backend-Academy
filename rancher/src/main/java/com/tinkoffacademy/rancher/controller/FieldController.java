@@ -1,10 +1,8 @@
 package com.tinkoffacademy.rancher.controller;
 
-import java.util.List;
-
-import com.tinkoffacademy.rancher.entity.Field;
+import com.tinkoffacademy.rancher.dto.FieldDto;
 import com.tinkoffacademy.rancher.service.FieldService;
-import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.io.ParseException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,28 +12,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/fields")
 public record FieldController(
         FieldService fieldService
 ) {
     @GetMapping("/{id}")
-    public Field findById(@PathVariable Long id) {
+    public FieldDto findById(@PathVariable Long id) {
         return fieldService.findById(id);
     }
 
     @GetMapping
-    public List<Field> findAll() {
+    public List<FieldDto> findAll() {
         return fieldService.findAll();
     }
 
     @PostMapping
-    public Field save(@RequestBody Field field) {
+    public FieldDto save(@RequestBody FieldDto field) throws ParseException {
         return fieldService.save(field);
     }
 
     @PutMapping("/{id}")
-    public Field updateById(@PathVariable Long id, @RequestBody Field field) {
+    public FieldDto updateById(@PathVariable Long id, @RequestBody FieldDto field) throws ParseException {
         return fieldService.updateById(id, field);
     }
 

@@ -52,10 +52,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
-    implementation "org.liquibase.ext:liquibase-mongodb:${liquibaseVersion}"
+    implementation "org.liquibase.ext:liquibase-mongodb:${mongodbExtVersion}"
     implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
     implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.hibernate:hibernate-spatial'
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -1,4 +1,4 @@
-GET http://localhost:7070/users/accounts
+GET http://localhost:8080/users/accounts
 Accept: application/json
 
 > {%
@@ -7,13 +7,13 @@ Accept: application/json
     });
 %}
 ###
-POST http://localhost:7070/users/accounts
+POST http://localhost:8080/users/accounts
 Content-Type: application/json
 Accept: application/json
 
 {
   "user": {{user_1}},
-  "bank": "Cici Bank",
+  "bank": "CICI_BANK",
   "cardId": 1234567890,
   "paymentCard": "Mir"
 }
@@ -24,13 +24,13 @@ Accept: application/json
     });
 %}
 ###
-POST http://localhost:7070/users/accounts
+POST http://localhost:8080/users/accounts
 Content-Type: application/json
 Accept: application/json
 
 {
-  "user": {{user_2}},
-  "bank": "Bank of Emerika",
+  "user": {{user_1}},
+  "bank": "BANK_OF_NIKITA",
   "cardId": 1234567890,
   "paymentCard": "MasterCard"
 }
@@ -41,13 +41,13 @@ Accept: application/json
     });
 %}
 ###
-POST http://localhost:7070/users/accounts
+POST http://localhost:8080/users/accounts
 Content-Type: application/json
 Accept: application/json
 
 {
-  "user": {{user_3}},
-  "bank": "Kremniy Alley Bank",
+  "user": {{user_1}},
+  "bank": "SBERBANK",
   "cardId": 1234567890,
   "paymentCard": "UnionPay"
 }
@@ -58,7 +58,160 @@ Accept: application/json
     });
 %}
 ###
-GET http://localhost:7070/users/accounts
+POST http://localhost:8080/users/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "user": {{user_1}},
+  "bank": "SBERBANK",
+  "cardId": 1234567890,
+  "paymentCard": "Visa"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+POST http://localhost:8080/users/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "user": {{user_2}},
+  "bank": "BANK_OF_AMERICA",
+  "cardId": 1234567890,
+  "paymentCard": "MasterCard"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+POST http://localhost:8080/users/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "user": {{user_2}},
+  "bank": "KREMNIY_ALLEY_BANK",
+  "cardId": 1234567890,
+  "paymentCard": "MasterCard"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+POST http://localhost:8080/users/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "user": {{user_2}},
+  "bank": "BANK_SPB",
+  "cardId": 1234567890,
+  "paymentCard": "Visa"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+POST http://localhost:8080/users/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "user": {{user_2}},
+  "bank": "ALPHA_BANK",
+  "cardId": 1234567890,
+  "paymentCard": "Mir"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+POST http://localhost:8080/users/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "user": {{user_3}},
+  "bank": "KREMNIY_ALLEY_BANK",
+  "cardId": 1234567890,
+  "paymentCard": "UnionPay"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+POST http://localhost:8080/users/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "user": {{user_3}},
+  "bank": "TINKOFF_BANK",
+  "cardId": 1234567890,
+  "paymentCard": "UnionPay"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+POST http://localhost:8080/users/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "user": {{user_3}},
+  "bank": "BANKA",
+  "cardId": 1234567890,
+  "paymentCard": "Mir"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+POST http://localhost:8080/users/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "user": {{user_3}},
+  "bank": "BANK_OF_NIKITA",
+  "cardId": 1234567890,
+  "paymentCard": "Mir"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+GET http://localhost:8080/users/accounts
 Accept: application/json
 
 > {%

@@ -1,4 +1,4 @@
-package com.tinkoffacademy.handyman.entity;
+package com.tinkoffacademy.handyman.enums;
 
 public enum Skill {
     SHOVEL, PLANT, WATER, SOW

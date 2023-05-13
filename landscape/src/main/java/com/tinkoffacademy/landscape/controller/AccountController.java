@@ -1,6 +1,7 @@
 package com.tinkoffacademy.landscape.controller;
 
 import com.tinkoffacademy.landscape.dto.AccountDto;
+import com.tinkoffacademy.landscape.dto.GardenerStat;
 import com.tinkoffacademy.landscape.service.AccountService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
@@ -54,5 +55,10 @@ public class AccountController {
     @Timed(value = "deleteById.time", description = "Time taken to delete account by id")
     public void deleteById(@PathVariable Long id) {
         accountService.deleteById(id);
+    }
+
+    @GetMapping("/gardener/stat")
+    public List<GardenerStat> findGardenerStat() {
+        return accountService.findStatGroupByLogin();
     }
 }

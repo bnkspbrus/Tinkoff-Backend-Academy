@@ -27,7 +27,7 @@ public class Field {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(optional = false)
-    @JoinColumn(name = "gardener")
+    @JoinColumn(name = "gardener_id")
     @JsonBackReference
     private Gardener gardener;
     @Column(nullable = false)

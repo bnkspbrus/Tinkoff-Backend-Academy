@@ -56,14 +56,14 @@ services:
       - POSTGRES_DB=vogorode
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
-  #    ports:
-  #      - "5432:5432"
+    ports:
+      - "5432:5432"
 
   mongodb:
     container_name: mongodb
     image: mongo
-  #    ports:
-  #      - "27017:27017"
+    ports:
+      - "27017:27017"
 
   prometheus:
     image: prom/prometheus:latest

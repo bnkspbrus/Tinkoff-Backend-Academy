@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.tinkoffacademy.handyman.enums.Bank;
+import com.tinkoffacademy.handyman.enums.PaymentCard;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,10 +29,12 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(optional = false)
+    @Column(name = "user_id")
     @JsonBackReference
     private User user;
     @Column(nullable = false)
-    private String bank;
+    @Enumerated(EnumType.STRING)
+    private Bank bank;
     @Column(nullable = false)
     private Long cardId;
     @Column(nullable = false)
