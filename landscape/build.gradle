@@ -16,12 +16,12 @@ buildscript {
 
 
 plugins {
-    id "java"
-    id "idea"
-    id "org.springframework.boot" version "${springBootVersion}"
-    id "io.spring.dependency-management" version "1.1.0"
-    id "com.google.protobuf" version "${protobufGradlePluginVersion}"
-    id "io.freefair.lombok" version "${lombokPluginVersion}"
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'com.google.protobuf' version "${protobufGradlePluginVersion}"
+    id 'io.freefair.lombok' version "${lombokPluginVersion}"
 }
 
 repositories {
@@ -33,9 +33,9 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 dependencies {
-    implementation "io.grpc:grpc-netty-shaded"
-    implementation "io.grpc:grpc-protobuf"
-    implementation "io.grpc:grpc-stub"
+    implementation 'io.grpc:grpc-netty-shaded'
+    implementation 'io.grpc:grpc-protobuf'
+    implementation 'io.grpc:grpc-stub'
     if (JavaVersion.current().isJava9Compatible()) {
         // Workaround for @javax.annotation.Generated
         // see: https://github.com/grpc/grpc-java/issues/3633
@@ -43,19 +43,19 @@ dependencies {
     }
     implementation "net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}"
     implementation "net.devh:grpc-server-spring-boot-starter:${springBootGrpcVersion}"
-    implementation "org.springframework.boot:spring-boot-starter"
-    implementation "org.springframework.boot:spring-boot-starter-actuator"
-    implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-    implementation "org.springframework.boot:spring-boot-starter-aop"
-    implementation "org.liquibase:liquibase-core"
-    implementation "org.hibernate:hibernate-spatial"
-    implementation "org.modelmapper:modelmapper:3.1.1"
-    runtimeOnly "io.micrometer:micrometer-registry-prometheus"
-    runtimeOnly "org.postgresql:postgresql"
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.hibernate:hibernate-spatial'
+    implementation 'org.modelmapper:modelmapper:3.1.1'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    runtimeOnly 'org.postgresql:postgresql'
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
     testImplementation "org.mockito:mockito-core:${mokitoVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 protobuf {

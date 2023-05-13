@@ -1,63 +1,64 @@
 buildscript {
     ext {
         // https://github.com/grpc/grpc-java/releases
-        grpcVersion = "1.53.0"
+        grpcVersion = '1.53.0'
         // https://github.com/protocolbuffers/protobuf/releases
-        protobufVersion = "3.22.0"
-        protobufGradlePluginVersion = "0.9.2"
+        protobufVersion = '3.22.0'
+        protobufGradlePluginVersion = '0.9.2'
 
         // https://github.com/spring-projects/spring-boot/releases
-        springBootVersion = "2.7.8"
-        springBootGrpcVersion = "2.14.0.RELEASE"
-        lombokPluginVersion = "6.6.2"
-        mockitoVersion = "5.1.1"
-        liquibaseVersion = "4.20.0"
+        springBootVersion = '2.7.8'
+        springBootGrpcVersion = '2.14.0.RELEASE'
+        lombokPluginVersion = '6.6.2'
+        mockitoVersion = '5.1.1'
+        mongodbExtVersion = '4.21.0'
+        liquibaseVersion = '4.20.0'
+        modelMapperVersion = '3.1.1'
     }
 }
 
 
 plugins {
-    id "java"
-    id "idea"
-    id "org.springframework.boot" version "${springBootVersion}"
-    id "io.spring.dependency-management" version "1.1.0"
-    id "com.google.protobuf" version "${protobufGradlePluginVersion}"
-    id "io.freefair.lombok" version "${lombokPluginVersion}"
-//    id "org.liquibase.gradle" version "2.2.0"
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'com.google.protobuf' version "${protobufGradlePluginVersion}"
+    id 'io.freefair.lombok' version "${lombokPluginVersion}"
+    id 'org.liquibase.gradle' version '2.2.0'
 }
 
 repositories {
     mavenCentral()
 }
 
-group = "com.tinkoffacademy"
-version = "0.0.1-SNAPSHOT"
-sourceCompatibility = "17"
+group = 'com.tinkoffacademy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
 dependencies {
-    implementation "io.grpc:grpc-netty-shaded"
-    implementation "io.grpc:grpc-protobuf"
-    implementation "io.grpc:grpc-stub"
+    implementation 'io.grpc:grpc-netty-shaded'
+    implementation 'io.grpc:grpc-protobuf'
+    implementation 'io.grpc:grpc-stub'
     if (JavaVersion.current().isJava9Compatible()) {
         // Workaround for @javax.annotation.Generated
         // see: https://github.com/grpc/grpc-java/issues/3633
-        implementation "jakarta.annotation:jakarta.annotation-api"
+        implementation 'jakarta.annotation:jakarta.annotation-api'
     }
     implementation "net.devh:grpc-server-spring-boot-starter:${springBootGrpcVersion}"
     implementation "net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}"
-    implementation "org.springframework.boot:spring-boot-starter"
-    implementation "org.springframework.boot:spring-boot-starter-actuator"
-    implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
-    implementation "org.springframework.boot:spring-boot-starter-aop"
-    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation "org.liquibase.ext:liquibase-mongodb:${liquibaseVersion}"
     implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
-    implementation "org.modelmapper:modelmapper:3.1.1"
-    implementation "org.hibernate:hibernate-spatial"
-    runtimeOnly "io.micrometer:micrometer-registry-prometheus"
-    runtimeOnly "org.postgresql:postgresql"
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // Grpc-Test-Support
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"

@@ -38,3 +38,6 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+mongo:
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-mongo.yaml

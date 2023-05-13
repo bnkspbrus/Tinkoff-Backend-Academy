@@ -34,3 +34,6 @@ grpc:
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
+mongo:
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-mongo.yaml
