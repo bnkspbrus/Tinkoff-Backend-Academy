@@ -1,7 +1,7 @@
 package com.tinkoffacademy.handyman.service;
 
 import com.tinkoffacademy.handyman.dto.AccountDto;
-import com.tinkoffacademy.handyman.model.Account;
+import com.tinkoffacademy.handyman.document.Account;
 import com.tinkoffacademy.handyman.repository.AccountRepository;
 import com.tinkoffacademy.handyman.utils.AccountMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.tinkoff.proto.AccountProto;
 import ru.tinkoff.proto.AccountServiceGrpc.AccountServiceBlockingStub;
-import ru.tinkoff.proto.UUIDProto;
+import ru.tinkoff.proto.IdProto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +30,8 @@ public class AccountService {
 
     public AccountDto getById(String id) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Handyman account with id " + id + " not found"));
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Handyman account with id " + id + " not " +
+                        "found"));
 
         return accountMapper.mapToAccountDto(account);
     }
@@ -45,9 +46,9 @@ public class AccountService {
     @Transactional
     public AccountDto save(AccountDto accountDto) {
         AccountProto accountProto = accountMapper.mapToAccountProto(accountDto);
-        UUIDProto uuid = landscapeStub.save(accountProto);
+        IdProto id = landscapeStub.save(accountProto);
         Account account = accountMapper.mapToAccount(accountDto);
-        account.setParentUUID(uuid.getValue());
+        account.setParentId(id.getValue());
         account = accountRepository.save(account);
         return accountMapper.mapToAccountDto(account);
     }

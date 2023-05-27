@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @JsonIgnoreProperties(value = {"id"}, allowGetters = true)
 public class AccountDto {
-        private UUID id;
+        private Long id;
         private String typeName;
         @NotBlank(message = "Login is mandatory")
         private String login;

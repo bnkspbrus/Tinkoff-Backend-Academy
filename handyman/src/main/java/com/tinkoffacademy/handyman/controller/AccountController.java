@@ -4,6 +4,8 @@ import com.tinkoffacademy.handyman.dto.AccountDto;
 import com.tinkoffacademy.handyman.service.AccountService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
+import com.tinkoffacademy.handyman.document.Account;
+import com.tinkoffacademy.handyman.service.AccountService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

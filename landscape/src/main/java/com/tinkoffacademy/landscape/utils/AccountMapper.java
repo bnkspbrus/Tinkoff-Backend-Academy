@@ -1,7 +1,7 @@
 package com.tinkoffacademy.landscape.utils;
 
 import com.tinkoffacademy.landscape.dto.AccountDto;
-import com.tinkoffacademy.landscape.model.Account;
+import com.tinkoffacademy.landscape.entity.Account;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -11,8 +11,8 @@ import ru.tinkoff.proto.AccountProto;
 /**
  * AccountMapper is a class that maps Account to AccountDto and vice versa.
  *
- * @see com.tinkoffacademy.landscape.dto.AccountDto
- * @see com.tinkoffacademy.landscape.model.Account
+ * @see AccountDto
+ * @see Account
  */
 @Component
 @RequiredArgsConstructor

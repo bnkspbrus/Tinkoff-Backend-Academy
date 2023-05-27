@@ -19,7 +19,7 @@ import java.util.List;
  * It is used in the {@link com.tinkoffacademy.rancher.controller.AccountController}.
  * </p>
  *
- * @see com.tinkoffacademy.rancher.model.Account
+ * @see com.tinkoffacademy.rancher.document.Account
  * @see com.tinkoffacademy.rancher.controller.AccountController
  */
 @JsonIgnoreProperties(value = {"id"}, allowGetters = true)
@@ -29,7 +29,6 @@ import java.util.List;
 public class AccountDto {
     @JsonInclude(Include.NON_NULL)
     private String id;
-    @NotBlank(message = "Login is mandatory")
     private String login;
     @Email(message = "Email should be valid")
     private String email;

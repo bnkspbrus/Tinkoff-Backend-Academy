@@ -3,7 +3,7 @@ package com.tinkoffacademy.handyman.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tinkoffacademy.handyman.config.ModelMapperConfig;
 import com.tinkoffacademy.handyman.dto.AccountDto;
-import com.tinkoffacademy.handyman.model.Account;
+import com.tinkoffacademy.handyman.document.Account;
 import com.tinkoffacademy.handyman.repository.AccountRepository;
 import com.tinkoffacademy.handyman.service.AccountService;
 import com.tinkoffacademy.handyman.utils.AccountMapper;
@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.tinkoff.proto.AccountCredProto;
 import ru.tinkoff.proto.AccountServiceGrpc.AccountServiceBlockingStub;
-import ru.tinkoff.proto.UUIDProto;
+import ru.tinkoff.proto.IdProto;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -79,32 +79,32 @@ class AccountControllerTest {
             new AccountDto("id10", "login10", "email10", "phone10", 10.0, 10.0, List.of("skill10"))
     );
     private static final List<Account> accountList = List.of(
-            new Account("id1", "id1", 1.0, 1.0, List.of("skill1")),
-            new Account("id2", "id2", 2.0, 2.0, List.of("skill2")),
-            new Account("id3", "id3", 3.0, 3.0, List.of("skill3")),
-            new Account("id4", "id4", 4.0, 4.0, List.of("skill4")),
-            new Account("id5", "id5", 5.0, 5.0, List.of("skill5")),
-            new Account("id6", "id6", 6.0, 6.0, List.of("skill6")),
-            new Account("id7", "id7", 7.0, 7.0, List.of("skill7")),
-            new Account("id8", "id8", 8.0, 8.0, List.of("skill8")),
-            new Account("id9", "id9", 9.0, 9.0, List.of("skill9")),
-            new Account("id10", "id10", 10.0, 10.0, List.of("skill10"))
+            new Account("id1", 1L, 1.0, 1.0, List.of("skill1")),
+            new Account("id2", 2L, 2.0, 2.0, List.of("skill2")),
+            new Account("id3", 3L, 3.0, 3.0, List.of("skill3")),
+            new Account("id4", 4L, 4.0, 4.0, List.of("skill4")),
+            new Account("id5", 5L, 5.0, 5.0, List.of("skill5")),
+            new Account("id6", 6L, 6.0, 6.0, List.of("skill6")),
+            new Account("id7", 7L, 7.0, 7.0, List.of("skill7")),
+            new Account("id8", 8L, 8.0, 8.0, List.of("skill8")),
+            new Account("id9", 9L, 9.0, 9.0, List.of("skill9")),
+            new Account("id10", 10L, 10.0, 10.0, List.of("skill10"))
     );
     /**
-     * List of test UUIDProto Objects of size 10. Use UUIDProto.newBuilder().build() for creating. Use setValue() for setting value.
-     * see {@link UUIDProto}
+     * List of test IdProto Objects of size 10. Use IdProto.newBuilder().build() for creating. Use setValue() for setting value.
+     * see {@link IdProto}
      */
-    private static final List<UUIDProto> uuidProtoList = List.of(
-            UUIDProto.newBuilder().setValue("id1").build(),
-            UUIDProto.newBuilder().setValue("id2").build(),
-            UUIDProto.newBuilder().setValue("id3").build(),
-            UUIDProto.newBuilder().setValue("id4").build(),
-            UUIDProto.newBuilder().setValue("id5").build(),
-            UUIDProto.newBuilder().setValue("id6").build(),
-            UUIDProto.newBuilder().setValue("id7").build(),
-            UUIDProto.newBuilder().setValue("id8").build(),
-            UUIDProto.newBuilder().setValue("id9").build(),
-            UUIDProto.newBuilder().setValue("id10").build()
+    private static final List<IdProto> uuidProtoList = List.of(
+            IdProto.newBuilder().setValue(1L).build(),
+            IdProto.newBuilder().setValue(2L).build(),
+            IdProto.newBuilder().setValue(3L).build(),
+            IdProto.newBuilder().setValue(4L).build(),
+            IdProto.newBuilder().setValue(5L).build(),
+            IdProto.newBuilder().setValue(6L).build(),
+            IdProto.newBuilder().setValue(7L).build(),
+            IdProto.newBuilder().setValue(8L).build(),
+            IdProto.newBuilder().setValue(9L).build(),
+            IdProto.newBuilder().setValue(10L).build()
     );
     /**
      * List of test AccountCredProto Objects of size 10. Use AccountCredProto.newBuilder().build() for creating. Use setLogin(), setEmail() and setPhone() for setting value.
@@ -125,7 +125,7 @@ class AccountControllerTest {
     );
 
     /**
-     * Provide a stream of {@link Arguments} to be injected into {@link AccountControllerTest#getAccountById(AccountDto, Account, AccountCredProto, UUIDProto)}
+     * Provide a stream of {@link Arguments} to be injected into {@link AccountControllerTest#getAccountById(AccountDto, Account, AccountCredProto, IdProto)}
      * Use {@link Arguments#of(Object...)} for creating {@link Arguments} instance.
      * Use corresponding objects from {@link AccountControllerTest#accountDtoList}, {@link AccountControllerTest#accountList}, {@link AccountControllerTest#accountCredProtoList} and {@link AccountControllerTest#uuidProtoList}
      *
@@ -148,7 +148,7 @@ class AccountControllerTest {
 
     @ParameterizedTest
     @MethodSource("provideGetAccountById")
-    void getAccountById(AccountDto accountDto, Account account, AccountCredProto accountCredProto, UUIDProto uuidProto) throws Exception {
+    void getAccountById(AccountDto accountDto, Account account, AccountCredProto accountCredProto, IdProto uuidProto) throws Exception {
         Mockito.when(accountRepository.findById(account.getId())).thenReturn(java.util.Optional.of(account));
         Mockito.when(landscapeStub.findById(uuidProto)).thenReturn(accountCredProto);
         mockMvc.perform(MockMvcRequestBuilders.get("/accounts/" + account.getId()))

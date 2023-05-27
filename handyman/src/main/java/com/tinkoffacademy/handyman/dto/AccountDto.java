@@ -18,7 +18,7 @@ import java.util.List;
  * It is used in the {@link com.tinkoffacademy.handyman.controller.AccountController}.
  * </p>
  *
- * @see com.tinkoffacademy.handyman.model.Account
+ * @see com.tinkoffacademy.handyman.document.Account
  * @see com.tinkoffacademy.handyman.controller.AccountController
  */
 @JsonIgnoreProperties(value = {"id"}, allowGetters = true)

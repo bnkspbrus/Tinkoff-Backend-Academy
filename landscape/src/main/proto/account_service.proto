@@ -6,8 +6,8 @@ option java_package = "ru.tinkoff.proto";
 option java_multiple_files = true;
 
 service AccountService {
-  rpc save(AccountProto) returns (UUIDProto);
-  rpc findById(UUIDProto) returns (AccountCredProto);
+  rpc save(AccountProto) returns (IdProto);
+  rpc findById(IdProto) returns (AccountCredProto);
 }
 
 message AccountProto {
@@ -19,8 +19,8 @@ message AccountProto {
   double longitude = 6;
 }
 
-message UUIDProto {
-  string value = 1;
+message IdProto {
+  int64 value = 1;
 }
 
 message AccountCredProto {

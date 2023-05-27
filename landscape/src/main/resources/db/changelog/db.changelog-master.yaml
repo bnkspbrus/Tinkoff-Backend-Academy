@@ -1,10 +1,10 @@
 databaseChangeLog:
   - include:
-      file: db/create-table-account.sql
+      file: db/create-account.sql
   - includeAll:
       errorIfMissingOrEmpty: false
       path: db/data
   - include:
-      file: db/alter-table-account.sql
+      file: db/alter-account.sql
   - include:
       file: db/create-procedure.sql

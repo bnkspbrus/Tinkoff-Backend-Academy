@@ -12,11 +12,13 @@ services:
       - "8080:8080"
     depends_on:
       - mongodb
+      - postgres
     build: ../handyman
     environment:
       - grpc.server.address=0.0.0.0
       - spring.data.mongodb.uri=mongodb://mongodb:27017/handyman
       - grpc.client.landscape.address=dns:///landscape:9092
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
 
   landscape:
     container_name: landscape
@@ -41,21 +43,23 @@ services:
       - "8082:8082"
     depends_on:
       - mongodb
+      - postgres
     build: ../rancher
     environment:
       - grpc.server.address=0.0.0.0
       - spring.data.mongodb.uri=mongodb://mongodb:27017/rancher
       - grpc.client.landscape.address=dns:///landscape:9092
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
 
   postgres:
     container_name: postgres
-    image: postgres
+    image: postgis/postgis
     environment:
       - POSTGRES_DB=vogorode
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
-  #    ports:
-  #      - "5432:5432"
+    ports:
+      - "5432:5432"
 
   mongodb:
     container_name: mongodb
@@ -97,5 +101,3 @@ services:
       - 3000
     ports:
       - "3000:3000"
-
-

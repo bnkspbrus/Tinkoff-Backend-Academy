@@ -1,6 +1,6 @@
 package com.tinkoffacademy.landscape.service;
 
-import com.tinkoffacademy.landscape.model.AccountTypeV2;
+import com.tinkoffacademy.landscape.entity.AccountTypeV2;
 import com.tinkoffacademy.landscape.repository.AccountTypeV2Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class AccountTypeV2Service {
                 .orElseThrow(
                         () -> new ResponseStatusException(
                                 NOT_FOUND,
-                                "AccountTypeV2 with typeName " + typeName + "not found"
+                                "AccountTypeV2 with typeName " + typeName + " not found"
                         )
                 );
     }
