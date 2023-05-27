@@ -1,5 +1,5 @@
 server:
-  port: 7070
+  port: 8080
 spring:
   application:
     name: handyman
@@ -12,25 +12,25 @@ spring:
     password: password
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   liquibase:
     enabled: false
 management:
   endpoints:
     web:
       exposure:
-        include: info, prometheus
+        include: prometheus, info
       base-path:
       path-mapping:
         prometheus: /metrics
         info: /actuator/info
 grpc:
   server:
-    port: 9898
     address: 127.0.0.1
+    port: 9091
   client:
     landscape:
-      address: 'static://127.0.0.1:8900'
+      address: 'static://127.0.0.1:9092'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext

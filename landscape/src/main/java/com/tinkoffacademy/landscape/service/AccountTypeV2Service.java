@@ -19,7 +19,7 @@ public class AccountTypeV2Service {
                 .orElseThrow(
                         () -> new ResponseStatusException(
                                 NOT_FOUND,
-                                "AccountTypeV2 with typeName " + typeName + "not found"
+                                "AccountTypeV2 with typeName " + typeName + " not found"
                         )
                 );
     }

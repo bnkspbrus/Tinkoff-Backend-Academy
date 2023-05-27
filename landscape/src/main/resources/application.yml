@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   application:
     name: landscape
@@ -9,8 +9,9 @@ spring:
     password: password
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   liquibase:
+#    change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: false
 management:
   endpoints:
@@ -24,18 +25,18 @@ management:
 grpc:
   client:
     handyman:
-      address: 'static://127.0.0.1:9898'
+      address: 'static://127.0.0.1:9091'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
     rancher:
-      address: 'static://127.0.0.1:8989'
+      address: 'static://127.0.0.1:9093'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
   server:
-    port: 8888
     address: 127.0.0.1
+    port: 9092
 logging:
   level:
     org.hibernate.SQL: DEBUG

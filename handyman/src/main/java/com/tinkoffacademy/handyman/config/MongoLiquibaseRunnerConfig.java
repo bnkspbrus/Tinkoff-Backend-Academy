@@ -12,7 +12,7 @@ public class MongoLiquibaseRunnerConfig {
     @Bean
     public MongoLiquibaseRunner liquibaseRunner(
             MongoLiquibaseDatabase database,
-            @Value("${MONGO_CHANGELOG_FILE:db/changelog/db.changelog-master.yaml}") String changeLogFile
+            @Value("${MONGO_CHANGELOG_FILE:db/changelog/db.changelog-mongo.yaml}") String changeLogFile
     ) {
         return new MongoLiquibaseRunner(database, changeLogFile);
     }
