@@ -1,5 +1,5 @@
 server:
-  port: 9090
+  port: 8082
 spring:
   application:
     name: rancher
@@ -17,8 +17,8 @@ management:
         info: /actuator/info
 grpc:
   server:
-    port: 9093
     address: 127.0.0.1
+    port: 9093
   client:
     landscape:
       address: 'static://127.0.0.1:9092'

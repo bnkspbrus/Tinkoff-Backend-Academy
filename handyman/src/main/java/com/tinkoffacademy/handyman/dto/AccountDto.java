@@ -28,7 +28,6 @@ import java.util.List;
 public class AccountDto {
     @JsonInclude(Include.NON_NULL)
     private String id;
-    @NotBlank(message = "Login is mandatory")
     private String login;
     @Email(message = "Email should be valid")
     private String email;

@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   application:
     name: landscape
@@ -35,8 +35,8 @@ grpc:
       keepAliveWithoutCalls: true
       negotiationType: plaintext
   server:
-    port: 9092
     address: 127.0.0.1
+    port: 9092
 logging:
   level:
     org.hibernate.SQL: DEBUG
