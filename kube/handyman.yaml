@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: handyman
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: handyman
@@ -25,12 +25,10 @@ spec:
         env:
           - name: GRPC_SERVER_ADDRESS
             value: 0.0.0.0
-          - name: SPRING_DATASOURCE_URL
-            value: jdbc:postgresql://postgres:5432/vogorode
-          - name: SPRING_DATASOURCE_USERNAME
-            value: username
-          - name: SPRING_DATASOURCE_PASSWORD
-            value: password
+          - name: GRPC_CLIENT_LANDSCAPE_ADDRESS
+            value: dns:///landscape-grpc:8888
+          - name: SPRING_DATA_MONGODB_URI
+            value: mongodb://mongodb:27017/handyman
 ---
 apiVersion: v1
 kind: Service

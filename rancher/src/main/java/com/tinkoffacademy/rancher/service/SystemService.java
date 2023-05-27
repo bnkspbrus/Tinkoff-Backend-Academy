@@ -14,9 +14,7 @@ import static java.util.Map.entry;
 
 @Service
 public class SystemService {
-
     private final BuildProperties buildProperties;
-
     @Setter
     private ManagedChannel channel;
 

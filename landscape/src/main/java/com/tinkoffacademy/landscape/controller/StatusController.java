@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/servers")
 public class StatusController {
-
     private final StatusService statusService;
 
     /**
      * Gets status of each server
+     *
      * @return all handyman statuses and all rancher statuses
      */
     @GetMapping("/statuses")

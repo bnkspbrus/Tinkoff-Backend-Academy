@@ -6,10 +6,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class StatusCollector {
-
     @JsonProperty("HandymanService")
     private final List<ServerStatus> allHandyman = new ArrayList<>();
-
     @JsonProperty("RancherService")
     private final List<ServerStatus> allRancher = new ArrayList<>();
 

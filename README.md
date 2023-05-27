@@ -4,9 +4,11 @@
 
 ### Пререквезиты
 
-* JDK версии 17 или выше, настроенный `JAVA_HOME`, `docker`, `minikube`, `kubectl`
+* `docker`, `minikube`, `kubectl`
 
 ### Использование
+
+#### kubernetes
 
 * Все команды выполняйте в одном терминале
 * Выполните `sudo systemctl start docker`
@@ -16,6 +18,14 @@
 * Запустите нужный сервис `minikube service $SERVICE`, где `SERVICE` это handyman, rancher или landscape
 * Выполняйте свои запросы в открывшемся окне браузера
 * Выполните `minikube stop`, когда надоест делать запросы
+
+#### docker compose
+
+* Выполните `sudo systemctl start docker`
+* Создайте директорию `landscape/src/main/resources/db/data`, если не существует
+* Положите в `landscape/src/main/resources/db/data` файл https://drive.google.com/file/d/1oO6ipKpazhdddr1qrfzQ1SMSdxY0CTy-/view?usp=sharing
+* Выполните `./setup.sh`
+* Выполните `docker compose -f dev/docker-compose.yml up`
 
 ### Ссылки
 

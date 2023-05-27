@@ -10,6 +10,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+#    enabled: false
 management:
   endpoints:
     web:
@@ -22,12 +25,19 @@ management:
 grpc:
   client:
     handyman:
-      address: 'static://127.0.0.1:9898'
+      address: 'static://127.0.0.1:9091'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
     rancher:
-      address: 'static://127.0.0.1:8989'
+      address: 'static://127.0.0.1:9093'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
+  server:
+    port: 9092
+    address: 127.0.0.1
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

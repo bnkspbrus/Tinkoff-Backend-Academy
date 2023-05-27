@@ -14,9 +14,7 @@ import ru.tinkoff.proto.VersionResponse;
 @GrpcService
 @RequiredArgsConstructor
 public class StatusServiceImpl extends StatusServiceGrpc.StatusServiceImplBase {
-
     private final Logger logger = LoggerFactory.getLogger(StatusServiceImpl.class);
-
     private final BuildProperties buildProperties;
 
     /**
@@ -49,6 +47,7 @@ public class StatusServiceImpl extends StatusServiceGrpc.StatusServiceImplBase {
 
     /**
      * Gets server version
+     *
      * @return server version
      */
     private VersionResponse getVersion() {

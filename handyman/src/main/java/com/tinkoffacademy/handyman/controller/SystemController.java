@@ -6,14 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 @RestController
 @RequestMapping("/system")
 @RequiredArgsConstructor
 public class SystemController {
-
     private final SystemService systemService;
 
     /**
