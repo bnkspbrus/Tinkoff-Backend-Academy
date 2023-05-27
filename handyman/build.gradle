@@ -52,6 +52,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-aop"
     implementation "org.liquibase.ext:liquibase-mongodb:${liquibaseVersion}"
     implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation 'org.modelmapper:modelmapper:3.1.1'
     runtimeOnly "io.micrometer:micrometer-registry-prometheus"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
