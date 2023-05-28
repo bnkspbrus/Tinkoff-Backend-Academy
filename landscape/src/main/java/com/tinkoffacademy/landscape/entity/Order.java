@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import javax.persistence.*;
 
+import com.tinkoffacademy.landscape.enums.Skill;
+import com.tinkoffacademy.landscape.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

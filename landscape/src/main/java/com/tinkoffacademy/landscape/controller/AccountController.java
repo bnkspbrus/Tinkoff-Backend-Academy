@@ -1,6 +1,7 @@
 package com.tinkoffacademy.landscape.controller;
 
 import com.tinkoffacademy.landscape.dto.AccountDto;
+import com.tinkoffacademy.landscape.dto.BankStat;
 import com.tinkoffacademy.landscape.dto.GardenerStat;
 import com.tinkoffacademy.landscape.service.AccountService;
 import io.micrometer.core.annotation.Timed;
@@ -60,5 +61,10 @@ public class AccountController {
     @GetMapping("/gardener/stat")
     public List<GardenerStat> findGardenerStat() {
         return accountService.findStatGroupByLogin();
+    }
+
+    @GetMapping("/bank/stat")
+    public List<BankStat> findBankStat() {
+        return accountService.findStatGroupByBank();
     }
 }
