@@ -59,11 +59,13 @@ public class AccountController {
     }
 
     @GetMapping("/gardener/stat")
+    @Timed(value = "findGardenerStat.time", description = "Time taken to find gardener stat")
     public List<GardenerStat> findGardenerStat() {
         return accountService.findStatGroupByLogin();
     }
 
     @GetMapping("/bank/stat")
+    @Timed(value = "findBankStat.time", description = "Time taken to find bank stat")
     public List<BankStat> findBankStat() {
         return accountService.findStatGroupByBank();
     }
