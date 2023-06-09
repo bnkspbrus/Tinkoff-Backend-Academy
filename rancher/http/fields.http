@@ -12,7 +12,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "gardener": {{gardener_1}},
+  "gardenerId": {{gardener_1}},
   "address": "address 1",
   "latitude": 1,
   "longitude": 2,
@@ -30,7 +30,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "gardener": {{gardener_2}},
+  "gardenerId": {{gardener_2}},
   "address": "address 2",
   "latitude": 2,
   "longitude": 2,
@@ -48,7 +48,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "gardener": {{gardener_3}},
+  "gardenerId": {{gardener_3}},
   "address": "address 3",
   "latitude": 3,
   "longitude": 2,

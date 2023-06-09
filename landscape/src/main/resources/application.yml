@@ -9,10 +9,10 @@ spring:
     password: password
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+        dialect: com.tinkoffacademy.landscape.config.STAreaPostgisDialect
   liquibase:
     enabled: false
 management:

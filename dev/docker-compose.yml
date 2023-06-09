@@ -1,8 +1,8 @@
 version: "3.9"
 
 volumes:
-  prometheus_data: {}
-  grafana_data: {}
+  prometheus_data: { }
+  grafana_data: { }
 
 services:
   handyman:
@@ -11,8 +11,10 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - mongodb
-      - postgres
+      postgres:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
     build: ../handyman
     environment:
       - grpc.server.address=0.0.0.0
@@ -26,7 +28,8 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
       - grpc.client.handyman.address=dns:///handyman:9091
       - grpc.client.rancher.address=dns:///rancher:9093
@@ -40,8 +43,10 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - mongodb
-      - postgres
+      postgres:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
     build: ../rancher
     environment:
       - grpc.server.address=0.0.0.0
@@ -52,6 +57,8 @@ services:
   postgres:
     container_name: postgres
     image: postgis/postgis
+    healthcheck:
+      test: pg_isready -U username -d postgresql://postgres:5432/vogorode
     environment:
       - POSTGRES_DB=vogorode
       - POSTGRES_USER=username
@@ -62,6 +69,8 @@ services:
   mongodb:
     container_name: mongodb
     image: mongo
+    healthcheck:
+      test: mongosh --eval "printjson(db.serverStatus())"
     ports:
       - "27017:27017"
 
