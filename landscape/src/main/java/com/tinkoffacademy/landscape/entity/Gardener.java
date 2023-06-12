@@ -2,22 +2,20 @@ package com.tinkoffacademy.landscape.entity;
 
 import lombok.Getter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 public class Gardener extends Account {
     @OneToMany(mappedBy = "gardener", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Field> fields;
+    private List<Field> fields = new ArrayList<>();
 
     public void setFields(List<Field> fields) {
-        this.fields = fields;
-        fields.forEach(field -> field.setGardener(this));
-        if (getId() == null) {
-            fields.forEach(field -> field.setId(null));
-        }
+        this.fields.forEach(field -> field.setGardener(null));
+        this.fields.clear();
+        this.fields.addAll(fields);
+        this.fields.forEach(field -> field.setGardener(this));
     }
 }

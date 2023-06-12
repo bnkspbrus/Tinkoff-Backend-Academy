@@ -8,14 +8,16 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
+@EqualsAndHashCode(exclude = "gardener")
+@ToString(exclude = "gardener")
 @AllArgsConstructor
+@NoArgsConstructor
+@With
 public class Field {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Gardener gardener;
     @Column(nullable = false)
     private String address;

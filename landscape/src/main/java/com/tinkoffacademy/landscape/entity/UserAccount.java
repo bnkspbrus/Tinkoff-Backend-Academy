@@ -9,14 +9,16 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
+@EqualsAndHashCode(exclude = "user")
+@ToString(exclude = "user")
 @AllArgsConstructor
+@NoArgsConstructor
+@With
 public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User user;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

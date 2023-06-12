@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -47,6 +49,7 @@ public class AccountService {
                 .toList();
     }
 
+    @Transactional
     public AccountDto save(AccountDto accountDto) {
         Account account = accountMapper.mapToAccount(accountDto);
         account = accountRepository.save(account);
@@ -57,6 +60,7 @@ public class AccountService {
         accountRepository.deleteById(id);
     }
 
+    @Transactional
     public AccountDto updateById(Long id, AccountDto accountDto) {
         Account account = getAccountById(id);
         if (accountDto.getType() != account.getType()) {
@@ -65,8 +69,8 @@ public class AccountService {
                     "Account type can't be changed"
             );
         }
-        account = accountMapper.mapToAccount(accountDto, account);
-        account.setId(id);
+        accountDto.setId(id);
+        account = accountMapper.mapToAccount(accountDto);
         account = accountRepository.save(account);
         return accountMapper.mapToAccountDto(account);
     }

@@ -29,15 +29,7 @@ public class AccountMapper {
         if (accountDto instanceof GardenerDto) {
             return modelMapper.map(accountDto, Gardener.class);
         }
-        return modelMapper.map(accountDto, Account.class);
-    }
-
-    /**
-     * Maps fields from AccountDto to Account using ModelMapper. ModelMapper skips creation and updating fields.
-     */
-    public Account mapToAccount(AccountDto accountDto, Account account) {
-        modelMapper.map(accountDto, account);
-        return account;
+        throw new IllegalArgumentException("Unknown account type");
     }
 
     public AccountDto mapToAccountDto(Account account) {
@@ -47,6 +39,6 @@ public class AccountMapper {
         if (account instanceof Gardener) {
             return modelMapper.map(account, GardenerDto.class);
         }
-        return modelMapper.map(account, AccountDto.class);
+        throw new IllegalArgumentException("Unknown account type");
     }
 }

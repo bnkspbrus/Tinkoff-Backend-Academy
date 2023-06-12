@@ -1,17 +1,13 @@
 package com.tinkoffacademy.landscape.config;
 
-import com.tinkoffacademy.landscape.dto.*;
-import com.tinkoffacademy.landscape.entity.*;
-import org.modelmapper.Conditions;
-import org.modelmapper.Converter;
+import com.tinkoffacademy.landscape.dto.GardenerDto;
+import com.tinkoffacademy.landscape.dto.UserDto;
+import com.tinkoffacademy.landscape.entity.Gardener;
+import com.tinkoffacademy.landscape.entity.User;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Configuration
 public class ModelMapperConfig {
@@ -23,54 +19,24 @@ public class ModelMapperConfig {
         // configure ModelMapper to skip null fields
         modelMapper.getConfiguration()
                 .setSkipNullEnabled(true);
-        // converter from List<Field> to List<FieldDto>
-        Converter<List<FieldDto>, List<Field>> toFieldList = ctx -> ctx.getSource()
-                .stream()
-                .map(fieldDto -> modelMapper.map(fieldDto, Field.class))
-                .toList();
-        // configure ModelMapper to map GardenerDto's fields to Gardener's fields.
-        modelMapper.typeMap(GardenerDto.class, Gardener.class)
-                .addMappings(mapper -> mapper
-                        .when(Conditions.isNotNull())
-                        .using(toFieldList)
-                        .map(GardenerDto::getFields, Gardener::setFields)
-                );
-        // converter from List<Field> to List<FieldDto>
-        Converter<List<Field>, List<FieldDto>> toFieldDtoList = ctx -> ctx.getSource()
-                .stream()
-                .map(field -> modelMapper.map(field, FieldDto.class))
-                .toList();
-        // configure ModelMapper to map Gardener's fields to GardenerDto's fields.
-        modelMapper.typeMap(Gardener.class, GardenerDto.class)
-                .addMappings(mapper -> mapper
-                        .when(Conditions.isNotNull())
-                        .using(toFieldDtoList)
-                        .map(Gardener::getFields, GardenerDto::setFields)
-                );
-        // converter from List<UserAccountDto> to List<UserAccount>
-        Converter<List<UserAccountDto>, List<UserAccount>> toUserAccountList = ctx -> ctx.getSource()
-                .stream()
-                .map(userAccountDto -> modelMapper.map(userAccountDto, UserAccount.class))
-                .toList();
-        // configure ModelMapper to map UserDto's userAccounts to User's userAccounts.
+
         modelMapper.typeMap(UserDto.class, User.class)
-                .addMappings(mapper -> mapper
-                        .when(Conditions.isNotNull())
-                        .using(toUserAccountList)
-                        .map(UserDto::getUserAccounts, User::setUserAccounts)
-                );
-        // converter from List<UserAccount> to List<UserAccountDto>
-        Converter<List<UserAccount>, List<UserAccountDto>> toUserAccountDtoList = ctx -> ctx.getSource()
-                .stream()
-                .map(userAccount -> modelMapper.map(userAccount, UserAccountDto.class))
-                .toList();
-        // configure ModelMapper to map User's userAccounts to UserDto's userAccounts.
-        modelMapper.typeMap(User.class, UserDto.class)
-                .addMappings(mapper -> mapper
-                        .when(Conditions.isNotNull())
-                        .using(toUserAccountDtoList)
-                        .map(User::getUserAccounts, UserDto::setUserAccounts)
-                );
+                .setPostConverter(context -> {
+                    User user = context.getDestination();
+                    if (user.getId() == null) {
+                        user.getUserAccounts().forEach(userAccount -> userAccount.setId(null));
+                    }
+                    return user;
+                });
+        // set post converter for GardenerDto to Gardener mapping
+        modelMapper.typeMap(GardenerDto.class, Gardener.class)
+                .setPostConverter(context -> {
+                    Gardener gardener = context.getDestination();
+                    if (gardener.getId() == null) {
+                        gardener.getFields().forEach(field -> field.setId(null));
+                    }
+                    return gardener;
+                });
         return modelMapper;
     }
 }

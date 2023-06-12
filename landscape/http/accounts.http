@@ -57,7 +57,7 @@ Accept: application/json
   "updating": "2019-01-01T00:00:00.000Z",
   "userAccounts": [
     {
-      "id": 123456789,
+      "id": 1,
       "bank": "Sberbank",
       "cardId": 123456789,
       "paymentSystem": "Visa"
@@ -69,9 +69,11 @@ Accept: application/json
     client.test("Request executed successfully", function() {
         client.assert(response.status === 200, "Response status is not 200");
     });
+    client.global.set("handymanId", response.body.id);
+    client.global.set("userAccountId", response.body.userAccounts[0].id);
 %}
 ###
-POST http://localhost:8081/accounts
+PUT http://localhost:8081/accounts/{{gardenerId}}
 Content-Type: application/json
 Accept: application/json
 
@@ -108,5 +110,77 @@ Accept: application/json
     client.test("Request executed successfully", function() {
         client.assert(response.status === 200, "Response status is not 200");
     });
+%}
+###
+PUT http://localhost:8081/accounts/{{handymanId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "type": "handyman",
+  "firstName": "Nikita",
+  "lastName": "Barsukov",
+  "login": "nbar",
+  "email": "nbar@mail.ru",
+  "phone": "123456789",
+  "latitude": 55.7558,
+  "longitude": 37.6173,
+  "skills": [
+    "WATER"
+  ],
+  "creation": "2019-01-01T00:00:00.000Z",
+  "updating": "2019-01-01T00:00:00.000Z",
+  "userAccounts": [
+    {
+      "id": {{userAccountId}},
+      "bank": "Alpha",
+      "cardId": 123456789,
+      "paymentSystem": "UnionPay"
+    }
+  ]
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("handymanId", response.body.id);
+    client.global.set("userAccountId", response.body.userAccounts[0].id);
+%}
+###
+PUT http://localhost:8081/accounts/{{handymanId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "type": "handyman",
+  "firstName": "Nikita",
+  "lastName": "Barsukov",
+  "login": "nbar",
+  "email": "nbar@mail.ru",
+  "phone": "123456789",
+  "latitude": 55.7558,
+  "longitude": 37.6173,
+  "skills": [
+    "WATER"
+  ],
+  "creation": "2019-01-01T00:00:00.000Z",
+  "updating": "2019-01-01T00:00:00.000Z",
+  "userAccounts": [
+    {
+      "id": 50,
+      "bank": "Alpha",
+      "cardId": 111111111,
+      "paymentSystem": "MasterCard"
+    }
+  ]
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("handymanId", response.body.id);
+    client.global.set("userAccountId", response.body.userAccounts[0].id);
 %}
 ###

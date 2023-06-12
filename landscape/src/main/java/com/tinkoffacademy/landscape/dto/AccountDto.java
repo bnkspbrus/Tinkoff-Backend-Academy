@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 })
 @Data
 @JsonIgnoreProperties(value = {"id", "creation", "updating"}, allowGetters = true)
-public class AccountDto {
+public abstract class AccountDto {
     private Long id;
     private AccountType type;
     private String firstName;

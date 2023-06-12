@@ -1,10 +1,7 @@
 package com.tinkoffacademy.landscape.entity;
 
 import com.tinkoffacademy.landscape.enums.AccountType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,12 +9,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Account {
+public abstract class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
