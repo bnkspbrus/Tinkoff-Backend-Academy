@@ -51,6 +51,10 @@ dependencies {
     implementation 'org.liquibase:liquibase-core'
     implementation 'org.hibernate:hibernate-spatial'
     implementation 'org.modelmapper:modelmapper:3.1.1'
+    implementation 'org.locationtech.jts:jts-core'
+    implementation 'org.locationtech.spatial4j:spatial4j:0.8'
+    implementation 'org.noggit:noggit:0.8'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"

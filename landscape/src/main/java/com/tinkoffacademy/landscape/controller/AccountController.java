@@ -48,7 +48,7 @@ public class AccountController {
 
     @PutMapping("/{id}")
     @Timed(value = "updateById.time", description = "Time taken to update account by id")
-    public AccountDto save(@PathVariable Long id, @RequestBody AccountDto accountDto) {
+    public AccountDto updateById(@PathVariable Long id, @RequestBody AccountDto accountDto) {
         return accountService.updateById(id, accountDto);
     }
 

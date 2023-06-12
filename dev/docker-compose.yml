@@ -11,8 +11,6 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      postgres:
-        condition: service_healthy
       mongodb:
         condition: service_healthy
     build: ../handyman
@@ -21,6 +19,7 @@ services:
       - spring.data.mongodb.uri=mongodb://mongodb:27017/handyman
       - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
       - grpc.client.landscape.address=dns:///landscape:9092
+      - landscape.baseUrl=http://landscape:8081
 
   landscape:
     container_name: landscape
@@ -43,8 +42,6 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      postgres:
-        condition: service_healthy
       mongodb:
         condition: service_healthy
     build: ../rancher

@@ -36,9 +36,6 @@ grpc:
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
-  server:
-    address: 127.0.0.1
-    port: 9092
 logging:
   level:
     org.hibernate.SQL: DEBUG

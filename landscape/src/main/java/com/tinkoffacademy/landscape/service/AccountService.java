@@ -4,7 +4,6 @@ import com.tinkoffacademy.landscape.dto.AccountDto;
 import com.tinkoffacademy.landscape.dto.BankStat;
 import com.tinkoffacademy.landscape.dto.GardenerStat;
 import com.tinkoffacademy.landscape.entity.Account;
-import com.tinkoffacademy.landscape.entity.AccountTypeV2;
 import com.tinkoffacademy.landscape.repository.AccountRepository;
 import com.tinkoffacademy.landscape.utils.AccountMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,16 +11,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
     private final AccountRepository accountRepository;
-    private final AccountTypeV2Service accountTypeV2Service;
     private final AccountMapper accountMapper;
 
     public AccountDto getAccountDtoById(Long id) {
@@ -51,17 +49,8 @@ public class AccountService {
 
     public AccountDto save(AccountDto accountDto) {
         Account account = accountMapper.mapToAccount(accountDto);
-        LocalDateTime now = LocalDateTime.now();
-        account.setCreation(now);
-        account.setUpdating(now);
-        AccountTypeV2 typeV2 = accountTypeV2Service.getByName(accountDto.getTypeName());
-        account.setTypeV2(typeV2);
         account = accountRepository.save(account);
         return accountMapper.mapToAccountDto(account);
-    }
-
-    public Account save(Account account) {
-        return accountRepository.save(account);
     }
 
     public void deleteById(Long id) {
@@ -70,6 +59,12 @@ public class AccountService {
 
     public AccountDto updateById(Long id, AccountDto accountDto) {
         Account account = getAccountById(id);
+        if (accountDto.getType() != account.getType()) {
+            throw new ResponseStatusException(
+                    BAD_REQUEST,
+                    "Account type can't be changed"
+            );
+        }
         account = accountMapper.mapToAccount(accountDto, account);
         account.setId(id);
         account = accountRepository.save(account);
@@ -77,8 +72,7 @@ public class AccountService {
     }
 
     public List<AccountDto> findAllSortByLastName() {
-        return accountRepository
-                .findAll(Sort.by(Sort.Direction.ASC, "lastName"))
+        return accountRepository.findAll(Sort.by("lastName"))
                 .stream()
                 .map(accountMapper::mapToAccountDto)
                 .toList();

@@ -1,0 +1,112 @@
+POST http://localhost:8081/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "type": "rancher",
+  "firstName": "John",
+  "lastName": "Doe",
+  "login": "jdoe",
+  "email": "johndoe@mail.ru",
+  "phone": "123456789",
+  "creation": "2019-01-01T00:00:00.000Z",
+  "updating": "2019-01-01T00:00:00.000Z",
+  "latitude": 55.7558,
+  "longitude": 37.6173,
+  "fields": [
+    {
+      "address": "Moscow, Red Square",
+      "latitude": 55.7558,
+      "longitude": 37.6173,
+      "area": "POLYGON((55.7558 37.6173, 55.7558 38.6173, 56.7558 38.6173, 56.7558 37.6173, 55.7558 37.6173))"
+    },
+    {
+      "address": "Saint-Petersburg, Nevsky prospect",
+      "latitude": 59.9343,
+      "longitude": 30.3351,
+      "area": "POLYGON((59.9343 30.3351, 59.9343 31.3351, 60.9343 31.3351, 60.9343 30.3351, 59.9343 30.3351))"
+    }
+  ]
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("gardenerId", response.body.id);
+    client.global.set("fieldId", response.body.fields[0].id);
+%}
+###
+POST http://localhost:8081/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "type": "handyman",
+  "firstName": "Nikita",
+  "lastName": "Barsukov",
+  "login": "nbar",
+  "email": "nbar@mail.ru",
+  "phone": "123456789",
+  "latitude": 55.7558,
+  "longitude": 37.6173,
+  "skills": [
+    "WATER"
+  ],
+  "creation": "2019-01-01T00:00:00.000Z",
+  "updating": "2019-01-01T00:00:00.000Z",
+  "userAccounts": [
+    {
+      "id": 123456789,
+      "bank": "Sberbank",
+      "cardId": 123456789,
+      "paymentSystem": "Visa"
+    }
+  ]
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###
+POST http://localhost:8081/accounts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": {{gardenerId}},
+  "type": "rancher",
+  "firstName": "John",
+  "lastName": "Doe",
+  "login": "jdoe",
+  "email": "johndoe@mail.ru",
+  "phone": "123456789",
+  "creation": "2019-01-01T00:00:00.000Z",
+  "updating": "2019-01-01T00:00:00.000Z",
+  "latitude": 55.7558,
+  "longitude": 37.6173,
+  "fields": [
+    {
+      "id": {{fieldId}},
+      "address": "Moscow, Red Square",
+      "latitude": 55.7558,
+      "longitude": 37.6173,
+      "area": "POLYGON((55.7558 37.6173, 55.7558 38.6173, 56.7558 38.6173, 56.7558 37.6173, 55.7558 37.6173))"
+    },
+    {
+      "address": "Saint-Petersburg, Nevsky prospect",
+      "latitude": 59.9343,
+      "longitude": 30.3351,
+      "area": "POLYGON((59.9343 30.3351, 59.9343 31.3351, 60.9343 31.3351, 60.9343 30.3351, 59.9343 30.3351))"
+    }
+  ]
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+###

@@ -16,12 +16,12 @@ Accept: application/json
     "SHOVEL",
     "PLANT"
   ],
-  "login": "ivanobiwan",
-  "email": "ivanobi@mail.ru",
+  "login": "ivan",
+  "email": "ivan@mail.ru",
   "phone": "123456789",
-  "firstName": "ivan",
-  "lastName": "ivanov",
-  "latitude": 1,
+  "firstName": "Ivan",
+  "lastName": "Ivanov",
+  "latitude": 0,
   "longitude": 0
 }
 

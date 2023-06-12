@@ -1,19 +1,25 @@
 package com.tinkoffacademy.landscape.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.tinkoffacademy.landscape.enums.AccountType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = UserDto.class, name = "handyman"),
+        @JsonSubTypes.Type(value = GardenerDto.class, name = "rancher")
+})
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonIgnoreProperties(value = {"id"}, allowGetters = true)
+@JsonIgnoreProperties(value = {"id", "creation", "updating"}, allowGetters = true)
 public class AccountDto {
     private Long id;
-    private String typeName;
+    private AccountType type;
+    private String firstName;
+    private String lastName;
     private String login;
     private String email;
     private String phone;

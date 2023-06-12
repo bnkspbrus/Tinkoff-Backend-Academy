@@ -1,7 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: create-accounts
-      author: bnkspbrus
-      changes:
-        - createCollection:
-            collectionName: accounts
