@@ -1,10 +1,8 @@
 package com.tinkoffacademy.landscape.repository;
 
-import com.tinkoffacademy.landscape.dto.AccountDto;
 import com.tinkoffacademy.landscape.dto.BankStat;
 import com.tinkoffacademy.landscape.dto.GardenerStat;
 import com.tinkoffacademy.landscape.entity.Account;
-import com.tinkoffacademy.landscape.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
