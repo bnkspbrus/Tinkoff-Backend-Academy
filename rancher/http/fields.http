@@ -2,71 +2,91 @@ GET http://localhost:8082/fields
 Accept: application/json
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###
-POST http://localhost:8082/fields
+POST http://localhost:8082/fields/gardener/{{gardener_1}}
 Content-Type: application/json
 Accept: application/json
 
 {
-  "gardenerId": {{gardener_1}},
-  "address": "address 1",
-  "latitude": 1,
-  "longitude": 2,
-  "areaWKT": "POLYGON((1 1, 1 2, 2 2, 2 1, 1 1))"
+  "address": "address",
+  "latitude": 0,
+  "longitude": 0,
+  "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5))"
 }
 
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
 ###
-POST http://localhost:8082/fields
+POST http://localhost:8082/fields/gardener/{{gardener_1}}
 Content-Type: application/json
 Accept: application/json
 
 {
-  "gardenerId": {{gardener_2}},
   "address": "address 2",
-  "latitude": 2,
-  "longitude": 2,
-  "areaWKT": "POLYGON((0 0, 10 0, 10 10, 0 10, 0 0),(1 1, 1 2, 2 2, 2 1, 1 1))"
+  "latitude": 1111,
+  "longitude": 1.1111,
+  "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5), (0.1 0.1, 0.1 0.2, 0.2 0.2, 0.2 0.1, 0.1 0.1))"
 }
 
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
 ###
-POST http://localhost:8082/fields
+POST http://localhost:8082/fields/gardener/{{gardener_1}}
 Content-Type: application/json
 Accept: application/json
 
 {
-  "gardenerId": {{gardener_3}},
   "address": "address 3",
-  "latitude": 3,
-  "longitude": 2,
-  "areaWKT": "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))"
+  "latitude": 1111,
+  "longitude": 1.1111,
+  "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5))"
 }
 
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
+###
+POST http://localhost:8082/fields/gardener/{{gardener_2}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "address": "address 4",
+  "latitude": 55,
+  "longitude": 5.5,
+  "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5))"
+}
+
+###
+POST http://localhost:8082/fields/gardener/{{gardener_2}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "address": "address 5",
+  "latitude": 666,
+  "longitude": 5.5,
+  "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5), (0.1 0.1, 0.1 0.2, 0.2 0.2, 0.2 0.1, 0.1 0.1))"
+}
+
+###
+POST http://localhost:8082/fields/gardener/{{gardener_2}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "address": "address 6",
+  "latitude": 666,
+  "longitude": 5.5,
+  "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5))"
+}
+
 ###
 GET http://localhost:8082/fields
 Accept: application/json
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###

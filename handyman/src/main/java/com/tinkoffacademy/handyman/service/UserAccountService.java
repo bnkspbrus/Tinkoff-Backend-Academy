@@ -2,7 +2,9 @@ package com.tinkoffacademy.handyman.service;
 
 import com.tinkoffacademy.handyman.dto.UserAccountDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -17,7 +19,10 @@ public class UserAccountService {
                 .stream()
                 .filter(userAccountDto -> userAccountDto.getId().equals(id))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User account not found"
+                ));
     }
 
     public List<UserAccountDto> getAllUserAccounts() {

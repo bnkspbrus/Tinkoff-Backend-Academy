@@ -2,80 +2,127 @@ GET http://localhost:8082/gardeners
 Accept: application/json
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###
 POST http://localhost:8082/gardeners
 Content-Type: application/json
 Accept: application/json
 
 {
-  "login": "ivanobiwan",
-  "email": "ivanobi@mail.ru",
+  "firstName": "firstName 1",
+  "lastName": "lastName 1",
+  "login": "login 1",
+  "email": "email1@mail.ru",
   "phone": "123456789",
-  "firstName": "ivan",
-  "lastName": "ivanov",
   "latitude": 1,
-  "longitude": 0
+  "longitude": 1,
+  "fields": [
+    {
+      "address": "address 1",
+      "latitude": 1,
+      "longitude": 1,
+      "area": "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))"
+    },
+    {
+      "address": "address 2",
+      "latitude": 2,
+      "longitude": 2,
+      "area": "POLYGON((0 0, 10 0, 10 10, 0 10, 0 0),(1 1, 1 2, 2 2, 2 1, 1 1))"
+    }
+  ]
 }
 
 > {%
     client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
-    client.global.set("gardener_1", response.body.id)
+    client.global.set("gardener_1", response.body.id);
 %}
+
 ###
 POST http://localhost:8082/gardeners
 Content-Type: application/json
 Accept: application/json
 
 {
-  "login": "bnkspb",
-  "email": "bnksbp@mail.ru",
+  "firstName": "firstName 2",
+  "lastName": "lastName 2",
+  "login": "login 2",
+  "email": "email2@mail.ru",
   "phone": "123456789",
-  "firstName": "nikita",
-  "lastName": "barsukov",
-  "latitude": 0,
-  "longitude": 0
-}
-
-> {%
-    client.test("Request executed successfully", function () {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-    client.global.set("gardener_2", response.body.id)
-%}
-###
-POST http://localhost:8082/gardeners
-Content-Type: application/json
-Accept: application/json
-
-{
-  "login": "roman",
-  "email": "roman@mail.ru",
-  "phone": "123456789",
-  "firstName": "roman",
-  "lastName": "abramovich",
   "latitude": 2,
-  "longitude": 0
+  "longitude": 2.5,
+  "fields": [
+    {
+      "address": "address 1",
+      "latitude": 1.1,
+      "longitude": 1.2,
+      "area": "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))"
+    },
+    {
+      "address": "address 2",
+      "latitude": 2.3,
+      "longitude": 2.4,
+      "area": "POLYGON((0 0, 10 0, 10 10, 0 10, 0 0),(1 1, 1 2, 2 2, 2 1, 1 1))"
+    },
+    {
+      "address": "address 3",
+      "latitude": 3.5,
+      "longitude": 3.6,
+      "area": "POLYGON((0 0, 10 0, 10 10, 0 10, 0 0),(1 1, 1 2, 2 2, 2 1, 1 1))"
+    }
+  ]
 }
 
 > {%
     client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
-    client.global.set("gardener_3", response.body.id)
+    client.global.set("gardener_2", response.body.id);
 %}
+
+###
+POST http://localhost:8082/gardeners
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "firstName 3",
+  "lastName": "lastName 3",
+  "login": "login 3",
+  "email": "email3@mail.ru",
+  "phone": "987654321",
+  "latitude": 2,
+  "longitude": 2.5,
+  "fields": [
+    {
+      "address": "address 4",
+      "latitude": 1.1,
+      "longitude": 1.2,
+      "area": "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))"
+    }
+  ]
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("gardener_3", response.body.id);
+%}
+
 ###
 GET http://localhost:8082/gardeners
 Accept: application/json
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###
