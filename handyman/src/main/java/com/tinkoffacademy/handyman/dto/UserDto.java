@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@JsonIgnoreProperties(value = {"id", "creation", "updating", "type"}, allowGetters = true)
+@JsonIgnoreProperties(value = {"type"}, allowGetters = true)
 public class UserDto {
     private Long id;
     private String type = "handyman";

@@ -2,35 +2,11 @@ GET http://localhost:8080/users
 Accept: application/json
 
 > {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
-###
-POST http://localhost:8080/users
-Content-Type: application/json
-Accept: application/json
-
-{
-  "skills": [
-    "SHOVEL",
-    "PLANT"
-  ],
-  "login": "ivan",
-  "email": "ivan@mail.ru",
-  "phone": "123456789",
-  "firstName": "Ivan",
-  "lastName": "Ivanov",
-  "latitude": 0,
-  "longitude": 0
-}
-
-> {%
     client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
-    client.global.set("user_1", JSON.stringify(response.body))
 %}
+
 ###
 POST http://localhost:8080/users
 Content-Type: application/json
@@ -42,21 +18,73 @@ Accept: application/json
     "PLANT",
     "SOW"
   ],
-  "login": "bnkspb",
-  "email": "bnksbp@mail.ru",
+  "login": "nikita",
+  "email": "nikita@mail.ru",
   "phone": "123456789",
   "firstName": "nikita",
   "lastName": "barsukov",
   "latitude": 0,
-  "longitude": 0
+  "longitude": 0,
+  "userAccounts": [
+    {
+      "bank": "Alpha",
+      "cardId": 123456789,
+      "paymentSystem": "MasterCard"
+    },
+    {
+      "bank": "Gazprombank",
+      "cardId": 987654321,
+      "paymentSystem": "Visa"
+    }
+  ]
 }
 
 > {%
     client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
-    client.global.set("user_2", JSON.stringify(response.body))
+    client.global.set("userId", response.body.id);
 %}
+
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "skills": [
+    "SHOVEL",
+    "PLANT",
+    "SOW"
+  ],
+  "login": "nik",
+  "email": "email@mail.ru",
+  "phone": "123456789",
+  "firstName": "nik",
+  "lastName": "barsukov",
+  "latitude": 0,
+  "longitude": 0,
+  "userAccounts": [
+    {
+      "bank": "Tinkoff",
+      "cardId": 123456789,
+      "paymentSystem": "MasterCard"
+    },
+    {
+      "bank": "Raiffeisen",
+      "cardId": 987654321,
+      "paymentSystem": "Visa"
+    }
+  ]
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("userId2", response.body.id);
+%}
+
 ###
 POST http://localhost:8080/users
 Content-Type: application/json
@@ -66,28 +94,47 @@ Accept: application/json
   "skills": [
     "PLANT"
   ],
-  "login": "roman",
-  "email": "roman@mail.ru",
+  "login": "vasya",
+  "email": "vasya@mail.ru",
   "phone": "123456789",
-  "firstName": "roman",
-  "lastName": "abramovich",
-  "latitude": 2,
-  "longitude": 0
+  "firstName": "vasya",
+  "lastName": "barsukov",
+  "latitude": 0,
+  "longitude": 0,
+  "userAccounts": [
+    {
+      "bank": "Promsvyazbank",
+      "cardId": 123456789,
+      "paymentSystem": "MasterCard"
+    },
+    {
+      "bank": "Raiffeisen",
+      "cardId": 111,
+      "paymentSystem": "Visa"
+    },
+    {
+      "bank": "Tinkoff",
+      "cardId": 222,
+      "paymentSystem": "MasterCard"
+    }
+  ]
 }
 
 > {%
     client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
-    client.global.set("user_3", JSON.stringify(response.body))
+    client.global.set("userId3", response.body.id);
 %}
+
 ###
 GET http://localhost:8080/users
 Accept: application/json
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###

@@ -27,6 +27,6 @@ public class User extends Account {
         this.userAccounts.forEach(userAccount -> userAccount.setUser(null));
         this.userAccounts.clear();
         this.userAccounts.addAll(userAccounts);
-        userAccounts.forEach(userAccount -> userAccount.setUser(this));
+        this.userAccounts.forEach(userAccount -> userAccount.setUser(this));
     }
 }

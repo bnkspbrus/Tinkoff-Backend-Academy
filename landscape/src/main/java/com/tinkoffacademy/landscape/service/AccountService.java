@@ -4,6 +4,7 @@ import com.tinkoffacademy.landscape.dto.AccountDto;
 import com.tinkoffacademy.landscape.dto.BankStat;
 import com.tinkoffacademy.landscape.dto.GardenerStat;
 import com.tinkoffacademy.landscape.entity.Account;
+import com.tinkoffacademy.landscape.enums.AccountType;
 import com.tinkoffacademy.landscape.repository.AccountRepository;
 import com.tinkoffacademy.landscape.utils.AccountMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -24,8 +24,13 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
 
-    public AccountDto getAccountDtoById(Long id) {
-        Account account = accountRepository.findById(id)
+    public AccountDto getById(Long id) {
+        Account account = getAccountById(id);
+        return accountMapper.mapToAccountDto(account);
+    }
+
+    public AccountDto getByFieldId(Long id) {
+        Account account = accountRepository.findByFieldId(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         NOT_FOUND,
                         "Account with id " + id + " not found"
@@ -33,19 +38,21 @@ public class AccountService {
         return accountMapper.mapToAccountDto(account);
     }
 
-    public Account getAccountById(Long id) {
-        return accountRepository.findById(id)
+    public AccountDto getByUserAccountId(Long id) {
+        Account account = accountRepository.findByUserAccountId(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         NOT_FOUND,
                         "Account with id " + id + " not found"
                 ));
+        return accountMapper.mapToAccountDto(account);
     }
 
-    public List<AccountDto> findAll() {
+    public List<AccountDto> findAll(AccountType type) {
         return accountRepository
                 .findAll()
                 .stream()
                 .map(accountMapper::mapToAccountDto)
+                .filter(accountDto -> type == null || accountDto.getType() == type)
                 .toList();
     }
 
@@ -54,10 +61,6 @@ public class AccountService {
         Account account = accountMapper.mapToAccount(accountDto);
         account = accountRepository.save(account);
         return accountMapper.mapToAccountDto(account);
-    }
-
-    public void deleteById(Long id) {
-        accountRepository.deleteById(id);
     }
 
     @Transactional
@@ -75,6 +78,10 @@ public class AccountService {
         return accountMapper.mapToAccountDto(account);
     }
 
+    public void deleteById(Long id) {
+        accountRepository.deleteById(id);
+    }
+
     public List<AccountDto> findAllSortByLastName() {
         return accountRepository.findAll(Sort.by("lastName"))
                 .stream()
@@ -88,5 +95,13 @@ public class AccountService {
 
     public List<BankStat> findStatGroupByBank() {
         return accountRepository.findStatGroupByBank();
+    }
+
+    private Account getAccountById(Long id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        NOT_FOUND,
+                        "Account with id " + id + " not found"
+                ));
     }
 }

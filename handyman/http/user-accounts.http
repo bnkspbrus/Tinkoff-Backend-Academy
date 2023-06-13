@@ -1,222 +1,105 @@
-GET http://localhost:8080/users/accounts
+GET http://localhost:8080/user-accounts
 Accept: application/json
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###
-POST http://localhost:8080/users/accounts
+POST http://localhost:8080/user-accounts/user/{{userId}}
 Content-Type: application/json
 Accept: application/json
 
 {
-  "user": {{user_1}},
-  "bank": "CICI_BANK",
-  "cardId": 1234567890,
-  "paymentCard": "Mir"
+  "bank": "VTB",
+  "cardId": 987654321,
+  "paymentSystem": "UnionPay"
 }
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###
-POST http://localhost:8080/users/accounts
+POST http://localhost:8080/user-accounts/user/{{userId2}}
 Content-Type: application/json
 Accept: application/json
 
 {
-  "user": {{user_1}},
-  "bank": "BANK_OF_NIKITA",
-  "cardId": 1234567890,
-  "paymentCard": "MasterCard"
+  "bank": "Sovcombank",
+  "cardId": 101,
+  "paymentSystem": "UnionPay"
 }
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###
-POST http://localhost:8080/users/accounts
+POST http://localhost:8080/user-accounts/user/{{userId}}
 Content-Type: application/json
 Accept: application/json
 
 {
-  "user": {{user_1}},
-  "bank": "SBERBANK",
-  "cardId": 1234567890,
-  "paymentCard": "UnionPay"
+  "bank": "Sberbank",
+  "cardId": 987,
+  "paymentSystem": "MasterCard"
 }
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###
-POST http://localhost:8080/users/accounts
+POST http://localhost:8080/user-accounts/user/{{userId3}}
 Content-Type: application/json
 Accept: application/json
 
 {
-  "user": {{user_1}},
-  "bank": "SBERBANK",
-  "cardId": 1234567890,
-  "paymentCard": "Visa"
+  "bank": "Promsvyazbank",
+  "cardId": 987,
+  "paymentSystem": "UnionPay"
 }
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###
-POST http://localhost:8080/users/accounts
+POST http://localhost:8080/user-accounts/user/{{userId3}}
 Content-Type: application/json
 Accept: application/json
 
 {
-  "user": {{user_2}},
-  "bank": "BANK_OF_AMERICA",
-  "cardId": 1234567890,
-  "paymentCard": "MasterCard"
+  "bank": "Gazprombank",
+  "cardId": 987,
+  "paymentSystem": "MasterCard"
 }
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###
-POST http://localhost:8080/users/accounts
-Content-Type: application/json
-Accept: application/json
-
-{
-  "user": {{user_2}},
-  "bank": "KREMNIY_ALLEY_BANK",
-  "cardId": 1234567890,
-  "paymentCard": "MasterCard"
-}
-
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
-###
-POST http://localhost:8080/users/accounts
-Content-Type: application/json
-Accept: application/json
-
-{
-  "user": {{user_2}},
-  "bank": "BANK_SPB",
-  "cardId": 1234567890,
-  "paymentCard": "Visa"
-}
-
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
-###
-POST http://localhost:8080/users/accounts
-Content-Type: application/json
-Accept: application/json
-
-{
-  "user": {{user_2}},
-  "bank": "ALPHA_BANK",
-  "cardId": 1234567890,
-  "paymentCard": "Mir"
-}
-
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
-###
-POST http://localhost:8080/users/accounts
-Content-Type: application/json
-Accept: application/json
-
-{
-  "user": {{user_3}},
-  "bank": "KREMNIY_ALLEY_BANK",
-  "cardId": 1234567890,
-  "paymentCard": "UnionPay"
-}
-
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
-###
-POST http://localhost:8080/users/accounts
-Content-Type: application/json
-Accept: application/json
-
-{
-  "user": {{user_3}},
-  "bank": "TINKOFF_BANK",
-  "cardId": 1234567890,
-  "paymentCard": "UnionPay"
-}
-
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
-###
-POST http://localhost:8080/users/accounts
-Content-Type: application/json
-Accept: application/json
-
-{
-  "user": {{user_3}},
-  "bank": "BANKA",
-  "cardId": 1234567890,
-  "paymentCard": "Mir"
-}
-
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
-###
-POST http://localhost:8080/users/accounts
-Content-Type: application/json
-Accept: application/json
-
-{
-  "user": {{user_3}},
-  "bank": "BANK_OF_NIKITA",
-  "cardId": 1234567890,
-  "paymentCard": "Mir"
-}
-
-> {%
-    client.test("Request executed successfully", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-%}
-###
-GET http://localhost:8080/users/accounts
+GET http://localhost:8080/user-accounts
 Accept: application/json
 
 > {%
-    client.test("Request executed successfully", function() {
+    client.test("Request executed successfully", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
 ###

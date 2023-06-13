@@ -1,4 +1,4 @@
-GET http://localhost:8081/accounts/bank/stat
+GET http://localhost:8081/accounts/stat/bank
 Accept: application/json
 
 > {%
@@ -7,7 +7,7 @@ Accept: application/json
     });
 %}
 ###
-GET http://localhost:8081/accounts/gardener/stat
+GET http://localhost:8081/accounts/stat/gardener
 Accept: application/json
 
 > {%

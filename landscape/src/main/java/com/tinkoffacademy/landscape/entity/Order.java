@@ -6,19 +6,12 @@ import javax.persistence.*;
 
 import com.tinkoffacademy.landscape.enums.Skill;
 import com.tinkoffacademy.landscape.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name="orders")
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +19,13 @@ public class Order {
     @ManyToOne(optional = false)
     private Gardener gardener;
     @ManyToOne(optional = false)
-    private Account user;
+    private User user;
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<Skill> skills;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime creation;
 }
