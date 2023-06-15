@@ -1,14 +1,5 @@
 package ru.tinkoff.landscape.config;
 
-import ru.tinkoff.landscape.dto.AccountDto;
-import ru.tinkoff.landscape.dto.GardenerDto;
-import ru.tinkoff.landscape.dto.OrderDto;
-import ru.tinkoff.landscape.dto.UserDto;
-import com.tinkoffacademy.landscape.entity.*;
-import ru.tinkoff.landscape.entity.*;
-import ru.tinkoff.landscape.repository.AccountTypeRepository;
-import ru.tinkoff.landscape.repository.FieldRepository;
-import ru.tinkoff.landscape.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
@@ -17,6 +8,14 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.server.ResponseStatusException;
+import ru.tinkoff.landscape.dto.AccountDto;
+import ru.tinkoff.landscape.dto.GardenerDto;
+import ru.tinkoff.landscape.dto.OrderDto;
+import ru.tinkoff.landscape.dto.UserDto;
+import ru.tinkoff.landscape.entity.*;
+import ru.tinkoff.landscape.repository.AccountTypeRepository;
+import ru.tinkoff.landscape.repository.FieldRepository;
+import ru.tinkoff.landscape.repository.UserRepository;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 

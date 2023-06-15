@@ -1,12 +1,11 @@
 package ru.tinkoff.landscape.utils;
 
-import ru.tinkoff.landscape.dto.AccountDto;
-import ru.tinkoff.landscape.dto.GardenerDto;
-import ru.tinkoff.landscape.dto.UserDto;
-import com.tinkoffacademy.landscape.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import ru.tinkoff.landscape.dto.AccountDto;
+import ru.tinkoff.landscape.dto.GardenerDto;
+import ru.tinkoff.landscape.dto.UserDto;
 import ru.tinkoff.landscape.entity.Account;
 import ru.tinkoff.landscape.entity.Gardener;
 import ru.tinkoff.landscape.entity.User;

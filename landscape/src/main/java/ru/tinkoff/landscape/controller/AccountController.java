@@ -1,12 +1,12 @@
 package ru.tinkoff.landscape.controller;
 
+import io.micrometer.core.annotation.Timed;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 import ru.tinkoff.landscape.dto.AccountDto;
 import ru.tinkoff.landscape.dto.BankStat;
 import ru.tinkoff.landscape.dto.GardenerStat;
 import ru.tinkoff.landscape.service.AccountService;
-import io.micrometer.core.annotation.Timed;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

@@ -14,6 +14,8 @@ import java.util.Set;
 @Setter
 @ToString(callSuper = true)
 public class User extends Account {
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<UserAccount> userAccounts = new ArrayList<>();
