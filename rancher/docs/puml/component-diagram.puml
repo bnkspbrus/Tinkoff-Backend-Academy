@@ -1,0 +1,32 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/mongodb.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Component diagram for Handyman Application - API Application
+
+ContainerDb(db, "Database", "NoSQL Database", "Stores user registration information, bank account details, and activity history", "mongodb")
+System_Ext(landscape, "Landscape Application", "Stores all the core information about users, accounts, transactions, and so on")
+
+Container_Boundary(api, "API Application") {
+    Component(gardenerController, "Gardener Controller", "Rest Controller", "Allows gardener to register, and manage their personal information")
+    Component(fieldController, "Field Controller", "Rest Controller", "Allows gardeners to view and manage their fields")
+    Component(systemController, "System Controller", "Rest Controller", "Provides general system information and health check")
+    Component(systemService, "System Service", "Service", "Provides functionality related to system information")
+    Component(gardenerService, "Gardener Service", "Service", "Provides functionality related to gardeners")
+    Component(fieldService, "Field Service", "Service", "Provides functionality related to fields")
+    Component(statusService, "Status Service", "Service", "Provides functionality related to status")
+
+    Rel(systemController, systemService, "Uses")
+    Rel(gardenerController, gardenerService, "Uses")
+    Rel(fieldController, fieldService, "Uses")
+    Rel(gardenerService, db, "Read & write to", "JDBC")
+    Rel(gardenerService, landscape, "Uses", "HTTP")
+    Rel(fieldService, db, "Read & write to", "JDBC")
+    Rel(fieldService, gardenerService, "Uses")
+    Rel(landscape, statusService, "Uses", "GRPC")
+}
+@enduml

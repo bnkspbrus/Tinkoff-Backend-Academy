@@ -1,0 +1,27 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Container.puml
+
+' LAYOUT_TOP_DOWN()
+' LAYOUT_AS_SKETCH()
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/mongodb.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container diagram for Handyman Application
+
+Person(user, User, "A user of the application, with personal bank accounts")
+
+System_Boundary(c1, "Handyman Application") {
+    ContainerDb(database, "Database", "NoSQL Database", "Stores user registration information, bank account details, and activity history", "mongodb")
+    Container(backend_api, "API Application", "Java, Docker Container", "Provides API endpoints for user registration, bank account management, and transaction history")
+}
+
+System_Ext(landscape, "Landscape Application", "Stores all the core information about users, accounts, transactions, and so on")
+
+Rel(user, backend_api, "Uses", "HTTP")
+Rel_Back_Neighbor(database, backend_api, "Reads from and writes to", "sync, JDBC")
+
+Rel_Neighbor(backend_api, landscape, "Uses", "HTTP")
+@enduml

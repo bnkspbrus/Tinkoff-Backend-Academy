@@ -1,0 +1,27 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/postgresql.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Container.puml
+
+' LAYOUT_TOP_DOWN()
+' LAYOUT_AS_SKETCH()
+LAYOUT_WITH_LEGEND()
+
+title Container diagram for Landscape Application
+
+Person(customer, Customer, "A customer of Landscape Application")
+
+System_Boundary(c1, "Landscape Application") {
+    ContainerDb(database, "Database", "SQL Database", "Stores all the customer information, accounts, transactions, etc. Also stores orders placed by customers", "postgresql")
+    Container(backend_api, "API Application", "Java, Docker Container", "Provides all the functionality for customers via an API")
+}
+
+System_Ext(handyman, "Handyman Application", "Stores all the core handyman information about users, bank accounts, etc.")
+System_Ext(rancher, "Rancher Application", "Stores all the core rancher information about gardeners, fields, etc.")
+
+Rel(customer, backend_api, "Uses", "HTTP")
+Rel_Back_Neighbor(database, backend_api, "Reads from and writes to", "sync, JDBC")
+Rel_Neighbor(backend_api, handyman, "Uses", "HTTP/GRPC")
+Rel_Neighbor(backend_api, rancher, "Uses", "HTTP/GRPC")
+@enduml
