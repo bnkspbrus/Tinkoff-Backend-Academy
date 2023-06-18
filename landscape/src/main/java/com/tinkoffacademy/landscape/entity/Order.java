@@ -16,9 +16,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Field garden;
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User user;
     @ElementCollection
     @Enumerated(EnumType.STRING)

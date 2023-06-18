@@ -19,6 +19,13 @@ Accept: application/json
   "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5))"
 }
 
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("field_1", response.body.id);
+%}
+
 ###
 POST http://localhost:8082/fields/gardener/{{gardener_1}}
 Content-Type: application/json
@@ -30,6 +37,13 @@ Accept: application/json
   "longitude": 1.1111,
   "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5), (0.1 0.1, 0.1 0.2, 0.2 0.2, 0.2 0.1, 0.1 0.1))"
 }
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("field_2", response.body.id);
+%}
 
 ###
 POST http://localhost:8082/fields/gardener/{{gardener_1}}
@@ -43,6 +57,13 @@ Accept: application/json
   "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5))"
 }
 
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("field_3", response.body.id);
+%}
+
 ###
 POST http://localhost:8082/fields/gardener/{{gardener_2}}
 Content-Type: application/json
@@ -54,6 +75,13 @@ Accept: application/json
   "longitude": 5.5,
   "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5))"
 }
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("field_4", response.body.id);
+%}
 
 ###
 POST http://localhost:8082/fields/gardener/{{gardener_2}}
@@ -67,6 +95,13 @@ Accept: application/json
   "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5), (0.1 0.1, 0.1 0.2, 0.2 0.2, 0.2 0.1, 0.1 0.1))"
 }
 
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("field_5", response.body.id);
+%}
+
 ###
 POST http://localhost:8082/fields/gardener/{{gardener_2}}
 Content-Type: application/json
@@ -78,6 +113,13 @@ Accept: application/json
   "longitude": 5.5,
   "area": "POLYGON ((0 0, 0 1, 1 1, 1 0, 0 0), (0.5 0.5, 0.5 0.6, 0.6 0.6, 0.6 0.5, 0.5 0.5))"
 }
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("field_6", response.body.id);
+%}
 
 ###
 GET http://localhost:8082/fields

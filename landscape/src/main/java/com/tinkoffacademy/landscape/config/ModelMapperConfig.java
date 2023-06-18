@@ -7,6 +7,8 @@ import com.tinkoffacademy.landscape.entity.Field;
 import com.tinkoffacademy.landscape.entity.Gardener;
 import com.tinkoffacademy.landscape.entity.Order;
 import com.tinkoffacademy.landscape.entity.User;
+import com.tinkoffacademy.landscape.repository.AccountRepository;
+import com.tinkoffacademy.landscape.repository.FieldRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
@@ -18,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class ModelMapperConfig {
+    private final AccountRepository accountRepository;
+    private final FieldRepository fieldRepository;
+
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
@@ -27,6 +32,32 @@ public class ModelMapperConfig {
         modelMapper.getConfiguration()
                 .setSkipNullEnabled(true);
 
+        configureUserDtoToUserPostConverter(modelMapper);
+        // set post converter for GardenerDto to Gardener mapping
+        configureGardenerDtoToGardenerPostConverter(modelMapper);
+        configureOrderToOrderDtoMapping(modelMapper);
+        configureOrderDtoToOrderMapping(modelMapper);
+        return modelMapper;
+    }
+
+    private void configureOrderDtoToOrderMapping(ModelMapper modelMapper) {
+        Converter<Long, Field> longToFieldConverter = context -> fieldRepository.findById(context.getSource()).orElse(null);
+        modelMapper.typeMap(OrderDto.class, Order.class)
+                .addMappings(mapper -> mapper
+                        .when(Conditions.isNotNull())
+                        .using(longToFieldConverter)
+                        .map(OrderDto::getGardenId, Order::setGarden)
+                );
+        Converter<Long, User> longToUserConverter = context -> (User) accountRepository.findById(context.getSource()).orElse(null);
+        modelMapper.typeMap(OrderDto.class, Order.class)
+                .addMappings(mapper -> mapper
+                        .when(Conditions.isNotNull())
+                        .using(longToUserConverter)
+                        .map(OrderDto::getUserId, Order::setUser)
+                );
+    }
+
+    private void configureUserDtoToUserPostConverter(ModelMapper modelMapper) {
         modelMapper.typeMap(UserDto.class, User.class)
                 .setPostConverter(context -> {
                     User user = context.getDestination();
@@ -35,7 +66,9 @@ public class ModelMapperConfig {
                     }
                     return user;
                 });
-        // set post converter for GardenerDto to Gardener mapping
+    }
+
+    private void configureGardenerDtoToGardenerPostConverter(ModelMapper modelMapper) {
         modelMapper.typeMap(GardenerDto.class, Gardener.class)
                 .setPostConverter(context -> {
                     Gardener gardener = context.getDestination();
@@ -44,8 +77,6 @@ public class ModelMapperConfig {
                     }
                     return gardener;
                 });
-        configureOrderToOrderDtoMapping(modelMapper);
-        return modelMapper;
     }
 
     private void configureOrderToOrderDtoMapping(ModelMapper modelMapper) {
