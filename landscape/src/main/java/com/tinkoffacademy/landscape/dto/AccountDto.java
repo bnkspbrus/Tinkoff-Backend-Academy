@@ -1,9 +1,7 @@
 package com.tinkoffacademy.landscape.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.tinkoffacademy.landscape.enums.AccountType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,10 +12,9 @@ import java.time.LocalDateTime;
         @JsonSubTypes.Type(value = GardenerDto.class, name = "rancher")
 })
 @Data
-@JsonIgnoreProperties(value = {"id", "creation", "updating"}, allowGetters = true)
 public abstract class AccountDto {
     private Long id;
-    private AccountType type;
+    private String type;
     private String firstName;
     private String lastName;
     private String login;

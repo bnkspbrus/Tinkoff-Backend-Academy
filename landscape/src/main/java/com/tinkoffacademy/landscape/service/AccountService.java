@@ -4,7 +4,6 @@ import com.tinkoffacademy.landscape.dto.AccountDto;
 import com.tinkoffacademy.landscape.dto.BankStat;
 import com.tinkoffacademy.landscape.dto.GardenerStat;
 import com.tinkoffacademy.landscape.entity.Account;
-import com.tinkoffacademy.landscape.enums.AccountType;
 import com.tinkoffacademy.landscape.repository.AccountRepository;
 import com.tinkoffacademy.landscape.utils.AccountMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -47,17 +47,18 @@ public class AccountService {
         return accountMapper.mapToAccountDto(account);
     }
 
-    public List<AccountDto> findAll(AccountType type) {
+    public List<AccountDto> findAll(String type) {
         return accountRepository
                 .findAll()
                 .stream()
                 .map(accountMapper::mapToAccountDto)
-                .filter(accountDto -> type == null || accountDto.getType() == type)
+                .filter(accountDto -> type == null || Objects.equals(accountDto.getType(), type))
                 .toList();
     }
 
     @Transactional
     public AccountDto save(AccountDto accountDto) {
+        accountDto.setId(null);
         Account account = accountMapper.mapToAccount(accountDto);
         account = accountRepository.save(account);
         return accountMapper.mapToAccountDto(account);
@@ -66,7 +67,7 @@ public class AccountService {
     @Transactional
     public AccountDto updateById(Long id, AccountDto accountDto) {
         Account account = getAccountById(id);
-        if (accountDto.getType() != account.getType()) {
+        if (!Objects.equals(accountDto.getType(), account.getType().getName())) {
             throw new ResponseStatusException(
                     BAD_REQUEST,
                     "Account type can't be changed"

@@ -1,7 +1,6 @@
 package com.tinkoffacademy.landscape.entity;
 
-import com.tinkoffacademy.landscape.enums.AccountType;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,8 +14,7 @@ public abstract class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
+    @ManyToOne(optional = false)
     private AccountType type;
     @Column(nullable = false)
     private String login;

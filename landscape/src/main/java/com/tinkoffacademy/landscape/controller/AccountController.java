@@ -3,7 +3,6 @@ package com.tinkoffacademy.landscape.controller;
 import com.tinkoffacademy.landscape.dto.AccountDto;
 import com.tinkoffacademy.landscape.dto.BankStat;
 import com.tinkoffacademy.landscape.dto.GardenerStat;
-import com.tinkoffacademy.landscape.enums.AccountType;
 import com.tinkoffacademy.landscape.service.AccountService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +36,7 @@ public class AccountController {
 
     @GetMapping
     @Timed(value = "findAll.time", description = "Time taken to find all accounts")
-    public List<AccountDto> findAll(@RequestParam(required = false) AccountType type) {
+    public List<AccountDto> findAll(@RequestParam(required = false) String type) {
         return accountService.findAll(type);
     }
 
