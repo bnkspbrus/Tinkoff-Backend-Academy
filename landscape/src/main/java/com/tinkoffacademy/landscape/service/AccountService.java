@@ -49,10 +49,9 @@ public class AccountService {
 
     public List<AccountDto> findAll(String type) {
         return accountRepository
-                .findAll()
+                .findAllByType(type)
                 .stream()
                 .map(accountMapper::mapToAccountDto)
-                .filter(accountDto -> type == null || Objects.equals(accountDto.getType(), type))
                 .toList();
     }
 

@@ -28,4 +28,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("select user from UserAccount where id=:accountId")
     Optional<Account> findByUserAccountId(@Param("accountId") Long accountId);
+
+    @Query("select a from Account a where a.type.name = :type or :type is null")
+    List<Account> findAllByType(@Param("type") String type);
 }
