@@ -13,8 +13,12 @@ spring:
     properties:
       hibernate:
         dialect: com.tinkoffacademy.landscape.config.STAreaPostgisDialect
+    defer-datasource-initialization: true
   liquibase:
     enabled: false
+  sql:
+    init:
+      mode: always
 management:
   endpoints:
     web:
