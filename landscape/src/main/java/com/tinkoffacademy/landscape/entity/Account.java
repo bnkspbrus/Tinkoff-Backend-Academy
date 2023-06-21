@@ -1,14 +1,18 @@
 package com.tinkoffacademy.landscape.entity;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(indexes = {
         @Index(columnList = "lastName"),
@@ -38,4 +42,22 @@ public abstract class Account {
     private Double latitude;
     @Column(nullable = false)
     private Double longitude;
+
+    @Override
+    public final boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        Class<?> oEffectiveClass = obj instanceof HibernateProxy ?
+                ((HibernateProxy) obj).getHibernateLazyInitializer().getPersistentClass() : obj.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ?
+                ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Account account = (Account) obj;
+        return getId() != null && Objects.equals(getId(), account.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -13,10 +13,10 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true, exclude = "userAccounts")
-@ToString(callSuper = true, exclude = "userAccounts")
+@ToString(callSuper = true)
 public class User extends Account {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<UserAccount> userAccounts = new ArrayList<>();
     private byte[] photo;
     @ElementCollection

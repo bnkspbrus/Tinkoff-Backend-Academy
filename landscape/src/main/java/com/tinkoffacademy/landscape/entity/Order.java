@@ -1,17 +1,21 @@
 package com.tinkoffacademy.landscape.entity;
 
-import java.time.LocalDateTime;
-import java.util.Set;
-import javax.persistence.*;
-
 import com.tinkoffacademy.landscape.enums.Skill;
 import com.tinkoffacademy.landscape.enums.Status;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.proxy.HibernateProxy;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="orders")
-@Data
+@Getter
+@Setter
+@ToString
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +32,22 @@ public class Order {
     private Status status;
     @CreationTimestamp
     private LocalDateTime creation;
+
+    @Override
+    public final boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        Class<?> oEffectiveClass = obj instanceof HibernateProxy ?
+                ((HibernateProxy) obj).getHibernateLazyInitializer().getPersistentClass() : obj.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ?
+                ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Order order = (Order) obj;
+        return getId() != null && Objects.equals(getId(), order.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return getClass().hashCode();
+    }
 }
