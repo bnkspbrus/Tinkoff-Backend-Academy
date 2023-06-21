@@ -10,13 +10,17 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(indexes = {
+        @Index(columnList = "lastName"),
+        @Index(columnList = "creation"),
+})
 public abstract class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(optional = false)
     private AccountType type;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String login;
     @Column(nullable = false)
     private String email;

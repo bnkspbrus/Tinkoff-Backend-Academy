@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "account_types")
+@Table(indexes = @Index(columnList = "name", unique = true))
 public class AccountType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

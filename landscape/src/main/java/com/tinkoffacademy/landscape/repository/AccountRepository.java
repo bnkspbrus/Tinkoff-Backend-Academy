@@ -19,8 +19,8 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<GardenerStat> findStatGroupByLogin();
 
     @Query("select " +
-            "new com.tinkoffacademy.landscape.dto.BankStat(ua.bank, min(u.creation), max(u.creation)) " +
-            "from UserAccount ua join User u on ua.user.id=u.id group by ua.bank")
+            "new com.tinkoffacademy.landscape.dto.BankStat(ua.bank, min(a.creation), max(a.creation)) " +
+            "from UserAccount ua join Account a on ua.user.id=a.id group by ua.bank")
     List<BankStat> findStatGroupByBank();
 
     @Query("select gardener from Field where id=:fieldId")
