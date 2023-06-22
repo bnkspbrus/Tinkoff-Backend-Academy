@@ -64,14 +64,14 @@ public class AccountController {
     }
 
     @GetMapping("/stat/gardener")
-    @Timed(value = "findGardenerStat.time", description = "Time taken to find gardener stat")
-    public List<GardenerStat> findGardenerStat() {
-        return accountService.findStatGroupByLogin();
+    @Timed(value = "getGardenerStat.time", description = "Time taken to find gardener stat")
+    public List<GardenerStat> getGardenerStat() {
+        return accountService.getGardenerStat();
     }
 
     @GetMapping("/stat/bank")
-    @Timed(value = "findBankStat.time", description = "Time taken to find bank stat")
-    public List<BankStat> findBankStat() {
-        return accountService.findStatGroupByBank();
+    @Timed(value = "getBankStat.time", description = "Time taken to find bank stat")
+    public List<BankStat> getBankStat() {
+        return accountService.getBankStat();
     }
 }

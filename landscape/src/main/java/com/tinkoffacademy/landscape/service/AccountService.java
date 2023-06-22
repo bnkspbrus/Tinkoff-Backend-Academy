@@ -9,9 +9,9 @@ import com.tinkoffacademy.landscape.utils.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,11 +24,13 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
 
+    @Transactional(readOnly = true)
     public AccountDto getById(Long id) {
         Account account = getAccountById(id);
         return accountMapper.mapToAccountDto(account);
     }
 
+    @Transactional(readOnly = true)
     public AccountDto getByFieldId(Long id) {
         Account account = accountRepository.findByFieldId(id)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -38,6 +40,7 @@ public class AccountService {
         return accountMapper.mapToAccountDto(account);
     }
 
+    @Transactional(readOnly = true)
     public AccountDto getByUserAccountId(Long id) {
         Account account = accountRepository.findByUserAccountId(id)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -47,6 +50,7 @@ public class AccountService {
         return accountMapper.mapToAccountDto(account);
     }
 
+    @Transactional(readOnly = true)
     public List<AccountDto> findAll(String type) {
         return accountRepository
                 .findAllByType(type)
@@ -78,10 +82,12 @@ public class AccountService {
         return accountMapper.mapToAccountDto(account);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         accountRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     public List<AccountDto> findAllSortByLastName() {
         return accountRepository.findAll(Sort.by("lastName"))
                 .stream()
@@ -89,12 +95,12 @@ public class AccountService {
                 .toList();
     }
 
-    public List<GardenerStat> findStatGroupByLogin() {
-        return accountRepository.findStatGroupByLogin();
+    public List<GardenerStat> getGardenerStat() {
+        return accountRepository.getGardenerStat();
     }
 
-    public List<BankStat> findStatGroupByBank() {
-        return accountRepository.findStatGroupByBank();
+    public List<BankStat> getBankStat() {
+        return accountRepository.getBankStat();
     }
 
     private Account getAccountById(Long id) {
