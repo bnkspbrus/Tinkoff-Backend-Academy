@@ -31,25 +31,25 @@ public class ModelMapperConfig {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT);
-        
+
         modelMapper.getConfiguration()
                 .setSkipNullEnabled(true);
 
         configureUserDtoToUserPostConverter(modelMapper);
-        
+
         configureGardenerDtoToGardenerPostConverter(modelMapper);
         configureOrderToOrderDtoMapping(modelMapper);
         configureOrderDtoToOrderMapping(modelMapper);
         configureAccountDtoToAccountMapping(modelMapper);
         configureAccountToAccountDtoMapping(modelMapper);
-        
+
         modelMapper.typeMap(UserDto.class, User.class).includeBase(AccountDto.class, Account.class);
         modelMapper.typeMap(GardenerDto.class, Gardener.class).includeBase(AccountDto.class, Account.class);
         return modelMapper;
     }
 
     private void configureAccountDtoToAccountMapping(ModelMapper modelMapper) {
-        
+
         Converter<String, AccountType> stringToAccountTypeConverter = context -> accountTypeRepository
                 .findByName(context.getSource())
                 .orElseThrow(() -> new ResponseStatusException(
@@ -65,7 +65,7 @@ public class ModelMapperConfig {
     }
 
     private void configureAccountToAccountDtoMapping(ModelMapper modelMapper) {
-        
+
         Converter<AccountType, String> accountTypeToStringConverter = context -> context.getSource().getName();
         modelMapper.typeMap(Account.class, AccountDto.class)
                 .addMappings(mapper -> mapper
@@ -76,24 +76,14 @@ public class ModelMapperConfig {
     }
 
     private void configureOrderDtoToOrderMapping(ModelMapper modelMapper) {
-        Converter<Long, Field> longToFieldConverter = context -> fieldRepository
-                .findById(context.getSource())
-                .orElseThrow(() -> new ResponseStatusException(
-                        NOT_FOUND,
-                        "Field with id " + context.getSource() + " not found")
-                );
+        Converter<Long, Field> longToFieldConverter = context -> fieldRepository.getReferenceById(context.getSource());
         modelMapper.typeMap(OrderDto.class, Order.class)
                 .addMappings(mapper -> mapper
                         .when(Conditions.isNotNull())
                         .using(longToFieldConverter)
                         .map(OrderDto::getGardenId, Order::setGarden)
                 );
-        Converter<Long, User> longToUserConverter = context -> (User) accountRepository
-                .findById(context.getSource())
-                .orElseThrow(() -> new ResponseStatusException(
-                        NOT_FOUND,
-                        "User with id " + context.getSource() + " not found")
-                );
+        Converter<Long, User> longToUserConverter = context -> (User) accountRepository.getReferenceById(context.getSource());
         modelMapper.typeMap(OrderDto.class, Order.class)
                 .addMappings(mapper -> mapper
                         .when(Conditions.isNotNull())
@@ -125,14 +115,14 @@ public class ModelMapperConfig {
     }
 
     private void configureOrderToOrderDtoMapping(ModelMapper modelMapper) {
-        
+
         Converter<Field, Long> orderToGardenIdConverter = context -> context.getSource().getId();
         modelMapper.typeMap(Order.class, OrderDto.class)
                 .addMappings(mapper -> mapper
                         .when(Conditions.isNotNull())
                         .using(orderToGardenIdConverter)
                         .map(Order::getGarden, OrderDto::setGardenId));
-        
+
         Converter<User, Long> orderToUserIdConverter = context -> context.getSource().getId();
         modelMapper.typeMap(Order.class, OrderDto.class)
                 .addMappings(mapper -> mapper

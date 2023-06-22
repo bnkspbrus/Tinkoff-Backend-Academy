@@ -20,9 +20,11 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Field garden;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private User user;
     @ElementCollection
     @Enumerated(EnumType.STRING)
