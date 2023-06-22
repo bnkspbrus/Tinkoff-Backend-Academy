@@ -5,9 +5,9 @@ import com.tinkoffacademy.landscape.dto.GardenerDto;
 import com.tinkoffacademy.landscape.dto.OrderDto;
 import com.tinkoffacademy.landscape.dto.UserDto;
 import com.tinkoffacademy.landscape.entity.*;
-import com.tinkoffacademy.landscape.repository.AccountRepository;
 import com.tinkoffacademy.landscape.repository.AccountTypeRepository;
 import com.tinkoffacademy.landscape.repository.FieldRepository;
+import com.tinkoffacademy.landscape.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
@@ -22,9 +22,9 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Configuration
 @RequiredArgsConstructor
 public class ModelMapperConfig {
-    private final AccountRepository accountRepository;
     private final FieldRepository fieldRepository;
     private final AccountTypeRepository accountTypeRepository;
+    private final UserRepository userRepository;
 
     @Bean
     public ModelMapper modelMapper() {
@@ -83,7 +83,7 @@ public class ModelMapperConfig {
                         .using(longToFieldConverter)
                         .map(OrderDto::getGardenId, Order::setGarden)
                 );
-        Converter<Long, User> longToUserConverter = context -> (User) accountRepository.getReferenceById(context.getSource());
+        Converter<Long, User> longToUserConverter = context -> userRepository.getReferenceById(context.getSource());
         modelMapper.typeMap(OrderDto.class, Order.class)
                 .addMappings(mapper -> mapper
                         .when(Conditions.isNotNull())
