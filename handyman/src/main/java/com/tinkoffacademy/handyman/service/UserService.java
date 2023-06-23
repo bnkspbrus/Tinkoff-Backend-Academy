@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Uses WebClient to retrieve data from landscape service.
@@ -67,5 +68,25 @@ public class UserService {
                 .retrieve()
                 .bodyToMono(UserDto.class)
                 .block();
+    }
+
+    public boolean acceptOrder(Long id, Long orderId) {
+        Random random = new Random();
+        boolean isAccepted = random.nextBoolean();
+        if (isAccepted) {
+            new Thread(() -> {
+                try {
+                    Thread.sleep(random.nextLong(1000, 10000));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                webClient.put()
+                        .uri("/orders/{id}/complete", orderId)
+                        .retrieve()
+                        .bodyToMono(Void.class)
+                        .block();
+            }).start();
+        }
+        return isAccepted;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class GardenerService {
@@ -64,5 +65,20 @@ public class GardenerService {
                 .retrieve()
                 .bodyToMono(GardenerDto.class)
                 .block();
+    }
+
+    public void reviewOrder(Long id, Long orderId) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(new Random().nextLong(1000, 10000));
+                webClient.put()
+                        .uri("/orders/{id}/approve", orderId)
+                        .retrieve()
+                        .bodyToMono(Void.class)
+                        .block();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }

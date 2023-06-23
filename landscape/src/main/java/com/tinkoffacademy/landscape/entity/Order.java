@@ -2,14 +2,17 @@ package com.tinkoffacademy.landscape.entity;
 
 import com.tinkoffacademy.landscape.enums.Skill;
 import com.tinkoffacademy.landscape.enums.Status;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.EnumSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name="orders")
@@ -26,9 +29,9 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     private User user;
-    @ElementCollection
-    @Enumerated(EnumType.STRING)
-    private Set<Skill> skills;
+    @Type(type = "io.hypersistence.utils.hibernate.type.json.JsonType")
+    @Column(columnDefinition = "jsonb")
+    private EnumSet<Skill> skills;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;

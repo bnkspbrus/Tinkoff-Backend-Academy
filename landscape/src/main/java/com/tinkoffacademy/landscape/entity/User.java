@@ -1,13 +1,15 @@
 package com.tinkoffacademy.landscape.entity;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.tinkoffacademy.landscape.enums.Skill;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -19,9 +21,12 @@ public class User extends Account {
     @ToString.Exclude
     private List<UserAccount> userAccounts = new ArrayList<>();
     private byte[] photo;
-    @ElementCollection
-    @Enumerated(EnumType.STRING)
-    private Set<Skill> skills;
+    @Type(type = "io.hypersistence.utils.hibernate.type.json.JsonType")
+    @Column(columnDefinition = "jsonb")
+    private EnumSet<Skill> skills;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Order> orders = new ArrayList<>();
 
     public void setUserAccounts(List<UserAccount> userAccounts) {
         this.userAccounts.forEach(userAccount -> userAccount.setUser(null));

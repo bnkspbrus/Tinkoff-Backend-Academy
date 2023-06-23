@@ -4,7 +4,6 @@ import com.tinkoffacademy.handyman.dto.UserDto;
 import com.tinkoffacademy.handyman.service.UserService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.Time;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +19,23 @@ public class UserController {
     public UserDto getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
+
     @GetMapping
     @Timed(value = "findAll.time", description = "Time taken to return all users")
     public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    /**
+     * Ask user to accept or decline order by id.
+     *
+     * @param id      user id
+     * @param orderId order id
+     * @return true if user accepted order, false if declined
+     */
+    @GetMapping("/{id}/orders/accept")
+    public Boolean acceptOrder(@PathVariable Long id, @RequestParam Long orderId) {
+        return userService.acceptOrder(id, orderId);
     }
 
     @PostMapping

@@ -43,4 +43,9 @@ public class GardenerController {
     public void deleteGardener(@PathVariable Long id) {
         gardenerService.deleteGardener(id);
     }
+
+    @GetMapping("/{id}/review")
+    public void reviewOrder(@PathVariable Long id, @RequestParam Long orderId) {
+        gardenerService.reviewOrder(id, orderId);
+    }
 }

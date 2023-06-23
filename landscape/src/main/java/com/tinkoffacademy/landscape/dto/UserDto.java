@@ -4,7 +4,10 @@ import com.tinkoffacademy.landscape.enums.Skill;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +16,6 @@ import java.util.Set;
 @Data
 public class UserDto extends AccountDto {
     private byte[] photo;
-    private Set<Skill> skills;
+    private EnumSet<Skill> skills;
     private List<UserAccountDto> userAccounts;
 }

@@ -50,4 +50,15 @@ public class OrderController {
     public void deleteById(@PathVariable Long id) {
         orderService.deleteById(id);
     }
+
+    @PutMapping("/{id}/complete")
+    public void completeOrder(@PathVariable Long id) {
+        orderService.completeOrder(id);
+    }
+
+    @PutMapping("/{id}/approve")
+    public void approveOrder(@PathVariable Long id) {
+        orderService.approveOrder(id);
+    }
+
 }

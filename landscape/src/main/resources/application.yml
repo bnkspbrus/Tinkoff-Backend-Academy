@@ -44,3 +44,7 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+handyman:
+  baseUrl: http://localhost:8080
+rancher:
+  baseUrl: http://localhost:8082

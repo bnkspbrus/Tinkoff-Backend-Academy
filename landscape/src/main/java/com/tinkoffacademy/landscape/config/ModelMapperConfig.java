@@ -17,11 +17,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.EnumSet;
+
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Configuration
 @RequiredArgsConstructor
 public class ModelMapperConfig {
+    private static final Converter<EnumSet<?>, EnumSet<?>> enumSetToEnumSetConverter = context ->
+            EnumSet.copyOf(context.getSource());
     private final FieldRepository fieldRepository;
     private final AccountTypeRepository accountTypeRepository;
     private final UserRepository userRepository;
@@ -90,6 +94,12 @@ public class ModelMapperConfig {
                         .using(longToUserConverter)
                         .map(OrderDto::getUserId, Order::setUser)
                 );
+        modelMapper.typeMap(OrderDto.class, Order.class)
+                .addMappings(mapper -> mapper
+                        .when(Conditions.isNotNull())
+                        .using(enumSetToEnumSetConverter)
+                        .map(OrderDto::getSkills, Order::setSkills)
+                );
     }
 
     private void configureUserDtoToUserPostConverter(ModelMapper modelMapper) {
@@ -129,5 +139,10 @@ public class ModelMapperConfig {
                         .when(Conditions.isNotNull())
                         .using(orderToUserIdConverter)
                         .map(Order::getUser, OrderDto::setUserId));
+        modelMapper.typeMap(Order.class, OrderDto.class)
+                .addMappings(mapper -> mapper
+                        .when(Conditions.isNotNull())
+                        .using(enumSetToEnumSetConverter)
+                        .map(Order::getSkills, OrderDto::setSkills));
     }
 }
