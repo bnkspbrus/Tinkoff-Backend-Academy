@@ -34,6 +34,8 @@ services:
       - grpc.client.rancher.address=dns:///rancher:9093
       - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
       - grpc.server.address=0.0.0.0
+      - handyman.baseUrl=http://handyman:8080
+      - rancher.baseUrl=http://rancher:8082
     build: ../landscape
 
   rancher:

@@ -84,6 +84,7 @@ public class UserService {
                         .uri("/orders/{id}/complete", orderId)
                         .retrieve()
                         .bodyToMono(Void.class)
+                        .retry(1) // retry in case of failure
                         .block();
             }).start();
         }

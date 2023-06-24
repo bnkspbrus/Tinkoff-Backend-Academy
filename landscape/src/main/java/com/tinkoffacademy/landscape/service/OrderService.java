@@ -87,6 +87,7 @@ public class OrderService {
                         .uri("/users/{id}/orders/accept?orderId={orderId}", user.getId(), order.getId())
                         .retrieve()
                         .bodyToMono(Boolean.class)
+                        .retry(1)
                         .block();
 
                 if (isAccepted != null && isAccepted) {
@@ -129,6 +130,7 @@ public class OrderService {
                 .uri("/gardeners/{id}/review?orderId={orderId}", order.getGarden().getGardener().getId(), order.getId())
                 .retrieve()
                 .bodyToMono(Void.class)
+                .retry(1) // retry in case of failure
                 .subscribe();
     }
 

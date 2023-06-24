@@ -2,16 +2,13 @@ package com.tinkoffacademy.rancher.service;
 
 import com.tinkoffacademy.rancher.dto.FieldDto;
 import com.tinkoffacademy.rancher.dto.OrderDto;
-import com.tinkoffacademy.rancher.dto.Skill;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class FieldService {
@@ -75,6 +72,7 @@ public class FieldService {
                 .bodyValue(orderDto)
                 .retrieve()
                 .bodyToMono(OrderDto.class)
+                .retry(1) // retry on error
                 .block();
     }
 }
