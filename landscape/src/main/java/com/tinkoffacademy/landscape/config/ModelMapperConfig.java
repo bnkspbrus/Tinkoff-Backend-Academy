@@ -40,7 +40,8 @@ public class ModelMapperConfig {
                 .setSkipNullEnabled(true);
 
         configureUserDtoToUserPostConverter(modelMapper);
-
+        configureUserDtoToUserMapping(modelMapper);
+        configureUserToUserDtoMapping(modelMapper);
         configureGardenerDtoToGardenerPostConverter(modelMapper);
         configureOrderToOrderDtoMapping(modelMapper);
         configureOrderDtoToOrderMapping(modelMapper);
@@ -50,6 +51,24 @@ public class ModelMapperConfig {
         modelMapper.typeMap(UserDto.class, User.class).includeBase(AccountDto.class, Account.class);
         modelMapper.typeMap(GardenerDto.class, Gardener.class).includeBase(AccountDto.class, Account.class);
         return modelMapper;
+    }
+
+    private void configureUserDtoToUserMapping(ModelMapper modelMapper) {
+        modelMapper.typeMap(UserDto.class, User.class)
+                .addMappings(mapper -> mapper
+                        .when(Conditions.isNotNull())
+                        .using(enumSetToEnumSetConverter)
+                        .map(UserDto::getSkills, User::setSkills)
+                );
+    }
+
+    private void configureUserToUserDtoMapping(ModelMapper modelMapper) {
+        modelMapper.typeMap(User.class, UserDto.class)
+                .addMappings(mapper -> mapper
+                        .when(Conditions.isNotNull())
+                        .using(enumSetToEnumSetConverter)
+                        .map(User::getSkills, UserDto::setSkills)
+                );
     }
 
     private void configureAccountDtoToAccountMapping(ModelMapper modelMapper) {

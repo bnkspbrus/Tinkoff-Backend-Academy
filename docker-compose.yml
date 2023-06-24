@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   postgres:
-    container_name: postgres
+    container_name: postgis
     image: postgis/postgis
     healthcheck:
       test: pg_isready -U username -d postgresql://postgres:5432/vogorode

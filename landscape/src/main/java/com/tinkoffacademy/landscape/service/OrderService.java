@@ -63,7 +63,7 @@ public class OrderService {
     }
 
     @Transactional(propagation = Propagation.NEVER)
-    public OrderDto findUser(OrderDto orderDto) {
+    public OrderDto create(OrderDto orderDto) {
         orderDto.setUserId(null);
         orderDto.setStatus(Status.CREATED);
         OrderDto saved = save(orderDto);
@@ -73,7 +73,10 @@ public class OrderService {
     @Transactional
     public OrderDto findAndUpdateUsers(OrderDto currentOrder) {
         for (Order order : orderRepository.findByUserIsNullOrderByCreation()) {
-            List<User> users = userRepository.findByOrdersIsEmpty();
+            List<User> users = userRepository.findByOrdersIsEmptyOrderByDistance(
+                    order.getGarden().getLatitude(),
+                    order.getGarden().getLongitude()
+            );
             List<User> suitable = users.stream()
                     .filter(user -> user.getSkills().containsAll(order.getSkills()))
                     .limit(3)
@@ -81,7 +84,7 @@ public class OrderService {
 
             for (User user : suitable) {
                 Boolean isAccepted = handymanWebClient.get()
-                        .uri("/users/{id}/accept?orderId={orderId}", user.getId(), order.getId())
+                        .uri("/users/{id}/orders/accept?orderId={orderId}", user.getId(), order.getId())
                         .retrieve()
                         .bodyToMono(Boolean.class)
                         .block();
@@ -89,17 +92,16 @@ public class OrderService {
                 if (isAccepted != null && isAccepted) {
                     order.setUser(user);
                     order.setStatus(Status.IN_PROGRESS);
-                    Order saved = orderRepository.save(order);
-                    if (saved.getId().equals(currentOrder.getId()))
-                        currentOrder = modelMapper.map(saved, OrderDto.class);
-                    return modelMapper.map(order, OrderDto.class);
+                    orderRepository.save(order);
+                    if (order.getId().equals(currentOrder.getId()))
+                        currentOrder.setUserId(user.getId());
                 }
             }
         }
         return currentOrder;
     }
 
-    public OrderDto save(OrderDto orderDto) {
+    private OrderDto save(OrderDto orderDto) {
         orderDto.setId(null);
         Order order = modelMapper.map(orderDto, Order.class);
         Order saved = orderRepository.save(order);

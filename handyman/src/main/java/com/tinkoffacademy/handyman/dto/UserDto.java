@@ -5,6 +5,7 @@ import com.tinkoffacademy.handyman.enums.Skill;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,6 @@ public class UserDto {
     private Double latitude;
     private Double longitude;
     private byte[] photo;
-    private Set<Skill> skills;
+    private EnumSet<Skill> skills;
     private List<UserAccountDto> userAccounts;
 }
