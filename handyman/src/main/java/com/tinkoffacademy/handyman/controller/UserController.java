@@ -1,45 +1,46 @@
 package com.tinkoffacademy.handyman.controller;
 
-import com.tinkoffacademy.handyman.entity.User;
+import com.tinkoffacademy.handyman.dto.UserDto;
 import com.tinkoffacademy.handyman.service.UserService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.micrometer.core.annotation.Timed;
+import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.Time;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public record UserController(
-        UserService userService
-) {
-    @GetMapping("/{id}")
-    public User findById(@PathVariable Long id) {
-        return userService.findById(id);
-    }
+@RequiredArgsConstructor
+public class UserController {
+    private final UserService userService;
 
+    @GetMapping("/{id}")
+    @Timed(value = "getById.time", description = "Time taken to return a user")
+    public UserDto getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
     @GetMapping
-    public List<User> findAll() {
-        return userService.findAll();
+    @Timed(value = "findAll.time", description = "Time taken to return all users")
+    public List<UserDto> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @PostMapping
-    public User save(@RequestBody User user) {
-        return userService.save(user);
+    @Timed(value = "save.time", description = "Time taken to save a user")
+    public UserDto saveUser(@RequestBody UserDto userDto) {
+        return userService.saveUser(userDto);
     }
 
-    @PutMapping("/{id}")
-    public User updateById(@PathVariable Long id, @RequestBody User user) {
-        return userService.updateById(id, user);
+    @PutMapping
+    @Timed(value = "updateById.time", description = "Time taken to update a user")
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        return userService.updateUser(userDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        userService.deleteById(id);
+    @Timed(value = "deleteById.time", description = "Time taken to delete a user")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
     }
 }

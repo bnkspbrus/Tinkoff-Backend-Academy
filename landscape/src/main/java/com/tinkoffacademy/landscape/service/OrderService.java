@@ -1,13 +1,15 @@
 package com.tinkoffacademy.landscape.service;
 
-import java.util.List;
-
+import com.tinkoffacademy.landscape.dto.OrderDto;
 import com.tinkoffacademy.landscape.entity.Order;
 import com.tinkoffacademy.landscape.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -15,28 +17,39 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final ModelMapper modelMapper;
 
-    public Order findById(Long id) {
-        return orderRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Order with id " + id + " not " +
-                        "found"));
+    public OrderDto getById(Long id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Order with id " + id + " not found"));
+        return modelMapper.map(order, OrderDto.class);
     }
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public List<OrderDto> findAll() {
+        return orderRepository.findAll()
+                .stream()
+                .map(order -> modelMapper.map(order, OrderDto.class))
+                .toList();
     }
 
-    public List<Order> findAll(Pageable pageable) {
-        return orderRepository.findAll(pageable).getContent();
+    public List<OrderDto> findAll(Pageable pageable) {
+        return orderRepository.findAll(pageable)
+                .getContent()
+                .stream()
+                .map(order -> modelMapper.map(order, OrderDto.class))
+                .toList();
     }
 
-    public Order save(Order order) {
-        return orderRepository.save(order);
+    public OrderDto save(OrderDto orderDto) {
+        orderDto.setId(null);
+        Order order = modelMapper.map(orderDto, Order.class);
+        return modelMapper.map(orderRepository.save(order), OrderDto.class);
     }
 
-    public Order updateById(Long id, Order order) {
-        order.setId(id);
-        return orderRepository.save(order);
+    public OrderDto updateById(Long id, OrderDto orderDto) {
+        orderDto.setId(id);
+        Order order = modelMapper.map(orderDto, Order.class);
+        return modelMapper.map(orderRepository.save(order), OrderDto.class);
     }
 
     public void deleteById(Long id) {

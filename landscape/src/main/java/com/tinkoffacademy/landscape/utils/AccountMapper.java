@@ -1,12 +1,12 @@
 package com.tinkoffacademy.landscape.utils;
 
 import com.tinkoffacademy.landscape.dto.AccountDto;
-import com.tinkoffacademy.landscape.entity.Account;
+import com.tinkoffacademy.landscape.dto.GardenerDto;
+import com.tinkoffacademy.landscape.dto.UserDto;
+import com.tinkoffacademy.landscape.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import ru.tinkoff.proto.AccountCredProto;
-import ru.tinkoff.proto.AccountProto;
 
 /**
  * AccountMapper is a class that maps Account to AccountDto and vice versa.
@@ -23,24 +23,22 @@ public class AccountMapper {
      * Maps AccountDto to Account using ModelMapper.
      */
     public Account mapToAccount(AccountDto accountDto) {
-        return modelMapper.map(accountDto, Account.class);
+        if (accountDto instanceof UserDto) {
+            return modelMapper.map(accountDto, User.class);
+        }
+        if (accountDto instanceof GardenerDto) {
+            return modelMapper.map(accountDto, Gardener.class);
+        }
+        throw new IllegalArgumentException("Unknown account type");
     }
 
-    /**
-     * Maps fields from AccountDto to Account using ModelMapper. ModelMapper skips id field of AccountDto.
-     */
-    public Account mapToAccount(AccountDto accountDto, Account account) {
-        modelMapper.map(accountDto, account);
-        return account;
-    }
-
-    public AccountCredProto mapToAccountCredProto(Account account) {
-        AccountCredProto.Builder builder = AccountCredProto.newBuilder();
-        modelMapper.map(account, builder);
-        return builder.build();
-    }
-
-    public Account mapToAccount(AccountProto accountProto) {
-        return modelMapper.map(accountProto, Account.class);
+    public AccountDto mapToAccountDto(Account account) {
+        if (account instanceof User) {
+            return modelMapper.map(account, UserDto.class);
+        }
+        if (account instanceof Gardener) {
+            return modelMapper.map(account, GardenerDto.class);
+        }
+        throw new IllegalArgumentException("Unknown account type");
     }
 }

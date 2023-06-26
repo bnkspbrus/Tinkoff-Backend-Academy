@@ -1,18 +1,12 @@
 package com.tinkoffacademy.landscape.controller;
 
 import com.tinkoffacademy.landscape.dto.AccountDto;
-import com.tinkoffacademy.landscape.entity.Account;
+import com.tinkoffacademy.landscape.dto.BankStat;
+import com.tinkoffacademy.landscape.dto.GardenerStat;
 import com.tinkoffacademy.landscape.service.AccountService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,30 +18,42 @@ public class AccountController {
 
     @GetMapping("/{id}")
     @Timed(value = "getById.time", description = "Time taken to get account by id")
-    public Account findById(@PathVariable Long id) {
+    public AccountDto getById(@PathVariable Long id) {
         return accountService.getById(id);
+    }
+
+    @GetMapping("/field/{id}")
+    @Timed(value = "getByFieldId.time", description = "Time taken to get account by field id")
+    public AccountDto getByFieldId(@PathVariable Long id) {
+        return accountService.getByFieldId(id);
+    }
+
+    @GetMapping("/user-account/{id}")
+    @Timed(value = "getByUserAccountId.time", description = "Time taken to get account by user account id")
+    public AccountDto getByUserAccountId(@PathVariable Long id) {
+        return accountService.getByUserAccountId(id);
     }
 
     @GetMapping
     @Timed(value = "findAll.time", description = "Time taken to find all accounts")
-    public List<Account> findAll() {
-        return accountService.findAll();
+    public List<AccountDto> findAll(@RequestParam(required = false) String type) {
+        return accountService.findAll(type);
     }
 
     @GetMapping("/sort/lastname")
-    public List<Account> findAllSortByLastName() {
+    public List<AccountDto> findAllSortByLastName() {
         return accountService.findAllSortByLastName();
     }
 
     @PostMapping
     @Timed(value = "save.time", description = "Time taken to save account")
-    public Account save(@RequestBody AccountDto accountDto) {
+    public AccountDto save(@RequestBody AccountDto accountDto) {
         return accountService.save(accountDto);
     }
 
     @PutMapping("/{id}")
     @Timed(value = "updateById.time", description = "Time taken to update account by id")
-    public Account save(@PathVariable Long id, @RequestBody AccountDto accountDto) {
+    public AccountDto updateById(@PathVariable Long id, @RequestBody AccountDto accountDto) {
         return accountService.updateById(id, accountDto);
     }
 
@@ -55,5 +61,17 @@ public class AccountController {
     @Timed(value = "deleteById.time", description = "Time taken to delete account by id")
     public void deleteById(@PathVariable Long id) {
         accountService.deleteById(id);
+    }
+
+    @GetMapping("/stat/gardener")
+    @Timed(value = "getGardenerStat.time", description = "Time taken to find gardener stat")
+    public List<GardenerStat> getGardenerStat() {
+        return accountService.getGardenerStat();
+    }
+
+    @GetMapping("/stat/bank")
+    @Timed(value = "getBankStat.time", description = "Time taken to find bank stat")
+    public List<BankStat> getBankStat() {
+        return accountService.getBankStat();
     }
 }

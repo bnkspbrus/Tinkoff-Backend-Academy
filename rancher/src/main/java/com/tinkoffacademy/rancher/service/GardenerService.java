@@ -1,41 +1,68 @@
 package com.tinkoffacademy.rancher.service;
 
+import com.tinkoffacademy.rancher.dto.GardenerDto;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import java.util.List;
 
-import com.tinkoffacademy.rancher.entity.Gardener;
-import com.tinkoffacademy.rancher.repository.GardenerRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 @Service
-@RequiredArgsConstructor
 public class GardenerService {
-    private final GardenerRepository gardenerRepository;
+    private final WebClient webClient;
 
-    public Gardener findById(Long id) {
-        return gardenerRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Gardener with id " + id + " not " +
-                        "found"));
+    public GardenerService(@Value("${landscape.baseUrl}") String baseUrl) {
+        this.webClient = WebClient.create(baseUrl);
     }
 
-    public List<Gardener> findAll() {
-        return gardenerRepository.findAll();
+    public GardenerDto getGardenerById(Long id) {
+        return webClient.get()
+                .uri("/accounts/{id}", id)
+                .retrieve()
+                .bodyToMono(GardenerDto.class)
+                .block();
     }
 
-    public Gardener save(Gardener gardener) {
-        return gardenerRepository.save(gardener);
+    public List<GardenerDto> getAllGardeners() {
+        return webClient.get()
+                .uri("/accounts?type=rancher")
+                .retrieve()
+                .bodyToFlux(GardenerDto.class)
+                .collectList()
+                .block();
     }
 
-    public Gardener updateById(Long id, Gardener gardener) {
-        gardener.setId(id);
-        return gardenerRepository.save(gardener);
+    public GardenerDto saveGardener(GardenerDto gardenerDto) {
+        return webClient.post()
+                .uri("/accounts")
+                .bodyValue(gardenerDto)
+                .retrieve()
+                .bodyToMono(GardenerDto.class)
+                .block();
     }
 
-    public void deleteById(Long id) {
-        gardenerRepository.deleteById(id);
+    public GardenerDto updateGardener(GardenerDto gardenerDto) {
+        return webClient.put()
+                .uri("/accounts/{id}", gardenerDto.getId())
+                .bodyValue(gardenerDto)
+                .retrieve()
+                .bodyToMono(GardenerDto.class)
+                .block();
+    }
+
+    public void deleteGardener(Long id) {
+        webClient.delete()
+                .uri("/accounts/{id}", id)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+
+    public GardenerDto getGardenerByFieldId(Long id) {
+        return webClient.get()
+                .uri("/accounts/field/{id}", id)
+                .retrieve()
+                .bodyToMono(GardenerDto.class)
+                .block();
     }
 }

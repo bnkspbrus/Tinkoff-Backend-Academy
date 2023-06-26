@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgis/postgis
+    healthcheck:
+      test: pg_isready -U username -d postgresql://postgres:5432/vogorode
+    environment:
+      - POSTGRES_DB=vogorode
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"

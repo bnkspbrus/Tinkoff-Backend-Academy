@@ -1,0 +1,105 @@
+GET http://localhost:8080/user-accounts
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+POST http://localhost:8080/user-accounts/user/{{userId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "bank": "VTB",
+  "cardId": 987654321,
+  "paymentSystem": "UnionPay"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+POST http://localhost:8080/user-accounts/user/{{userId2}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "bank": "Sovcombank",
+  "cardId": 101,
+  "paymentSystem": "UnionPay"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+POST http://localhost:8080/user-accounts/user/{{userId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "bank": "Sberbank",
+  "cardId": 987,
+  "paymentSystem": "MasterCard"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+POST http://localhost:8080/user-accounts/user/{{userId3}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "bank": "Promsvyazbank",
+  "cardId": 987,
+  "paymentSystem": "UnionPay"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+POST http://localhost:8080/user-accounts/user/{{userId3}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "bank": "Gazprombank",
+  "cardId": 987,
+  "paymentSystem": "MasterCard"
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+GET http://localhost:8080/user-accounts
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###

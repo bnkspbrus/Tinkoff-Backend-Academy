@@ -1,62 +1,113 @@
 package com.tinkoffacademy.landscape.service;
 
 import com.tinkoffacademy.landscape.dto.AccountDto;
+import com.tinkoffacademy.landscape.dto.BankStat;
+import com.tinkoffacademy.landscape.dto.GardenerStat;
 import com.tinkoffacademy.landscape.entity.Account;
-import com.tinkoffacademy.landscape.entity.AccountTypeV2;
 import com.tinkoffacademy.landscape.repository.AccountRepository;
 import com.tinkoffacademy.landscape.utils.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
     private final AccountRepository accountRepository;
-    private final AccountTypeV2Service accountTypeV2Service;
     private final AccountMapper accountMapper;
 
-    public Account getById(Long id) {
-        return accountRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Account with id " + id + " not found"));
+    @Transactional(readOnly = true)
+    public AccountDto getById(Long id) {
+        Account account = getAccountById(id);
+        return accountMapper.mapToAccountDto(account);
     }
 
-    public List<Account> findAll() {
-        return accountRepository.findAll();
+    @Transactional(readOnly = true)
+    public AccountDto getByFieldId(Long id) {
+        Account account = accountRepository.findByFieldId(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        NOT_FOUND,
+                        "Account with id " + id + " not found"
+                ));
+        return accountMapper.mapToAccountDto(account);
     }
 
-    public Account save(AccountDto accountDto) {
+    @Transactional(readOnly = true)
+    public AccountDto getByUserAccountId(Long id) {
+        Account account = accountRepository.findByUserAccountId(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        NOT_FOUND,
+                        "Account with id " + id + " not found"
+                ));
+        return accountMapper.mapToAccountDto(account);
+    }
+
+    @Transactional(readOnly = true)
+    public List<AccountDto> findAll(String type) {
+        return accountRepository
+                .findAllByType(type)
+                .stream()
+                .map(accountMapper::mapToAccountDto)
+                .toList();
+    }
+
+    @Transactional
+    public AccountDto save(AccountDto accountDto) {
+        accountDto.setId(null);
         Account account = accountMapper.mapToAccount(accountDto);
-        LocalDateTime now = LocalDateTime.now();
-        account.setCreation(now);
-        account.setUpdating(now);
-        AccountTypeV2 typeV2 = accountTypeV2Service.getByName(accountDto.getTypeName());
-        account.setTypeV2(typeV2);
-        return accountRepository.save(account);
+        account = accountRepository.save(account);
+        return accountMapper.mapToAccountDto(account);
     }
 
-    public Account save(Account account) {
-        return accountRepository.save(account);
+    @Transactional
+    public AccountDto updateById(Long id, AccountDto accountDto) {
+        Account account = getAccountById(id);
+        if (!Objects.equals(accountDto.getType(), account.getType().getName())) {
+            throw new ResponseStatusException(
+                    BAD_REQUEST,
+                    "Account type can't be changed"
+            );
+        }
+        accountDto.setId(id);
+        account = accountMapper.mapToAccount(accountDto);
+        account = accountRepository.save(account);
+        return accountMapper.mapToAccountDto(account);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         accountRepository.deleteById(id);
     }
 
-    public Account updateById(Long id, AccountDto accountDto) {
-        Account account = getById(id);
-        account = accountMapper.mapToAccount(accountDto, account);
-        account.setId(id);
-        return accountRepository.save(account);
+    @Transactional(readOnly = true)
+    public List<AccountDto> findAllSortByLastName() {
+        return accountRepository.findAll(Sort.by("lastName"))
+                .stream()
+                .map(accountMapper::mapToAccountDto)
+                .toList();
     }
 
-    public List<Account> findAllSortByLastName() {
-        return accountRepository.findAll(Sort.by(Sort.Direction.ASC, "lastName"));
+    public List<GardenerStat> getGardenerStat() {
+        return accountRepository.getGardenerStat();
+    }
+
+    public List<BankStat> getBankStat() {
+        return accountRepository.getBankStat();
+    }
+
+    private Account getAccountById(Long id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        NOT_FOUND,
+                        "Account with id " + id + " not found"
+                ));
     }
 }

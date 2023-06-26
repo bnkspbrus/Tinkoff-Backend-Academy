@@ -1,0 +1,18 @@
+POST http://localhost:8081/orders
+Content-Type: application/json
+Accept: application/json
+
+{
+  "gardenId": {{gardener_1}},
+  "userId": {{userId}},
+  "skills": ["SOW", "WATER"],
+  "status": "CREATED"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###

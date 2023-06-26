@@ -1,30 +1,27 @@
 package com.tinkoffacademy.landscape.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.UUID;
+import java.time.LocalDateTime;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = UserDto.class, name = "handyman"),
+        @JsonSubTypes.Type(value = GardenerDto.class, name = "rancher")
+})
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonIgnoreProperties(value = {"id"}, allowGetters = true)
-public class AccountDto {
-        private Long id;
-        private String typeName;
-        @NotBlank(message = "Login is mandatory")
-        private String login;
-        @Email(message = "Email should be valid")
-        private String email;
-        @NotBlank(message = "Phone is mandatory")
-        private String phone;
-        @NotNull(message = "Latitude is mandatory")
-        private Double latitude;
-        @NotNull(message = "Longitude is mandatory")
-        private Double longitude;
+public abstract class AccountDto {
+    private Long id;
+    private String type;
+    private String firstName;
+    private String lastName;
+    private String login;
+    private String email;
+    private String phone;
+    private LocalDateTime creation;
+    private LocalDateTime updating;
+    private Double latitude;
+    private Double longitude;
 }

@@ -1,46 +1,46 @@
 package com.tinkoffacademy.rancher.controller;
 
-import java.util.List;
-
-import com.tinkoffacademy.rancher.entity.Field;
+import com.tinkoffacademy.rancher.dto.FieldDto;
 import com.tinkoffacademy.rancher.service.FieldService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/fields")
-public record FieldController(
-        FieldService fieldService
-) {
-    @GetMapping("/{id}")
-    public Field findById(@PathVariable Long id) {
-        return fieldService.findById(id);
+@RequiredArgsConstructor
+public class FieldController {
+    private final FieldService fieldService;
+
+    @GetMapping("{id}")
+    @Timed(value = "getById.time", description = "Time taken to get field by id")
+    public FieldDto getFieldById(@PathVariable Long id) {
+        return fieldService.getFieldById(id);
     }
 
     @GetMapping
-    public List<Field> findAll() {
-        return fieldService.findAll();
+    @Timed(value = "findAll.time", description = "Time taken to find all fields")
+    public List<FieldDto> getAllFields() {
+        return fieldService.getAllFields();
     }
 
-    @PostMapping
-    public Field save(@RequestBody Field field) {
-        return fieldService.save(field);
+    @PostMapping("/gardener/{gardenerId}")
+    @Timed(value = "save.time", description = "Time taken to save field with gardener id")
+    public FieldDto saveFieldWithGardenerId(@PathVariable Long gardenerId, @RequestBody FieldDto fieldDto) {
+        return fieldService.saveFieldWithGardenerId(gardenerId, fieldDto);
     }
 
-    @PutMapping("/{id}")
-    public Field updateById(@PathVariable Long id, @RequestBody Field field) {
-        return fieldService.updateById(id, field);
+    @PutMapping
+    @Timed(value = "updateById.time", description = "Time taken to update field by id")
+    public FieldDto updateField(@RequestBody FieldDto fieldDto) {
+        return fieldService.updateField(fieldDto);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        fieldService.deleteById(id);
+    @DeleteMapping("{id}")
+    @Timed(value = "deleteById.time", description = "Time taken to delete field by id")
+    public void deleteField(@PathVariable Long id) {
+        fieldService.deleteField(id);
     }
 }

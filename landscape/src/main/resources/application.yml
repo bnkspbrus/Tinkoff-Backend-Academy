@@ -10,9 +10,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: com.tinkoffacademy.landscape.config.STAreaPostgisDialect
+    defer-datasource-initialization: true
   liquibase:
-#    change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: false
+  sql:
+    init:
+      mode: always
 management:
   endpoints:
     web:
@@ -34,9 +40,6 @@ grpc:
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
-  server:
-    address: 127.0.0.1
-    port: 9092
 logging:
   level:
     org.hibernate.SQL: DEBUG

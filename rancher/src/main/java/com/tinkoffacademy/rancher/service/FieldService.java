@@ -1,40 +1,60 @@
 package com.tinkoffacademy.rancher.service;
 
-import java.util.List;
-
-import com.tinkoffacademy.rancher.entity.Field;
-import com.tinkoffacademy.rancher.repository.FieldRepository;
+import com.tinkoffacademy.rancher.dto.FieldDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class FieldService {
-    private final FieldRepository fieldRepository;
+    private final GardenerService gardenerService;
 
-    public Field findById(Long id) {
-        return fieldRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Field with id " + id + " not " +
-                        "found"));
+    public FieldDto getFieldById(Long id) {
+        return gardenerService.getGardenerByFieldId(id)
+                .getFields()
+                .stream()
+                .filter(field -> field.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Field not found"
+                ));
     }
 
-    public List<Field> findAll() {
-        return fieldRepository.findAll();
+    public List<FieldDto> getAllFields() {
+        return gardenerService.getAllGardeners()
+                .stream()
+                .flatMap(gardenerDto -> gardenerDto.getFields().stream())
+                .toList();
     }
 
-    public Field save(Field field) {
-        return fieldRepository.save(field);
+    public FieldDto saveFieldWithGardenerId(Long gardenerId, FieldDto fieldDto) {
+        var gardenerDto = gardenerService.getGardenerById(gardenerId);
+        gardenerDto.getFields().add(fieldDto);
+        var updated = gardenerService.updateGardener(gardenerDto);
+        return updated.getFields().get(updated.getFields().size() - 1);
     }
 
-    public Field updateById(Long id, Field field) {
-        field.setId(id);
-        return fieldRepository.save(field);
+    public FieldDto updateField(FieldDto fieldDto) {
+        var gardenerDto = gardenerService.getGardenerByFieldId(fieldDto.getId());
+        var fieldDtos = gardenerDto.getFields();
+        var indexes = fieldDtos.stream().map(FieldDto::getId).toList();
+        var index = indexes.indexOf(fieldDto.getId());
+        fieldDtos.set(index, fieldDto);
+        var updated = gardenerService.updateGardener(gardenerDto);
+        return updated.getFields().get(index);
     }
 
-    public void deleteById(Long id) {
-        fieldRepository.deleteById(id);
+    public void deleteField(Long id) {
+        var gardenerDto = gardenerService.getGardenerByFieldId(id);
+        var fieldDtos = gardenerDto.getFields();
+        var indexes = fieldDtos.stream().map(FieldDto::getId).toList();
+        var index = indexes.indexOf(id);
+        fieldDtos.remove(index);
+        gardenerService.updateGardener(gardenerDto);
     }
 }

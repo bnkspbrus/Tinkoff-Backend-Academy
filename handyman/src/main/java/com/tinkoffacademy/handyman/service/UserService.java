@@ -1,40 +1,71 @@
 package com.tinkoffacademy.handyman.service;
 
+import com.tinkoffacademy.handyman.dto.UserDto;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import java.util.List;
 
-import com.tinkoffacademy.handyman.entity.User;
-import com.tinkoffacademy.handyman.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
+/**
+ * Uses WebClient to retrieve data from landscape service.
+ */
 @Service
-@RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
+    private final WebClient webClient;
 
-    public User findById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "User with id " + id + " not " +
-                        "found"));
+    public UserService(@Value("${landscape.baseUrl}") String baseUrl) {
+        this.webClient = WebClient.create(baseUrl);
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public UserDto getUserById(Long id) {
+        return webClient.get()
+                .uri("/accounts/{id}", id)
+                .retrieve()
+                .bodyToMono(UserDto.class)
+                .block();
     }
 
-    public User save(User user) {
-        return userRepository.save(user);
+    public List<UserDto> getAllUsers() {
+        return webClient.get()
+                .uri("/accounts?type=handyman")
+                .retrieve()
+                .bodyToFlux(UserDto.class)
+                .collectList()
+                .block();
     }
 
-    public User updateById(Long id, User user) {
-        user.setId(id);
-        return userRepository.save(user);
+    public UserDto saveUser(UserDto userDto) {
+        return webClient.post()
+                .uri("/accounts")
+                .bodyValue(userDto)
+                .retrieve()
+                .bodyToMono(UserDto.class)
+                .block();
     }
 
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
+    public UserDto updateUser(UserDto userDto) {
+        return webClient.put()
+                .uri("/accounts/{id}", userDto.getId())
+                .bodyValue(userDto)
+                .retrieve()
+                .bodyToMono(UserDto.class)
+                .block();
+    }
+
+    public void deleteUser(Long id) {
+        webClient.delete()
+                .uri("/accounts/{id}", id)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+
+    public UserDto getUserByUserAccountId(Long userAccountId) {
+        return webClient.get()
+                .uri("/accounts/user-account/{id}", userAccountId)
+                .retrieve()
+                .bodyToMono(UserDto.class)
+                .block();
     }
 }

@@ -1,46 +1,46 @@
 package com.tinkoffacademy.rancher.controller;
 
-import java.util.List;
-
-import com.tinkoffacademy.rancher.entity.Gardener;
+import com.tinkoffacademy.rancher.dto.GardenerDto;
 import com.tinkoffacademy.rancher.service.GardenerService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/gardeners")
-public record GardenerController(
-        GardenerService gardenerService
-) {
+@RequiredArgsConstructor
+public class GardenerController {
+    private final GardenerService gardenerService;
+
     @GetMapping("/{id}")
-    public Gardener findById(@PathVariable Long id) {
-        return gardenerService.findById(id);
+    @Timed(value = "getById.time", description = "Time taken to get gardener by id")
+    public GardenerDto getGardenerById(@PathVariable Long id) {
+        return gardenerService.getGardenerById(id);
     }
 
     @GetMapping
-    public List<Gardener> findAll() {
-        return gardenerService.findAll();
+    @Timed(value = "findAll.time", description = "Time taken to find all gardeners")
+    public List<GardenerDto> getAllGardeners() {
+        return gardenerService.getAllGardeners();
     }
 
     @PostMapping
-    public Gardener save(@RequestBody Gardener gardener) {
-        return gardenerService.save(gardener);
+    @Timed(value = "save.time", description = "Time taken to save gardener")
+    public GardenerDto saveGardener(@RequestBody GardenerDto gardenerDto) {
+        return gardenerService.saveGardener(gardenerDto);
     }
 
-    @PutMapping("/{id}")
-    public Gardener updateById(@PathVariable Long id, @RequestBody Gardener gardener) {
-        return gardenerService.updateById(id, gardener);
+    @PutMapping
+    @Timed(value = "updateById.time", description = "Time taken to update gardener by id")
+    public GardenerDto updateGardener(@RequestBody GardenerDto gardenerDto) {
+        return gardenerService.updateGardener(gardenerDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        gardenerService.deleteById(id);
+    @Timed(value = "deleteById.time", description = "Time taken to delete gardener by id")
+    public void deleteGardener(@PathVariable Long id) {
+        gardenerService.deleteGardener(id);
     }
 }

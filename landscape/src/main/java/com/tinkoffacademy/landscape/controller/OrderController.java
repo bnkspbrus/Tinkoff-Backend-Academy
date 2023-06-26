@@ -1,20 +1,13 @@
 package com.tinkoffacademy.landscape.controller;
 
-import java.util.List;
-
-import com.tinkoffacademy.landscape.entity.Order;
+import com.tinkoffacademy.landscape.dto.OrderDto;
 import com.tinkoffacademy.landscape.service.OrderService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
@@ -23,31 +16,37 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/{id}")
-    public Order findById(@PathVariable Long id) {
-        return orderService.findById(id);
+    @Timed(value = "getById.time", description = "Time taken to return an order")
+    public OrderDto getById(@PathVariable Long id) {
+        return orderService.getById(id);
     }
 
     @GetMapping
-    public List<Order> findAll() {
+    @Timed(value = "findAll.time", description = "Time taken to return all orders")
+    public List<OrderDto> findAll() {
         return orderService.findAll();
     }
 
     @GetMapping("/page")
-    public List<Order> findAll(@RequestParam int page, @RequestParam int size) {
+    @Timed(value = "findAllPage.time", description = "Time taken to return all orders with pagination")
+    public List<OrderDto> findAll(@RequestParam int page, @RequestParam int size) {
         return orderService.findAll(PageRequest.of(page, size));
     }
 
     @PostMapping
-    public Order save(@RequestBody Order order) {
+    @Timed(value = "save.time", description = "Time taken to save an order")
+    public OrderDto save(@RequestBody OrderDto order) {
         return orderService.save(order);
     }
 
     @PutMapping("/{id}")
-    public Order updateById(@PathVariable Long id, @RequestBody Order order) {
+    @Timed(value = "updateById.time", description = "Time taken to update an order")
+    public OrderDto updateById(@PathVariable Long id, @RequestBody OrderDto order) {
         return orderService.updateById(id, order);
     }
 
     @DeleteMapping("/{id}")
+    @Timed(value = "deleteById.time", description = "Time taken to delete an order")
     public void deleteById(@PathVariable Long id) {
         orderService.deleteById(id);
     }

@@ -1,45 +1,46 @@
 package com.tinkoffacademy.handyman.controller;
 
-import com.tinkoffacademy.handyman.entity.UserAccount;
+import com.tinkoffacademy.handyman.dto.UserAccountDto;
 import com.tinkoffacademy.handyman.service.UserAccountService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.micrometer.core.annotation.Timed;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/accounts")
-public record UserAccountController(
-        UserAccountService accountService
-) {
+@RequestMapping("/user-accounts")
+@RequiredArgsConstructor
+public class UserAccountController {
+    private final UserAccountService userAccountService;
+
     @GetMapping("/{id}")
-    public UserAccount findById(@PathVariable Long id) {
-        return accountService.findById(id);
+    @Timed(value = "getById.time", description = "Time taken to return a user account")
+    public UserAccountDto getUserAccountById(@PathVariable Long id) {
+        return userAccountService.getUserAccountById(id);
     }
 
     @GetMapping
-    public List<UserAccount> findAll() {
-        return accountService.findAll();
+    @Timed(value = "findAll.time", description = "Time taken to return all user accounts")
+    public List<UserAccountDto> getAllUserAccounts() {
+        return userAccountService.getAllUserAccounts();
     }
 
-    @PostMapping
-    public UserAccount save(@RequestBody UserAccount userAccount) {
-        return accountService.save(userAccount);
+    @PostMapping("/user/{userId}")
+    @Timed(value = "save.time", description = "Time taken to save a user account with user id")
+    public UserAccountDto saveUserAccountWithUserId(@PathVariable Long userId, @RequestBody UserAccountDto userAccountDto) {
+        return userAccountService.saveUserAccountWithUserId(userId, userAccountDto);
     }
 
     @PutMapping("/{id}")
-    public UserAccount updateById(@PathVariable Long id, @RequestBody UserAccount userAccount) {
-        return accountService.updateById(id, userAccount);
+    @Timed(value = "updateById.time", description = "Time taken to update a user account")
+    public UserAccountDto updateUserAccount(@RequestBody UserAccountDto userAccountDto) {
+        return userAccountService.updateUserAccount(userAccountDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        accountService.deleteById(id);
+    @Timed(value = "deleteById.time", description = "Time taken to delete a user account")
+    public void deleteUserAccount(@PathVariable Long id) {
+        userAccountService.deleteUserAccount(id);
     }
 }

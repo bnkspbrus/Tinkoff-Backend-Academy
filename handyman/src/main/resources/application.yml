@@ -19,7 +19,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus, info
+        include: prometheus,info
       base-path:
       path-mapping:
         prometheus: /metrics
@@ -38,3 +38,5 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+landscape:
+  baseUrl: http://localhost:8081

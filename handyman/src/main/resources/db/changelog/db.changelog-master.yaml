@@ -1,7 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/create-users.sql
-  - include:
-      file: db/create-user-account.sql
-  - include:
-      file: db/create-user-skills.sql
