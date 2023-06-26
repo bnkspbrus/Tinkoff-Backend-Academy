@@ -1,8 +1,8 @@
 package com.tinkoffacademy.landscape.utils;
 
-import com.tinkoffacademy.landscape.dto.AccountDto;
-import com.tinkoffacademy.landscape.dto.GardenerDto;
-import com.tinkoffacademy.landscape.dto.UserDto;
+import com.tinkoffacademy.dto.AccountDto;
+import com.tinkoffacademy.dto.GardenerDto;
+import com.tinkoffacademy.dto.UserDto;
 import com.tinkoffacademy.landscape.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

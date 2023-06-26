@@ -1,4 +1,4 @@
-package com.tinkoffacademy.landscape.dto;
+package com.tinkoffacademy.dto;
 
 public record GardenerStat(
         String login,

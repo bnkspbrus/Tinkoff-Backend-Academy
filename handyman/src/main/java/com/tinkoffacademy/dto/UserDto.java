@@ -1,4 +1,4 @@
-package com.tinkoffacademy.handyman.dto;
+package com.tinkoffacademy.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tinkoffacademy.handyman.enums.Skill;
@@ -7,7 +7,6 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @JsonIgnoreProperties(value = {"type"}, allowGetters = true)

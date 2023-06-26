@@ -1,4 +1,4 @@
-package com.tinkoffacademy.landscape.dto;
+package com.tinkoffacademy.dto;
 
 import com.tinkoffacademy.landscape.enums.Bank;
 

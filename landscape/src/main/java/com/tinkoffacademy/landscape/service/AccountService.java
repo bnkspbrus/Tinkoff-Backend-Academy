@@ -1,8 +1,8 @@
 package com.tinkoffacademy.landscape.service;
 
-import com.tinkoffacademy.landscape.dto.AccountDto;
-import com.tinkoffacademy.landscape.dto.BankStat;
-import com.tinkoffacademy.landscape.dto.GardenerStat;
+import com.tinkoffacademy.dto.AccountDto;
+import com.tinkoffacademy.dto.BankStat;
+import com.tinkoffacademy.dto.GardenerStat;
 import com.tinkoffacademy.landscape.entity.Account;
 import com.tinkoffacademy.landscape.repository.AccountRepository;
 import com.tinkoffacademy.landscape.utils.AccountMapper;

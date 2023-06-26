@@ -1,7 +1,7 @@
-package com.tinkoffacademy.landscape.dto;
+package com.tinkoffacademy.dto;
 
-import com.tinkoffacademy.landscape.enums.Skill;
-import com.tinkoffacademy.landscape.enums.Status;
+import com.tinkoffacademy.handyman.enums.Skill;
+import com.tinkoffacademy.handyman.enums.Status;
 import lombok.Data;
 
 import java.time.LocalDateTime;

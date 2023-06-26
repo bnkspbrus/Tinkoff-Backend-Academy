@@ -1,4 +1,4 @@
-package com.tinkoffacademy.landscape.dto;
+package com.tinkoffacademy.dto;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

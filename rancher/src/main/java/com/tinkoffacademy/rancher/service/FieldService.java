@@ -1,24 +1,17 @@
 package com.tinkoffacademy.rancher.service;
 
-import com.tinkoffacademy.rancher.dto.FieldDto;
-import com.tinkoffacademy.rancher.dto.OrderDto;
-import org.springframework.beans.factory.annotation.Value;
+import com.tinkoffacademy.dto.FieldDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class FieldService {
     private final GardenerService gardenerService;
-    private final WebClient webClient;
-
-    public FieldService(GardenerService gardenerService, @Value("${landscape.baseUrl}") String baseUrl) {
-        this.gardenerService = gardenerService;
-        this.webClient = WebClient.create(baseUrl);
-    }
 
     public FieldDto getFieldById(Long id) {
         return gardenerService.getGardenerByFieldId(id)
@@ -63,16 +56,5 @@ public class FieldService {
         var index = indexes.indexOf(id);
         fieldDtos.remove(index);
         gardenerService.updateGardener(gardenerDto);
-    }
-
-    public OrderDto createOrder(Long id, OrderDto orderDto) {
-        orderDto.setGardenId(id);
-        return webClient.post()
-                .uri("/orders")
-                .bodyValue(orderDto)
-                .retrieve()
-                .bodyToMono(OrderDto.class)
-                .retry(1) // retry on error
-                .block();
     }
 }

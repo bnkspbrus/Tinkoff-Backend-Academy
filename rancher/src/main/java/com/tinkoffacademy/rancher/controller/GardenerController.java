@@ -1,6 +1,6 @@
 package com.tinkoffacademy.rancher.controller;
 
-import com.tinkoffacademy.rancher.dto.GardenerDto;
+import com.tinkoffacademy.dto.GardenerDto;
 import com.tinkoffacademy.rancher.service.GardenerService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;

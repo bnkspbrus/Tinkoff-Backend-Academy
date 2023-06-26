@@ -53,6 +53,8 @@ dependencies {
     implementation 'org.locationtech.jts:jts-core:1.19.0'
     implementation 'org.locationtech.spatial4j:spatial4j:0.8'
     implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

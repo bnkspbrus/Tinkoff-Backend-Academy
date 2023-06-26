@@ -1,6 +1,6 @@
 package com.tinkoffacademy.rancher.service;
 
-import com.tinkoffacademy.rancher.dto.GardenerDto;
+import com.tinkoffacademy.dto.GardenerDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

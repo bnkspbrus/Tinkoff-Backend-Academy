@@ -1,7 +1,7 @@
 package com.tinkoffacademy.landscape.repository;
 
-import com.tinkoffacademy.landscape.dto.BankStat;
-import com.tinkoffacademy.landscape.dto.GardenerStat;
+import com.tinkoffacademy.dto.BankStat;
+import com.tinkoffacademy.dto.GardenerStat;
 import com.tinkoffacademy.landscape.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,12 +14,12 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query("select " +
-            "new com.tinkoffacademy.landscape.dto.GardenerStat(a.login, min(ST_Area(f.area)), max(ST_Area(f.area)), avg(ST_Area(f.area))) " +
+            "new com.tinkoffacademy.dto.GardenerStat(a.login, min(ST_Area(f.area)), max(ST_Area(f.area)), avg(ST_Area(f.area))) " +
             "from Field f join Account a on f.gardener.id=a.id group by a.login")
     List<GardenerStat> getGardenerStat();
 
     @Query("select " +
-            "new com.tinkoffacademy.landscape.dto.BankStat(ua.bank, min(a.creation), max(a.creation)) " +
+            "new com.tinkoffacademy.dto.BankStat(ua.bank, min(a.creation), max(a.creation)) " +
             "from UserAccount ua join Account a on ua.user.id=a.id group by ua.bank")
     List<BankStat> getBankStat();
 

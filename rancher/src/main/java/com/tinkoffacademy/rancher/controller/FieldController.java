@@ -1,7 +1,6 @@
 package com.tinkoffacademy.rancher.controller;
 
-import com.tinkoffacademy.rancher.dto.FieldDto;
-import com.tinkoffacademy.rancher.dto.OrderDto;
+import com.tinkoffacademy.dto.FieldDto;
 import com.tinkoffacademy.rancher.service.FieldService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
@@ -43,10 +42,5 @@ public class FieldController {
     @Timed(value = "deleteById.time", description = "Time taken to delete field by id")
     public void deleteField(@PathVariable Long id) {
         fieldService.deleteField(id);
-    }
-
-    @PostMapping("/{id}/orders/create")
-    public OrderDto createOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
-        return fieldService.createOrder(id, orderDto);
     }
 }

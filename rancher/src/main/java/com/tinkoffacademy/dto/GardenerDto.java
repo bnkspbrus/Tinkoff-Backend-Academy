@@ -1,4 +1,4 @@
-package com.tinkoffacademy.rancher.dto;
+package com.tinkoffacademy.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

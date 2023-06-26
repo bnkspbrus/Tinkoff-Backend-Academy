@@ -1,7 +1,7 @@
-package com.tinkoffacademy.landscape.dto;
+package com.tinkoffacademy.dto;
 
-import com.tinkoffacademy.landscape.enums.Bank;
-import com.tinkoffacademy.landscape.enums.PaymentSystem;
+import com.tinkoffacademy.handyman.enums.Bank;
+import com.tinkoffacademy.handyman.enums.PaymentSystem;
 import lombok.Data;
 
 @Data

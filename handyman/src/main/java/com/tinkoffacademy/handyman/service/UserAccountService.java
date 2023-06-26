@@ -1,6 +1,6 @@
 package com.tinkoffacademy.handyman.service;
 
-import com.tinkoffacademy.handyman.dto.UserAccountDto;
+import com.tinkoffacademy.dto.UserAccountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

@@ -1,9 +1,9 @@
 package com.tinkoffacademy.landscape.config;
 
-import com.tinkoffacademy.landscape.dto.AccountDto;
-import com.tinkoffacademy.landscape.dto.GardenerDto;
-import com.tinkoffacademy.landscape.dto.OrderDto;
-import com.tinkoffacademy.landscape.dto.UserDto;
+import com.tinkoffacademy.dto.AccountDto;
+import com.tinkoffacademy.dto.GardenerDto;
+import com.tinkoffacademy.dto.OrderDto;
+import com.tinkoffacademy.dto.UserDto;
 import com.tinkoffacademy.landscape.entity.*;
 import com.tinkoffacademy.landscape.repository.AccountTypeRepository;
 import com.tinkoffacademy.landscape.repository.FieldRepository;

@@ -1,15 +1,12 @@
-package com.tinkoffacademy.landscape.dto;
+package com.tinkoffacademy.dto;
 
 import com.tinkoffacademy.landscape.enums.Skill;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

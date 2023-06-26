@@ -1,6 +1,6 @@
 package com.tinkoffacademy.landscape.controller;
 
-import com.tinkoffacademy.landscape.dto.OrderDto;
+import com.tinkoffacademy.dto.OrderDto;
 import com.tinkoffacademy.landscape.service.OrderService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
@@ -33,12 +33,6 @@ public class OrderController {
         return orderService.findAll(PageRequest.of(page, size));
     }
 
-    @PostMapping
-    @Timed(value = "create.time", description = "Time taken to create an order")
-    public OrderDto createOrder(@RequestBody OrderDto order) {
-        return orderService.create(order);
-    }
-
     @PutMapping("/{id}")
     @Timed(value = "updateById.time", description = "Time taken to update an order")
     public OrderDto updateOrder(@PathVariable Long id, @RequestBody OrderDto order) {
@@ -50,15 +44,4 @@ public class OrderController {
     public void deleteOrder(@PathVariable Long id) {
         orderService.deleteById(id);
     }
-
-    @PutMapping("/{id}/complete")
-    public void completeOrder(@PathVariable Long id) {
-        orderService.completeOrder(id);
-    }
-
-    @PutMapping("/{id}/approve")
-    public void approveOrder(@PathVariable Long id) {
-        orderService.approveOrder(id);
-    }
-
 }

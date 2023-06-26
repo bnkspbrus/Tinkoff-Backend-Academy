@@ -1,6 +1,6 @@
 package com.tinkoffacademy.handyman.controller;
 
-import com.tinkoffacademy.handyman.dto.UserDto;
+import com.tinkoffacademy.dto.UserDto;
 import com.tinkoffacademy.handyman.service.UserService;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;

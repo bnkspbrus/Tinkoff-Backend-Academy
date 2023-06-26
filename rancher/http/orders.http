@@ -1,3 +1,13 @@
+POST http://localhost:8082/orders/create
+Content-Type: application/json
+Accept: application/json
+
+{
+  "gardenId": {{field_1}},
+  "skills": ["PLANT", "SOW"]
+}
+
+###
 POST http://localhost:8082/fields/{{field_1}}/orders/create
 Content-Type: application/json
 Accept: application/json
