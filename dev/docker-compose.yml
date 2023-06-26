@@ -3,6 +3,8 @@ version: "3.9"
 volumes:
   prometheus_data: { }
   grafana_data: { }
+  kafka_data:
+    driver: local
 
 services:
   handyman:
@@ -15,6 +17,7 @@ services:
         condition: service_healthy
     build: ../handyman
     environment:
+      - spring.kafka.bootstrap-servers=kafka:9092
       - grpc.server.address=0.0.0.0
       - spring.data.mongodb.uri=mongodb://mongodb:27017/handyman
       - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
@@ -30,6 +33,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
+      - spring.kafka.bootstrap-servers=kafka:9092
       - grpc.client.handyman.address=dns:///handyman:9091
       - grpc.client.rancher.address=dns:///rancher:9093
       - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
@@ -48,6 +52,7 @@ services:
         condition: service_healthy
     build: ../rancher
     environment:
+      - spring.kafka.bootstrap-servers=kafka:9092
       - grpc.server.address=0.0.0.0
       - spring.data.mongodb.uri=mongodb://mongodb:27017/rancher
       - spring.datasource.url=jdbc:postgresql://postgres:5432/vogorode
@@ -108,3 +113,12 @@ services:
       - 3000
     ports:
       - "3000:3000"
+
+  kafka:
+    image: docker.io/bitnami/kafka:3.4
+    ports:
+      - "9092:9092"
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      - ALLOW_PLAINTEXT_LISTENER=yes
