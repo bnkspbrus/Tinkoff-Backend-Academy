@@ -16,6 +16,6 @@ public class OrderController {
 
     @PostMapping("/create")
     public void createOrder(@RequestBody OrderDto orderDto) {
-        orderProducer.send(orderDto);
+        orderProducer.createOrder(orderDto);
     }
 }

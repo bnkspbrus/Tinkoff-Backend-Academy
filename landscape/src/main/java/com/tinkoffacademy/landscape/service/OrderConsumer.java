@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +18,8 @@ public class OrderConsumer {
     private final KafkaTemplate<String, OrderDto> kafkaTemplate;
     private final OrderService orderService;
 
-    @SendTo("landscape-rancher")
     @KafkaListener(id = "rancherLandscape", topics = "rancher-landscape")
-    public OrderDto consumeRancher(OrderDto orderDto) {
+    public void consumeRancher(OrderDto orderDto) {
         log.info("Order consumed by landscape from rancher: " + orderDto);
         Objects.requireNonNull(orderDto.getGardenId());
         Objects.requireNonNull(orderDto.getSkills());
@@ -37,15 +35,12 @@ public class OrderConsumer {
                     saved.setUserId(user.getId());
                     kafkaTemplate.send("landscape-handyman", saved);
                 }
-                saved.setUserId(null);
-                return saved;
             }
             case APPROVED -> {
                 Objects.requireNonNull(orderDto.getUserId());
                 Objects.requireNonNull(orderDto.getId());
                 orderService.updateById(orderDto.getId(), orderDto);
                 log.info("Order updated by landscape: " + orderDto);
-                return orderDto;
             }
             default -> throw new RuntimeException("Order with status " + orderDto.getStatus() + " can't be consumed by landscape from rancher");
         }
@@ -65,7 +60,6 @@ public class OrderConsumer {
                 if (saved.getUserId() == null) {
                     orderService.updateById(orderDto.getId(), orderDto);
                     log.info("Order updated by landscape: " + orderDto);
-                    kafkaTemplate.send("landscape-rancher", orderDto);
                 }
             }
             case DONE -> {

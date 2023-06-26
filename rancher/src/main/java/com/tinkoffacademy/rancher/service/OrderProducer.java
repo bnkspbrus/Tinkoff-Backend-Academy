@@ -15,10 +15,14 @@ import java.util.Objects;
 public class OrderProducer {
     private final KafkaTemplate<String, OrderDto> kafkaTemplate;
 
-    public void send(OrderDto orderDto) {
+    public void createOrder(OrderDto orderDto) {
         Objects.requireNonNull(orderDto.getGardenId());
         Objects.requireNonNull(orderDto.getSkills());
         orderDto.setStatus(Status.CREATED);
+        kafkaTemplate.send("rancher-landscape", orderDto);
+    }
+
+    public void send(OrderDto orderDto) {
         kafkaTemplate.send("rancher-landscape", orderDto);
     }
 }

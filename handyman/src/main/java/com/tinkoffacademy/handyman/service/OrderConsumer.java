@@ -20,7 +20,6 @@ public class OrderConsumer {
     private final Random random = new Random();
     private final OrderProducer orderProducer;
 
-//    @SendTo("handyman-landscape")
     @KafkaListener(id = "landscapeHandyman", topics = "landscape-handyman")
     public void consume(OrderDto orderDto) {
         if (Objects.requireNonNull(orderDto.getStatus()) == Status.CREATED) {
