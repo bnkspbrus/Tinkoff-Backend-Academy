@@ -12,7 +12,7 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: com.tinkoffacademy.landscape.config.STAreaPostgisDialect
+        dialect: ru.tinkoff.landscape.config.STAreaPostgisDialect
     defer-datasource-initialization: true
   liquibase:
     enabled: false

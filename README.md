@@ -23,9 +23,24 @@
 
 * Выполните `sudo systemctl start docker`
 * Создайте директорию `landscape/src/main/resources/db/data`, если не существует
-* Положите в `landscape/src/main/resources/db/data` файл https://drive.google.com/file/d/1oO6ipKpazhdddr1qrfzQ1SMSdxY0CTy-/view?usp=sharing
+* Положите в `landscape/src/main/resources/db/data`
+  файл https://drive.google.com/file/d/1oO6ipKpazhdddr1qrfzQ1SMSdxY0CTy-/view?usp=sharing
 * Выполните `./setup.sh`
 * Выполните `docker compose -f dev/docker-compose.yml up`
+
+#### Загрузить 100_000 документов в mongodb
+
+```
+mongosh -f handyman/src/main/resources/load-data.js
+```
+![](handyman/src/main/resources/load.png)
+
+#### Дропнуть коллекцию в mongodb
+
+```
+mongosh -f handyman/src/main/resources/drop-data.js
+```
+![](handyman/src/main/resources/drop.png)
 
 ### Ссылки
 
@@ -35,14 +50,17 @@
 
 ### Мониторинг
 
-После нескольких запусков скриптов в папке `http` в сервисе `handyman` можно заметить, что суммарное время увеличивается и максимальное время тоже увеличивается.
+После нескольких запусков скриптов в папке `http` в сервисе `handyman` можно заметить, что суммарное время увеличивается
+и максимальное время тоже увеличивается.
 
 ![](docs/pics/handyman.png)
 
-Аналогично после нескольких запусков скриптов в папке `http` в сервисе `rancher` можно заметить, что суммарное время увеличивается и максимальное время тоже увеличивается.
+Аналогично после нескольких запусков скриптов в папке `http` в сервисе `rancher` можно заметить, что суммарное время
+увеличивается и максимальное время тоже увеличивается.
 
 ![](docs/pics/rancher.png)
 
-Если паралельно запустить скрипты в папке `http` в сервисе `landscape`, то можно заметить, что и его максимальное время тоже увеличивается, так как становится больше записей в базе данных.
+Если паралельно запустить скрипты в папке `http` в сервисе `landscape`, то можно заметить, что и его максимальное время
+тоже увеличивается, так как становится больше записей в базе данных.
 
 ![](docs/pics/landscape.png)
