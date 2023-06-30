@@ -1,0 +1,32 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/mongodb.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Component diagram for Handyman Application - API Application
+
+ContainerDb(db, "Database", "NoSQL Database", "Stores user registration information, bank account details, and activity history", "mongodb")
+System_Ext(landscape, "Landscape Application", "Stores all the core information about users, accounts, transactions, and so on")
+
+Container_Boundary(api, "API Application") {
+    Component(userController, "User Controller", "Rest Controller", "Allows users to register, and manage their personal information")
+    Component(accountController, "Account Controller", "Rest Controller", "Allows users to view and manage their bank accounts")
+    Component(systemController, "System Controller", "Rest Controller", "Provides general system information and health check")
+    Component(systemService, "System Service", "Service", "Provides functionality related to system information")
+    Component(userService, "User Service", "Service", "Provides functionality related to users")
+    Component(accountService, "Account Service", "Service", "Provides functionality related to bank accounts")
+    Component(statusService, "Status Service", "Service", "Provides functionality related to status")
+
+    Rel(systemController, systemService, "Uses")
+    Rel(userController, userService, "Uses")
+    Rel(accountController, accountService, "Uses")
+    Rel(userService, db, "Read & write to", "JDBC")
+    Rel(userService, landscape, "Uses", "HTTP")
+    Rel(accountService, db, "Read & write to", "JDBC")
+    Rel(accountService, userService, "Uses")
+    Rel(landscape, statusService, "Uses", "GRPC")
+}
+@enduml

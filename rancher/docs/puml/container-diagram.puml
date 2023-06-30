@@ -1,0 +1,27 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Container.puml
+
+' LAYOUT_TOP_DOWN()
+' LAYOUT_AS_SKETCH()
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/mongodb.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Container diagram for Rancher Application
+
+Person(gardener, Gardener, "A user of the application, with personal fields")
+
+System_Boundary(c1, "Rancher Application") {
+    ContainerDb(database, "Database", "NoSQL Database", "Stores gardener registration information, field details, and activity history", "mongodb")
+    Container(backend_api, "API Application", "Java, Docker Container", "Provides API endpoints for gardener registration, field management, and transaction history")
+}
+
+System_Ext(landscape, "Landscape Application", "Stores all the core information about gardeners, fields, transactions, and so on")
+
+Rel(gardener, backend_api, "Uses", "HTTP")
+Rel_Back_Neighbor(database, backend_api, "Reads from and writes to", "sync, JDBC")
+
+Rel_Neighbor(backend_api, landscape, "Uses", "HTTP")
+@enduml

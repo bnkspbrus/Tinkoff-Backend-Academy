@@ -6,18 +6,18 @@
 
 * `docker`, `minikube`, `kubectl`
 
+### Описание
+
+#### Context Diagram
+![Context Diagram](docs/pics/context_diagram.png)
+
+Система VOgorode представляет собой набор сервисов, которые позволяют садоводам и копателям взаимодействовать друг с другом.
+Опсания сервисов можно найти в соответствующих папках.
+* [Rancher](rancher/README.md)
+* [Handyman](handyman/README.md)
+* [Landscape](landscape/README.md)
+
 ### Использование
-
-#### kubernetes
-
-* Все команды выполняйте в одном терминале
-* Выполните `sudo systemctl start docker`
-* Выполните `eval $(minikube -p minikube docker-env)`
-* Выполните `./setup.sh`
-* Выполните `kubectl apply -f kube`
-* Запустите нужный сервис `minikube service $SERVICE`, где `SERVICE` это handyman, rancher или landscape
-* Выполняйте свои запросы в открывшемся окне браузера
-* Выполните `minikube stop`, когда надоест делать запросы
 
 #### docker compose
 

@@ -1,0 +1,31 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Context.puml
+
+'LAYOUT_TOP_DOWN()
+'LAYOUT_AS_SKETCH()
+LAYOUT_WITH_LEGEND()
+
+title System Landscape diagram for VOgorode Application
+
+Person(customer, "Customer", "A customer of VOgorode Application")
+
+Enterprise_Boundary(c0, "VOgorode Application") {
+    System(handyman, "Handyman Application", "Allows handymen to manage their user profiles and bank accounts")
+    System(landscape, "Landscape Application", "Allows customers to manage their accounts and orders")
+    System(rancher, "Rancher Application", "Allows ranchers to manage their gardeners profiles and fields")
+}
+
+Rel_Neighbor(customer, handyman, "Uses", "HTTP")
+Rel_Neighbor(customer, landscape, "Uses", "HTTP")
+Rel_Neighbor(customer, rancher, "Uses", "HTTP")
+Rel_Neighbor(landscape, rancher, "Uses", "GRPC")
+Rel_Neighbor(rancher, landscape, "Uses", "HTTP")
+Rel_Neighbor(landscape, handyman, "Uses", "GRPC")
+Rel_Neighbor(handyman, landscape, "Uses", "HTTP")
+
+Lay_D(customer, landscape)
+Lay_R(landscape, rancher)
+Lay_L(landscape, handyman)
+@enduml

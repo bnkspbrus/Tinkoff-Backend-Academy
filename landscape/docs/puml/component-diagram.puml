@@ -1,0 +1,36 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/postgresql.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Component diagram for Landscape Application - API Application
+
+ContainerDb(db, "Database", "SQL Database", "Stores all the customer information, accounts, transactions, etc. Also stores orders placed by customers", "postgresql")
+System_Ext(handyman, "Handyman Application", "Stores all the core handyman information about users, bank accounts, etc.")
+System_Ext(rancher, "Rancher Application", "Stores all the core rancher information about gardeners, fields, etc.")
+
+Container_Boundary(api, "API Application") {
+    Component(accountController, "Account Controller", "Rest Controller", "Provides customers with general ways to manage their accounts")
+    Component(orderController, "Order Controller", "Rest Controller", "Allows customers to place orders for jobs to be done on their gardens")
+    Component(systemController, "System Controller", "Rest Controller", "Provides customers with general system information and health checks")
+    Component(statusController, "Status Controller", "Rest Controller", "Provides information about the status of handyman and rancher applications")
+    Component(accountService, "Account Service", "Spring Service", "Provides functionality related to customer accounts")
+    Component(orderService, "Order Service", "Spring Service", "Provides functionality related to customer orders")
+    Component(systemService, "System Service", "Spring Service", "Provides functionality related to system information")
+    Component(statusService, "Status Service", "Spring Service", "Provides functionality related to status information")
+
+    Rel(accountController, accountService, "Uses")
+    Rel(handyman, accountController, "Uses", "HTTP")
+    Rel(rancher, accountController, "Uses", "HTTP")
+    Rel(orderController, orderService, "Uses")
+    Rel(accountService, db, "Read & write to", "JDBC")
+    Rel(orderService, db, "Read & write to", "JDBC")
+    Rel(systemController, systemService, "Uses")
+    Rel(statusController, statusService, "Uses")
+    Rel(statusService, handyman, "Uses", "GRPC")
+    Rel(statusService, rancher, "Uses", "GRPC")
+}
+@enduml
